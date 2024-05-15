@@ -1,0 +1,14 @@
+Color Palettes from lospec.com:
+- Asenses palette by Anubi
+- Toti-froti by Anubi
+- Sweetcyan by Anubi
+- 2bit demichrome by Space Sandwich
+- AYY4 by Polyducks
+- Hollow by Poltergasm
+- Wish GB by Kerrie Lake
+- Spacehaze Palette by WildLeoKnight
+
+Fonts sourced from BitFontMaker2:
+	
+
+Transition Shader by DDRKirby(ISQ) at https://ddrkirby.com/articles/shader-based-transitions/shader-based-transitions.html 

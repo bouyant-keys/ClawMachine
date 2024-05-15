@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LevelList" load_steps=5 format=3 uid="uid://dh6xmcwp31cgo"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/LevelList.gd" id="1_3ungu"]
+[ext_resource type="PackedScene" uid="uid://d14csjxl4pxdr" path="res://Scenes/Levels/level_1.tscn" id="1_pmyi5"]
+[ext_resource type="PackedScene" uid="uid://ddpummoxyscf" path="res://Scenes/Levels/level_2.tscn" id="2_uvxqs"]
+[ext_resource type="PackedScene" uid="uid://birmp5yag4pm5" path="res://Scenes/Levels/level_3.tscn" id="3_soxl0"]
+
+[resource]
+script = ExtResource("1_3ungu")
+levels = Array[Resource]([ExtResource("1_pmyi5"), ExtResource("2_uvxqs"), ExtResource("3_soxl0")])

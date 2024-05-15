@@ -1,0 +1,101 @@
+[gd_scene load_steps=9 format=3 uid="uid://ch4wglb7cfc7"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_kn0tk"]
+[ext_resource type="Texture2D" uid="uid://22qcxjft1nwm" path="res://Sprites/Blocks/GoalCapsule.png" id="2_56148"]
+[ext_resource type="Texture2D" uid="uid://cqq4eronihr5t" path="res://Sprites/ClawClosed_Swap.png" id="3_655xl"]
+[ext_resource type="Texture2D" uid="uid://brrq0m2xrngja" path="res://Sprites/ClawOpen_Swap.png" id="3_ld5u5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xm8gq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_655xl")
+}],
+"loop": true,
+"name": &"Closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_655xl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ld5u5")
+}],
+"loop": false,
+"name": &"EmptyGrab",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ld5u5")
+}],
+"loop": true,
+"name": &"Open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_idxcs"]
+size = Vector2(16, 6)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cyivv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jehkn"]
+radius = 8.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 8
+script = ExtResource("1_kn0tk")
+
+[node name="GrabObj_Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, 12)
+texture = ExtResource("2_56148")
+
+[node name="ClawSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 7)
+sprite_frames = SubResource("SpriteFrames_xm8gq")
+animation = &"EmptyGrab"
+frame = 1
+frame_progress = 1.0
+
+[node name="CenterCollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_idxcs")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+position = Vector2(0, 14)
+
+[node name="GrabArea" type="Area2D" parent="." groups=["Player"]]
+position = Vector2(0, 12)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabArea"]
+shape = SubResource("CircleShape2D_cyivv")
+debug_color = Color(0.643137, 0.521569, 0, 0.419608)
+
+[node name="HurtArea" type="Area2D" parent="." groups=["Player"]]
+position = Vector2(0, 8)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea"]
+shape = SubResource("CircleShape2D_jehkn")
+debug_color = Color(0.726223, 3.41728e-06, 5.77569e-07, 0.419608)
+
+[node name="Grab_SFX" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[node name="Clamp_SFX" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[node name="VertTick_SFX" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[node name="HorizTick_SFX" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[connection signal="area_entered" from="GrabArea" to="." method="on_grab_area_entered"]
+[connection signal="area_exited" from="GrabArea" to="." method="on_grab_area_exited"]
+[connection signal="area_entered" from="HurtArea" to="." method="on_hurt_area_entered"]
+[connection signal="area_exited" from="HurtArea" to="." method="on_hurt_area_exited"]

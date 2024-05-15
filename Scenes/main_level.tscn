@@ -1,0 +1,117 @@
+[gd_scene load_steps=14 format=3 uid="uid://006i5i72bun1"]
+
+[ext_resource type="Script" path="res://Scripts/Level_Main.gd" id="1_5miic"]
+[ext_resource type="TileSet" uid="uid://bfrx7f5cwkkor" path="res://Sprites/TileSets/MainTileSet.tres" id="2_0b15d"]
+[ext_resource type="Resource" uid="uid://dh6xmcwp31cgo" path="res://Scripts/Resources/LevelList.tres" id="2_gemkk"]
+[ext_resource type="PackedScene" uid="uid://c1q3hty38mbi2" path="res://Scenes/Triggers/win_area.tscn" id="5_xt6wo"]
+[ext_resource type="TileSet" uid="uid://bytays7o1v2t1" path="res://Sprites/TileSets/BackgroundTileSet.tres" id="6_7iu5l"]
+[ext_resource type="PackedScene" uid="uid://d14csjxl4pxdr" path="res://Scenes/Levels/level_1.tscn" id="6_ybi8k"]
+[ext_resource type="Script" path="res://Scripts/Trigger_CamUpdate.gd" id="12_3tfj6"]
+[ext_resource type="Texture2D" uid="uid://c1koeytaanf25" path="res://Sprites/cloud.png" id="17_t8pnq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s7ku3"]
+size = Vector2(128, 10)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pxbl8"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 60.0
+gravity = Vector3(0, 0, 0)
+damping_min = 25.0
+damping_max = 30.0
+sub_emitter_mode = 2
+sub_emitter_amount_at_end = 1
+
+[sub_resource type="Gradient" id="Gradient_owya0"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_044bu"]
+gradient = SubResource("Gradient_owya0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1evd7"]
+particle_flag_disable_z = true
+angle_min = -45.0
+angle_max = 45.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+damping_min = 25.0
+damping_max = 30.0
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_044bu")
+
+[node name="MainLevel" type="Node2D"]
+script = ExtResource("1_5miic")
+level_list = ExtResource("2_gemkk")
+
+[node name="MachineTiles" type="TileMap" parent="."]
+tile_set = ExtResource("2_0b15d")
+format = 2
+layer_0/tile_data = PackedInt32Array(458752, 65536, 1, 458761, 0, 1, 0, 65536, 0, 196608, 65536, 0, 262144, 65536, 1, 327680, 65536, 2, 393216, 65536, 0, 524288, 65536, 2, 1, 196608, 1, 2, 131072, 2, 3, 131072, 2, 4, 131072, 2, 5, 131072, 2, 6, 131072, 2, 7, 131072, 2, 8, 196608, 2, 9, 0, 0, 196617, 0, 0, 262153, 0, 1, 327689, 0, 2, 393225, 0, 0, 524297, 0, 2, 65536, 65536, 1, 131072, 65536, 2, 65545, 0, 1, 131081, 0, 2, 327684, 2, 0, 327685, 65538, 0)
+
+[node name="BackgroundTiles" type="TileMap" parent="."]
+position = Vector2(0, -8)
+tile_set = ExtResource("6_7iu5l")
+format = 2
+layer_0/z_index = -1
+layer_0/tile_data = PackedInt32Array(8, 0, 2, 9, 131072, 2, 0, 0, 2, 1, 131072, 2, 65544, 0, 0, 131080, 0, 2, 65545, 131072, 0, 131081, 131072, 2, 65536, 0, 0, 131072, 0, 2, 65537, 131072, 0, 131073, 131072, 2, 196608, 0, 0, 262144, 0, 2, 196609, 131072, 0, 262145, 131072, 2, 196616, 0, 0, 262152, 0, 2, 196617, 131072, 0, 262153, 131072, 2, 2, 0, 1, 65538, 0, 2, 131074, 0, 0, 3, 65536, 1, 65539, 65536, 2, 131075, 65536, 0, 4, 131072, 1, 65540, 131072, 2, 131076, 131072, 0, 5, 0, 1, 65541, 0, 2, 131077, 0, 0, 6, 65536, 1, 65542, 65536, 2, 131078, 65536, 0, 7, 131072, 1, 65543, 131072, 2, 131079, 131072, 0, 196610, 0, 1, 262146, 0, 2, 327682, 0, 0, 196611, 65536, 1, 262147, 65536, 2, 327683, 65536, 0, 196612, 131072, 1, 262148, 131072, 2, 327684, 131072, 0, 196613, 0, 1, 262149, 0, 2, 327685, 0, 0, 196614, 65536, 1, 262150, 65536, 2, 327686, 65536, 0, 196615, 131072, 1, 262151, 131072, 2, 327687, 131072, 0, 393218, 0, 1, 458754, 0, 2, 524290, 0, 0, 393219, 65536, 1, 458755, 65536, 2, 524291, 65536, 0, 393220, 131072, 1, 458756, 131072, 2, 524292, 131072, 0, 393221, 0, 1, 458757, 0, 2, 524293, 0, 0, 393222, 65536, 1, 458758, 65536, 2, 524294, 65536, 0, 393223, 131072, 1, 458759, 131072, 2, 524295, 131072, 0, 589826, 0, 1, 589827, 65536, 1, 589828, 131072, 1, 589829, 0, 1, 589830, 65536, 1, 589831, 131072, 1, 327680, 0, 0, 393216, 0, 2, 327681, 131072, 0, 393217, 131072, 2, 458752, 0, 0, 524288, 0, 2, 458753, 131072, 0, 524289, 131072, 2, 589824, 0, 0, 589825, 131072, 0, 589832, 0, 0, 589833, 131072, 0, 458760, 0, 0, 524296, 0, 2, 458761, 131072, 0, 524297, 131072, 2, 327688, 0, 0, 393224, 0, 2, 327689, 131072, 0, 393225, 131072, 2)
+
+[node name="CurrentLevel" type="Node2D" parent="."]
+position = Vector2(0, 144)
+
+[node name="Level_1" parent="CurrentLevel" instance=ExtResource("6_ybi8k")]
+
+[node name="Triggers" type="Node2D" parent="."]
+
+[node name="CamUpdate_VMain" type="Area2D" parent="Triggers"]
+position = Vector2(80, 136)
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("12_3tfj6")
+enter_direction = Vector2i(0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/CamUpdate_VMain"]
+shape = SubResource("RectangleShape2D_s7ku3")
+
+[node name="CamUpdate_Level1" type="Area2D" parent="Triggers"]
+position = Vector2(80, 152)
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("12_3tfj6")
+to_floor = 1
+enter_direction = Vector2i(0, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/CamUpdate_Level1"]
+shape = SubResource("RectangleShape2D_s7ku3")
+
+[node name="WinArea" parent="Triggers" instance=ExtResource("5_xt6wo")]
+position = Vector2(80, 83)
+
+[node name="WinParticles" type="GPUParticles2D" parent="."]
+self_modulate = Color(0.25098, 0, 0, 1)
+position = Vector2(80, 88)
+emitting = false
+amount = 16
+sub_emitter = NodePath("../WinSubEmitter")
+process_material = SubResource("ParticleProcessMaterial_pxbl8")
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+trail_enabled = true
+
+[node name="WinSubEmitter" type="GPUParticles2D" parent="."]
+position = Vector2(80, 88)
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_1evd7")
+texture = ExtResource("17_t8pnq")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+
+[connection signal="body_entered" from="Triggers/CamUpdate_VMain" to="Triggers/CamUpdate_VMain" method="on_area_entered"]
+[connection signal="change_floor" from="Triggers/CamUpdate_VMain" to="." method="update_camera_pos"]
+[connection signal="body_entered" from="Triggers/CamUpdate_Level1" to="Triggers/CamUpdate_Level1" method="on_area_entered"]
+[connection signal="change_floor" from="Triggers/CamUpdate_Level1" to="." method="update_camera_pos"]

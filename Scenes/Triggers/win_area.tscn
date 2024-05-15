@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1q3hty38mbi2"]
+
+[ext_resource type="Script" path="res://Scripts/Trigger_CollectObj.gd" id="1_uuo7p"]
+[ext_resource type="Texture2D" uid="uid://b7n33vixj6112" path="res://Sprites/TileSets/WinArea_alt.png" id="2_1hnut"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wbi8"]
+size = Vector2(16, 12)
+
+[node name="WinArea" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_uuo7p")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1hnut")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_4wbi8")
+debug_color = Color(0.533333, 0, 1, 0.419608)
+
+[node name="WinCollect_SFX" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[node name="DefCollect_SFX" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[connection signal="area_entered" from="." to="." method="on_area_entered"]

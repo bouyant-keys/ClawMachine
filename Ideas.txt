@@ -1,0 +1,24 @@
++ = Reasonable effort, * = Doable but difficult/annoying , # = Unknown effort
+! = Considering,  / = Not Considering
+Mechanics?:     
+	Electrical Systems:
+		Buttons +
+		Levers +
+		Sliders (Volume, sfx but physical) +
+		Doors/Gates of some kind +
+		Portals *
+		Batteries to place into ports? +
+	
+	Gameplay:
+		Lives/Num of Grabs left +
+		MOuse-based movement? *
+		Breakable environment? # /
+		Treadmill-blocks (move objects back and forth)
+		Enemies/Obstacles?:
+			Fans (Push claw around) +*
+			Zappy Blocksa (Knocks held obj out of claw, deals damage?) +
+			Explosives? (when picked up starts a countdown?, breaks blocks?) *
+	
+	Shop?:
+		Coins/Tokens? +
+		Buy palettes, keychain toys?

@@ -1,0 +1,71 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcox082scxjlq"]
+
+[ext_resource type="PackedScene" uid="uid://rwfchjep3tin" path="res://Scenes/chain_end.tscn" id="1_470rm"]
+[ext_resource type="PackedScene" uid="uid://ch4wglb7cfc7" path="res://Scenes/claw.tscn" id="1_g7x0m"]
+[ext_resource type="Script" path="res://Scripts/chain_body.gd" id="1_sbrkp"]
+[ext_resource type="PackedScene" uid="uid://d3i1p38v6ffoy" path="res://Scenes/chain_link.tscn" id="2_r4qom"]
+
+[node name="Chain" type="Node2D"]
+script = ExtResource("1_sbrkp")
+
+[node name="ChainEnd" parent="." instance=ExtResource("1_470rm")]
+position = Vector2(0, -12)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(0, 8)
+node_a = NodePath("../ChainEnd")
+node_b = NodePath("../ChainLink")
+disable_collision = false
+angular_limit_lower = -1.5708
+angular_limit_upper = 1.5708
+
+[node name="ChainLink" parent="." instance=ExtResource("2_r4qom")]
+mass = 0.1
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="."]
+position = Vector2(0, -8)
+node_a = NodePath("../ChainLink")
+node_b = NodePath("../ChainLink2")
+disable_collision = false
+angular_limit_lower = -1.5708
+angular_limit_upper = 1.5708
+
+[node name="ChainLink2" parent="." instance=ExtResource("2_r4qom")]
+position = Vector2(0, 16)
+mass = 0.1
+
+[node name="PinJoint2D3" type="PinJoint2D" parent="."]
+position = Vector2(0, 24)
+node_a = NodePath("../ChainLink2")
+node_b = NodePath("../ChainLink3")
+disable_collision = false
+angular_limit_enabled = true
+angular_limit_upper = 1.5708
+
+[node name="ChainLink3" parent="." instance=ExtResource("2_r4qom")]
+position = Vector2(0, 32)
+mass = 0.1
+
+[node name="PinJoint2D4" type="PinJoint2D" parent="."]
+position = Vector2(0, 40)
+node_a = NodePath("../ChainLink3")
+node_b = NodePath("../ChainLink4")
+disable_collision = false
+softness = 0.1
+angular_limit_enabled = true
+angular_limit_upper = 1.5708
+
+[node name="ChainLink4" parent="." instance=ExtResource("2_r4qom")]
+position = Vector2(0, 48)
+mass = 0.1
+
+[node name="PinJoint2D5" type="PinJoint2D" parent="."]
+position = Vector2(0, 56)
+node_a = NodePath("../ChainLink4")
+node_b = NodePath("../Claw")
+disable_collision = false
+angular_limit_enabled = true
+angular_limit_upper = 1.5708
+
+[node name="Claw" parent="." instance=ExtResource("1_g7x0m")]
+position = Vector2(0, 56)

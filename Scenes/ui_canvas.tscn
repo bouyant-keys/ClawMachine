@@ -1,0 +1,140 @@
+[gd_scene load_steps=7 format=3 uid="uid://cjimp4jwk24co"]
+
+[ext_resource type="Script" path="res://Scripts/UI/ui_canvas.gd" id="1_kqwid"]
+[ext_resource type="PackedScene" uid="uid://cp3y7un0gtwcj" path="res://Scenes/grab_display.tscn" id="2_i44rk"]
+[ext_resource type="Texture2D" uid="uid://7m8jcppj3qxf" path="res://Sprites/UI/UI_Bar.png" id="3_meky2"]
+[ext_resource type="FontFile" uid="uid://dnoqi8fg1yacv" path="res://Fonts/HelvetiPixel_by_pentacom.ttf" id="4_6r2kv"]
+[ext_resource type="Script" path="res://Scripts/UI/BarDisplay.gd" id="4_yx2gg"]
+[ext_resource type="Texture2D" uid="uid://drj2lq0wsin3i" path="res://Sprites/UI/hp_unit.png" id="5_cqqbw"]
+
+[node name="UICanvas" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_kqwid")
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="GrabDisplay" parent="HUD" instance=ExtResource("2_i44rk")]
+visible = false
+layout_mode = 1
+
+[node name="TopBar" type="TextureRect" parent="HUD"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -36.0
+offset_bottom = -4.0
+grow_horizontal = 2
+texture = ExtResource("3_meky2")
+script = ExtResource("4_yx2gg")
+onscreen_y = -16.0
+offscreen_y = -36.0
+
+[node name="TicketLabel" type="Label" parent="HUD/TopBar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_6r2kv")
+text = "x10 "
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/TopBar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = -8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/TopBar/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_cqqbw")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="HUD/TopBar/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_cqqbw")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="HUD/TopBar/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_cqqbw")
+stretch_mode = 2
+
+[node name="BottomBar" type="TextureRect" parent="HUD"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+offset_bottom = 36.0001
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_meky2")
+flip_v = true
+script = ExtResource("4_yx2gg")
+onscreen_y = 128.0
+offscreen_y = 148.0
+
+[node name="TicketLabel" type="Label" parent="HUD/BottomBar"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 14.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_6r2kv")
+text = "x10 "
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/BottomBar"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 16.0
+grow_horizontal = 2
+theme_override_constants/separation = -8
+
+[node name="TextureRect" type="TextureRect" parent="HUD/BottomBar/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_cqqbw")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="HUD/BottomBar/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_cqqbw")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="HUD/BottomBar/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_cqqbw")
+stretch_mode = 2
+
+[node name="Pause" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

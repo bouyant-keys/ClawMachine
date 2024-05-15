@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ovd4lsqu07bh"]
+
+[ext_resource type="Texture2D" uid="uid://ekyx3pxpk572" path="res://Sprites/Chain_Side.png" id="1_upodk"]
+[ext_resource type="Script" path="res://Scripts/Chain.gd" id="2_w2clv"]
+
+[node name="Chain" type="Line2D"]
+texture_filter = 1
+texture_repeat = 2
+points = PackedVector2Array(0, 0, 0, -16, 0, -32, 0, -48, 0, -64, 0, -80, 0, -96, 0, -112, 0, -128, 0, -144, 0, -160)
+width = 16.0
+texture = ExtResource("1_upodk")
+texture_mode = 1
+script = ExtResource("2_w2clv")

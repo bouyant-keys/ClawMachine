@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BlockData" load_steps=2 format=3 uid="uid://c3hjs50oxu5n5"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/BlockData.gd" id="1_2qin7"]
+
+[resource]
+script = ExtResource("1_2qin7")
+obj_action = 0
+obj_name = ""
+sprite_path = null

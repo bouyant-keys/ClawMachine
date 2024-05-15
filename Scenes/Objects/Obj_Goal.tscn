@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://d258hxwh1n74s"]
+
+[ext_resource type="Texture2D" uid="uid://22qcxjft1nwm" path="res://Sprites/Blocks/GoalCapsule.png" id="2_g6dcq"]
+[ext_resource type="Script" path="res://Scripts/Resources/BlockData.gd" id="3_sw6yh"]
+[ext_resource type="Script" path="res://Scripts/Grab_Block.gd" id="3_u2r7o"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r5hlg"]
+radius = 6.0
+height = 16.0
+
+[sub_resource type="Resource" id="Resource_6yw77"]
+script = ExtResource("3_sw6yh")
+obj_action = 3
+obj_name = "Goal"
+sprite_path = NodePath("../Sprite2D")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8q57j"]
+
+[node name="Goal" type="RigidBody2D"]
+collision_layer = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_g6dcq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_r5hlg")
+debug_color = Color(1, 0.698039, 0.25098, 0.419608)
+
+[node name="Area2D" type="Area2D" parent="." groups=["Grabbable"]]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_u2r7o")
+block_data = SubResource("Resource_6yw77")
+rb_path = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_8q57j")
+debug_color = Color(0, 0.847059, 0, 0.419608)

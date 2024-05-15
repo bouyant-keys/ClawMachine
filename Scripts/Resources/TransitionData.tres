@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TransitionData" load_steps=2 format=3 uid="uid://cjcyvbwqk0jlc"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/TransitionData.gd" id="1_o0e3r"]
+
+[resource]
+script = ExtResource("1_o0e3r")
+trans_pos = 0
+level_depth = 0
+enter_directon = Vector2(0, 0)

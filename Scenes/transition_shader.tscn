@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://dpg5ed8ojadqn"]
+
+[ext_resource type="Shader" path="res://Materials/DiamondWipe.gdshader" id="1_nxi1x"]
+[ext_resource type="Script" path="res://Scripts/TransitionShader.gd" id="2_icn20"]
+[ext_resource type="FontFile" uid="uid://cvjdwac354t8g" path="res://Fonts/BasicHandwritingbyNoahK.ttf" id="3_8307l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aa7sp"]
+shader = ExtResource("1_nxi1x")
+shader_parameter/progress = 0.0
+shader_parameter/diamondPixelSize = 10.0
+shader_parameter/direction = Vector2(0, 0)
+shader_parameter/mult = 0.0
+
+[node name="TransitionShader" type="ColorRect"]
+material = SubResource("ShaderMaterial_aa7sp")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_icn20")
+wipe_time = 1.0
+hold_time = 0.5
+
+[node name="Label" type="Label" parent="."]
+visible = false
+self_modulate = Color(0.501961, 0.501961, 0.501961, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -17.5
+offset_right = 45.0
+offset_bottom = 17.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_8307l")
+theme_override_font_sizes/font_size = 16
+text = "a game by: 
+
+Ethan Keys"
+horizontal_alignment = 1
+vertical_alignment = 1

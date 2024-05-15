@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://gxh1451tlop0"]
+
+[ext_resource type="Texture2D" uid="uid://b7xaoahas4r6w" path="res://Sprites/Blocks/Crate.png" id="1_d5a1a"]
+[ext_resource type="Script" path="res://Scripts/Grab_Block.gd" id="1_gw0l4"]
+[ext_resource type="Script" path="res://Scripts/Resources/BlockData.gd" id="2_axexp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5nggr"]
+size = Vector2(16, 16)
+
+[sub_resource type="Resource" id="Resource_n6mer"]
+script = ExtResource("2_axexp")
+obj_action = 0
+obj_name = "Crate"
+sprite_path = NodePath("../Sprite2D")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1kox3"]
+
+[node name="Obj_Crate" type="RigidBody2D"]
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_d5a1a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5nggr")
+
+[node name="Area2D" type="Area2D" parent="." groups=["Grabbable"]]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_gw0l4")
+block_data = SubResource("Resource_n6mer")
+rb_path = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_1kox3")
