@@ -26,7 +26,7 @@ texture = ExtResource("2_g6dcq")
 shape = SubResource("CapsuleShape2D_r5hlg")
 debug_color = Color(1, 0.698039, 0.25098, 0.419608)
 
-[node name="Area2D" type="Area2D" parent="." groups=["Grabbable"]]
+[node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 0
 monitoring = false

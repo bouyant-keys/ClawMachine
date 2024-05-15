@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b3d7gawmwn128"]
+[gd_scene load_steps=14 format=3 uid="uid://b3d7gawmwn128"]
 
 [ext_resource type="PackedScene" uid="uid://006i5i72bun1" path="res://Scenes/main_level.tscn" id="1_bu0eb"]
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_ryie0"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ch4wglb7cfc7" path="res://Scenes/Player.tscn" id="3_nfab3"]
 [ext_resource type="PackedScene" uid="uid://cjimp4jwk24co" path="res://Scenes/ui_canvas.tscn" id="4_0rokx"]
 [ext_resource type="PackedScene" uid="uid://ovd4lsqu07bh" path="res://Scenes/chain.tscn" id="4_pdtj6"]
+[ext_resource type="PackedScene" uid="uid://uj8cf506ml5v" path="res://Scenes/chain_base.tscn" id="5_33amq"]
 [ext_resource type="Script" path="res://Scripts/MainCamera.gd" id="5_kpbsb"]
 [ext_resource type="PackedScene" uid="uid://dpg5ed8ojadqn" path="res://Scenes/transition_shader.tscn" id="6_x3bfk"]
 [ext_resource type="Shader" path="res://Materials/SetColorPalette.gdshader" id="7_4qc8k"]
@@ -31,10 +32,16 @@ bus = &"Music"
 [node name="MainLevel" parent="." instance=ExtResource("1_bu0eb")]
 
 [node name="Chain" parent="." instance=ExtResource("4_pdtj6")]
+points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+base_path = NodePath("../ChainBase")
 player_path = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("3_nfab3")]
 position = Vector2(80, 11.2)
+
+[node name="ChainBase" parent="." instance=ExtResource("5_33amq")]
+position = Vector2(80, 8)
+player_path = NodePath("../Player")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(80, 72)
@@ -43,6 +50,7 @@ script = ExtResource("5_kpbsb")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="UICanvas" parent="CanvasLayer" instance=ExtResource("4_0rokx")]
+visible = false
 
 [node name="TransitionShader" parent="CanvasLayer" instance=ExtResource("6_x3bfk")]
 

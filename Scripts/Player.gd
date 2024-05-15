@@ -51,10 +51,11 @@ func _physics_process(delta):
 		velocity.x += (x_dir * ACCEL) * delta
 		prev_x_dir = x_dir
 	else:
-		if abs(velocity.x) < DECEL * delta:
-			velocity.x = 0.0
-		else:
+		if abs(velocity.x) > DECEL * delta:
 			velocity.x -= (prev_x_dir * DECEL) * delta
+		else:
+			velocity.x = 0.0
+	velocity.x = clampf(velocity.x, -MAX_SPEED, MAX_SPEED)
 	
 	if !is_on_floor() and current_player_state == PlayerState.MOVING:
 		var y_speed := -vert_vel if grabbing else vert_vel
@@ -145,12 +146,12 @@ func grab() ->void:
 	grabbing = true
 	grab_obj.on_grab()
 	remote_trans.remote_path = grab_obj.get_path()
+	grab_sprite.texture = grab_obj.get_sprite()
 	
-	var data = grab_obj.get_data() as BlockData
+	#var data = grab_obj.get_data() as BlockData
 	
 	claw_sprite.play("Closed")
-	grab_sprite.texture = data.get_obj_sprite()
-	emit_signal("object_grab", data.get_obj_name(), true)
+	#emit_signal("object_grab", data.get_obj_name(), true)
 
 func release() ->void:
 	if !grabbing: return
@@ -169,7 +170,7 @@ func release() ->void:
 func on_grab_area_entered(area:Area2D) ->void:
 	if grabbing: return
 	
-	var temp_obj = area.get_parent().get_block()
+	var temp_obj = get_node(area.get_path())
 	if temp_obj is Grabbable: grab_obj = temp_obj
 
 func on_grab_area_exited(area:Area2D) ->void:

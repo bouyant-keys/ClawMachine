@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://uj8cf506ml5v"]
+
+[ext_resource type="Script" path="res://Scripts/ChainBase.gd" id="1_spxkt"]
+[ext_resource type="Texture2D" uid="uid://c1koeytaanf25" path="res://Sprites/cloud.png" id="2_awnuh"]
+
+[node name="ChainBase" type="Node2D"]
+script = ExtResource("1_spxkt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_awnuh")

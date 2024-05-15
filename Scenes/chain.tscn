@@ -1,13 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://ovd4lsqu07bh"]
+[gd_scene load_steps=4 format=3 uid="uid://ovd4lsqu07bh"]
 
 [ext_resource type="Texture2D" uid="uid://ekyx3pxpk572" path="res://Sprites/Chain_Side.png" id="1_upodk"]
 [ext_resource type="Script" path="res://Scripts/Chain.gd" id="2_w2clv"]
 
+[sub_resource type="Curve" id="Curve_kqrfl"]
+min_value = 1.0
+max_value = 1.1
+_data = [Vector2(0, 1), 0.0, 0.19881, 0, 1, Vector2(0.502994, 1.1), 0.0, 0.0, 0, 0, Vector2(1, 1), -0.201205, 0.0, 1, 0]
+point_count = 3
+
 [node name="Chain" type="Line2D"]
 texture_filter = 1
 texture_repeat = 2
-points = PackedVector2Array(0, 0, 0, -16, 0, -32, 0, -48, 0, -64, 0, -80, 0, -96, 0, -112, 0, -128, 0, -144, 0, -160)
+points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 width = 16.0
 texture = ExtResource("1_upodk")
 texture_mode = 1
 script = ExtResource("2_w2clv")
+move_curve = SubResource("Curve_kqrfl")
