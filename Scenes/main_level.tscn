@@ -1,9 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://006i5i72bun1"]
+[gd_scene load_steps=13 format=3 uid="uid://006i5i72bun1"]
 
 [ext_resource type="Script" path="res://Scripts/Level_Main.gd" id="1_5miic"]
 [ext_resource type="TileSet" uid="uid://bfrx7f5cwkkor" path="res://Sprites/TileSets/MainTileSet.tres" id="2_0b15d"]
 [ext_resource type="Resource" uid="uid://dh6xmcwp31cgo" path="res://Scripts/Resources/LevelList.tres" id="2_gemkk"]
-[ext_resource type="PackedScene" uid="uid://c1q3hty38mbi2" path="res://Scenes/Triggers/win_area.tscn" id="5_xt6wo"]
 [ext_resource type="TileSet" uid="uid://bytays7o1v2t1" path="res://Sprites/TileSets/BackgroundTileSet.tres" id="6_7iu5l"]
 [ext_resource type="PackedScene" uid="uid://d14csjxl4pxdr" path="res://Scenes/Levels/level_1.tscn" id="6_ybi8k"]
 [ext_resource type="Script" path="res://Scripts/Trigger_CamUpdate.gd" id="12_3tfj6"]
@@ -85,9 +84,6 @@ enter_direction = Vector2i(0, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/CamUpdate_Level1"]
 shape = SubResource("RectangleShape2D_s7ku3")
-
-[node name="WinArea" parent="Triggers" instance=ExtResource("5_xt6wo")]
-position = Vector2(80, 83)
 
 [node name="WinParticles" type="GPUParticles2D" parent="."]
 self_modulate = Color(0.25098, 0, 0, 1)

@@ -16,6 +16,8 @@ func _ready() -> void:
 
 func update_camera_pos(to_floor:int, enter_dir:Vector2) ->void:
 	if to_floor == current_floor: return
+	
+	current_floor = to_floor
 	game_manager.change_floor(to_floor, enter_dir)
 
 # This script will load/swap certain tilesets, a 'main' set will stay with the 

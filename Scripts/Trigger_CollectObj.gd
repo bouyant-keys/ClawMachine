@@ -13,9 +13,8 @@ func on_area_entered(area:Area2D) ->void:
 	match collect_type:
 		collect_obj.Object_Action.NONE:
 			print("! ! NOTHING ! !")
-		#collect_obj.Object_Action.LEVEL_LOAD:
-			#print("LOAD LEVEL: " + str(collect_obj.get_level_path()))
-			#emit_signal("load_level", collect_obj.get_level_path())
+		collect_obj.Object_Action.COINS:
+			print("! ! COINS ! !")
 		collect_obj.Object_Action.WIN:
 			print("! ! WIN ! !")
 			emit_signal("win_signal")

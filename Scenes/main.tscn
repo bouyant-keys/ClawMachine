@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://b3d7gawmwn128"]
+[gd_scene load_steps=15 format=3 uid="uid://b3d7gawmwn128"]
 
 [ext_resource type="PackedScene" uid="uid://006i5i72bun1" path="res://Scenes/main_level.tscn" id="1_bu0eb"]
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_ryie0"]
 [ext_resource type="Script" path="res://Scripts/MusicManager.gd" id="2_w01u1"]
 [ext_resource type="PackedScene" uid="uid://ch4wglb7cfc7" path="res://Scenes/Player.tscn" id="3_nfab3"]
 [ext_resource type="PackedScene" uid="uid://cjimp4jwk24co" path="res://Scenes/ui_canvas.tscn" id="4_0rokx"]
+[ext_resource type="PackedScene" uid="uid://c1q3hty38mbi2" path="res://Scenes/Triggers/win_area.tscn" id="4_giia6"]
 [ext_resource type="PackedScene" uid="uid://ovd4lsqu07bh" path="res://Scenes/chain.tscn" id="4_pdtj6"]
 [ext_resource type="PackedScene" uid="uid://uj8cf506ml5v" path="res://Scenes/chain_base.tscn" id="5_33amq"]
 [ext_resource type="Script" path="res://Scripts/MainCamera.gd" id="5_kpbsb"]
@@ -21,6 +22,7 @@ shader_parameter/palette = ExtResource("8_6gf24")
 [node name="Main" type="Node"]
 
 [node name="GameManager" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("1_ryie0")
 
 [node name="MusicManager" type="Node" parent="."]
@@ -31,8 +33,10 @@ bus = &"Music"
 
 [node name="MainLevel" parent="." instance=ExtResource("1_bu0eb")]
 
+[node name="WinArea" parent="." instance=ExtResource("4_giia6")]
+position = Vector2(80, 83)
+
 [node name="Chain" parent="." instance=ExtResource("4_pdtj6")]
-points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 base_path = NodePath("../ChainBase")
 player_path = NodePath("../Player")
 
@@ -67,17 +71,20 @@ script = ExtResource("9_btm2a")
 
 [connection signal="lose_process" from="GameManager" to="Player" method="disable_input"]
 [connection signal="lose_process" from="GameManager" to="CanvasLayer/UICanvas" method="hide_displays"]
+[connection signal="pause" from="GameManager" to="CanvasLayer/UICanvas" method="on_pause"]
 [connection signal="reset_process" from="GameManager" to="Player" method="reset"]
 [connection signal="reset_process" from="GameManager" to="Camera2D" method="reset_camera"]
 [connection signal="start_process" from="GameManager" to="Player" method="enable_input"]
+[connection signal="unpause" from="GameManager" to="CanvasLayer/UICanvas" method="on_unpause"]
 [connection signal="update_camera" from="GameManager" to="Camera2D" method="update_camera_pos"]
 [connection signal="win_process" from="GameManager" to="MainLevel" method="on_win"]
 [connection signal="win_process" from="GameManager" to="Player" method="disable_input"]
 [connection signal="win_process" from="GameManager" to="CanvasLayer/UICanvas" method="hide_displays"]
 [connection signal="screen_wipe" from="MainLevel" to="CanvasLayer/TransitionShader" method="transition"]
 [connection signal="update_camera" from="MainLevel" to="Camera2D" method="update_camera_pos"]
+[connection signal="win_signal" from="WinArea" to="GameManager" method="win"]
 [connection signal="change_palette" from="Player" to="CanvasLayer/PaletteShader" method="change_palette"]
-[connection signal="object_grab" from="Player" to="CanvasLayer/UICanvas" method="update_grab_display"]
+[connection signal="player_lose" from="Player" to="GameManager" method="lose"]
 [connection signal="set_display" from="Player" to="CanvasLayer/UICanvas" method="set_displaying"]
 [connection signal="swap_display" from="Player" to="CanvasLayer/UICanvas" method="swap_data_displays"]
 [connection signal="update_coins" from="Player" to="CanvasLayer/UICanvas" method="update_coins"]

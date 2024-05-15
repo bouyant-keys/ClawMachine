@@ -4,9 +4,8 @@
 [ext_resource type="Script" path="res://Scripts/Chain.gd" id="2_w2clv"]
 
 [sub_resource type="Curve" id="Curve_kqrfl"]
-min_value = 1.0
-max_value = 1.1
-_data = [Vector2(0, 1), 0.0, 0.19881, 0, 1, Vector2(0.502994, 1.1), 0.0, 0.0, 0, 0, Vector2(1, 1), -0.201205, 0.0, 1, 0]
+min_value = 0.9
+_data = [Vector2(0, 1), 0.0, -0.367032, 0, 0, Vector2(0.251497, 0.947253), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [node name="Chain" type="Line2D"]

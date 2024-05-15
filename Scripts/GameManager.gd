@@ -1,6 +1,8 @@
 extends Node
 class_name GameManager
 
+var paused := false
+
 @onready var transition: ColorRect = $"../CanvasLayer/TransitionShader"
 
 signal start_process
@@ -8,11 +10,16 @@ signal win_process
 signal lose_process
 signal reset_process
 signal pause
+signal unpause
 signal update_camera(Vector2)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	call_deferred("intro")
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if event.is_action_pressed("Pause"): set_pause()
 
 func intro() ->void:
 	await transition.fade_in(Vector2.ZERO)
@@ -45,5 +52,12 @@ func change_floor(floor:int, dir:Vector2) ->void:
 	await transition.fade_in(dir)
 	Player.input_enabled = true
 
-#func pause() ->void:
-	#pass
+func set_pause() ->void:
+	if paused:
+		paused = false
+		get_tree().paused = false
+		emit_signal("unpause")
+	else:
+		paused = true
+		get_tree().paused = true
+		emit_signal("pause")

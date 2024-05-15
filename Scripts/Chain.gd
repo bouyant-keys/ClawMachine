@@ -18,5 +18,5 @@ func _process(delta: float) -> void:
 	for point : int in points.size(): # Why points.size() and not points.size() - 1 ? Who knows?
 		var normalized_value := point as float / (points.size() - 1) as float
 		var linear_point = lerp(player.position, chain_base.position, normalized_value)
-		print(str(point) + " | " + str(normalized_value) + " -=- " + str(linear_point))
-		points[point] = linear_point * move_curve.sample(normalized_value) #Vector2(move_curve.sample(1.0 - normalized_value), linear_point.y)
+		#print(str(point) + " | " + str(normalized_value) + " -=- " + str(linear_point))
+		points[point] = linear_point #* (move_curve.sample(normalized_value) * (1.0 + player.velocity.normalized().x)) #Vector2(move_curve.sample(1.0 - normalized_value), linear_point.y)

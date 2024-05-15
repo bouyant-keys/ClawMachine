@@ -9,7 +9,7 @@ const DECEL := 40.0
 const VERTICAL_SPEED := 1000.0
 const SPEED_CHANGE := 400.0
 
-var grab_obj : Node2D
+var grab_obj : Grab_Block
 var grabbing := false
 var hurting := false
 var in_center_screen := false
@@ -29,12 +29,13 @@ enum PlayerState {IDLE, MOVING}
 @onready var verttick_sfx = $VertTick_SFX as AudioStreamPlayer
 @onready var horiztick_sfx = $HorizTick_SFX as AudioStreamPlayer
 
+signal player_lose
 signal update_health(float)
 signal update_coins(int)
 signal set_display(active:bool)
 signal swap_display(set_top:bool)
 signal change_palette(int)
-signal object_grab(String, bool)
+#signal object_grab(String, bool)
 
 
 func _ready():
@@ -147,31 +148,26 @@ func grab() ->void:
 	grab_obj.on_grab()
 	remote_trans.remote_path = grab_obj.get_path()
 	grab_sprite.texture = grab_obj.get_sprite()
-	
-	#var data = grab_obj.get_data() as BlockData
-	
 	claw_sprite.play("Closed")
-	#emit_signal("object_grab", data.get_obj_name(), true)
 
 func release() ->void:
 	if !grabbing: return
 	
 	pause_lowering()
 	grabbing = false
+	grab_obj.on_release()
+	remote_trans.remote_path = ""
 	grab_sprite.texture = null
 	claw_sprite.play("Open")
-	remote_trans.remote_path = ""
-	grab_obj.on_release()
 	grab_obj = null
-	emit_signal("object_grab", "Empty", false)
 
 # Area Functions
 
 func on_grab_area_entered(area:Area2D) ->void:
 	if grabbing: return
 	
-	var temp_obj = get_node(area.get_path())
-	if temp_obj is Grabbable: grab_obj = temp_obj
+	var temp_obj := area.get_parent()
+	if temp_obj is Grab_Block: grab_obj = temp_obj
 
 func on_grab_area_exited(area:Area2D) ->void:
 	if !grabbing: return
