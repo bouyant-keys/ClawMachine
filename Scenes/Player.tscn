@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ch4wglb7cfc7"]
+[gd_scene load_steps=14 format=3 uid="uid://ch4wglb7cfc7"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_kn0tk"]
 [ext_resource type="Texture2D" uid="uid://22qcxjft1nwm" path="res://Sprites/Blocks/GoalCapsule.png" id="2_56148"]
 [ext_resource type="Texture2D" uid="uid://cqq4eronihr5t" path="res://Sprites/ClawClosed_Swap.png" id="3_655xl"]
 [ext_resource type="Texture2D" uid="uid://brrq0m2xrngja" path="res://Sprites/ClawOpen_Swap.png" id="3_ld5u5"]
+[ext_resource type="AudioStream" uid="uid://f7dku23xcf24" path="res://Audio/Effects/Grab.wav" id="5_8y0ge"]
+[ext_resource type="AudioStream" uid="uid://dg7civ3l4w3j7" path="res://Audio/Effects/EmptyGrab.wav" id="6_17la2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xm8gq"]
 animations = [{
@@ -36,12 +38,49 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_idxcs"]
-size = Vector2(16, 6)
+size = Vector2(16, 4)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cyivv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jehkn"]
 radius = 8.0
+
+[sub_resource type="Animation" id="Animation_patul"]
+resource_name = "invincible"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClawSprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_10qqr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClawSprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ypmtt"]
+_data = {
+"RESET": SubResource("Animation_10qqr"),
+"invincible": SubResource("Animation_patul")
+}
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 8
@@ -59,6 +98,7 @@ frame = 1
 frame_progress = 1.0
 
 [node name="CenterCollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_idxcs")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
@@ -83,10 +123,15 @@ monitorable = false
 shape = SubResource("CircleShape2D_jehkn")
 debug_color = Color(0.726223, 3.41728e-06, 5.77569e-07, 0.419608)
 
+[node name="InvincibleTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="Grab_SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_8y0ge")
 bus = &"SFX"
 
 [node name="Clamp_SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_17la2")
 bus = &"SFX"
 
 [node name="VertTick_SFX" type="AudioStreamPlayer" parent="."]
@@ -95,7 +140,13 @@ bus = &"SFX"
 [node name="HorizTick_SFX" type="AudioStreamPlayer" parent="."]
 bus = &"SFX"
 
+[node name="player_anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ypmtt")
+}
+
 [connection signal="area_entered" from="GrabArea" to="." method="on_grab_area_entered"]
 [connection signal="area_exited" from="GrabArea" to="." method="on_grab_area_exited"]
-[connection signal="area_entered" from="HurtArea" to="." method="on_hurt_area_entered"]
-[connection signal="area_exited" from="HurtArea" to="." method="on_hurt_area_exited"]
+[connection signal="body_entered" from="HurtArea" to="." method="on_hurt_area_entered"]
+[connection signal="body_exited" from="HurtArea" to="." method="on_hurt_area_exited"]
+[connection signal="timeout" from="InvincibleTimer" to="." method="on_invincible_timeout"]

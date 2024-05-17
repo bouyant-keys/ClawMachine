@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfjg08w7825s8"
-path="res://.godot/imported/CollectionSpot1.png-dc982f109ef22a0dc4b1999a3de3d348.ctex"
+uid="uid://bhvb807ls8eta"
+path="res://.godot/imported/ChainBase.png-c3b6efe2a3cbc26246fc193145a09661.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TileSets/CollectionSpot1.png"
-dest_files=["res://.godot/imported/CollectionSpot1.png-dc982f109ef22a0dc4b1999a3de3d348.ctex"]
+source_file="res://Sprites/ChainBase.png"
+dest_files=["res://.godot/imported/ChainBase.png-c3b6efe2a3cbc26246fc193145a09661.ctex"]
 
 [params]
 

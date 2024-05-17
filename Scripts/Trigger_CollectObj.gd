@@ -8,13 +8,13 @@ func on_area_entered(area:Area2D) ->void:
 		printerr("WinArea signal win_signal has no connections!")
 		return
 	
-	var collect_obj = area.get_parent() as Grabbable
-	var collect_type = collect_obj.action
+	var collect_obj := area.get_parent() as Grab_Block
+	var collect_type := collect_obj.block_data.get_obj_action()
 	match collect_type:
-		collect_obj.Object_Action.NONE:
+		BlockData.Object_Action.NONE:
 			print("! ! NOTHING ! !")
-		collect_obj.Object_Action.COINS:
+		BlockData.Object_Action.COINS:
 			print("! ! COINS ! !")
-		collect_obj.Object_Action.WIN:
+		BlockData.Object_Action.WIN:
 			print("! ! WIN ! !")
 			emit_signal("win_signal")

@@ -10,6 +10,9 @@ var display_active := true
 @onready var top_bar: TextureRect = $HUD/TopBar
 @onready var bottom_bar: TextureRect = $HUD/BottomBar
 
+
+# Add Screen shake effect!!
+
 func update_grab_display(new_text:String, set_display:bool) ->void:
 	pass
 	#grab_display.update_text(new_text, set_display)

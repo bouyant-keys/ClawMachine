@@ -9,6 +9,7 @@ const DECEL := 40.0
 const VERTICAL_SPEED := 1000.0
 const SPEED_CHANGE := 400.0
 
+var health := 3
 var grab_obj : Grab_Block
 var grabbing := false
 var hurting := false
@@ -23,14 +24,17 @@ enum PlayerState {IDLE, MOVING}
 
 @onready var claw_sprite = $ClawSprite as AnimatedSprite2D
 @onready var grab_sprite = $GrabObj_Sprite as Sprite2D
+@onready var hurt_area: Area2D = $HurtArea
 @onready var remote_trans = $RemoteTransform2D as RemoteTransform2D
+@onready var invi_timer: Timer = $InvincibleTimer
+@onready var player_anim: AnimationPlayer = $player_anim
 @onready var grab_sfx = $Grab_SFX as AudioStreamPlayer
 @onready var clamp_sfx = $Clamp_SFX as AudioStreamPlayer
 @onready var verttick_sfx = $VertTick_SFX as AudioStreamPlayer
 @onready var horiztick_sfx = $HorizTick_SFX as AudioStreamPlayer
 
 signal player_lose
-signal update_health(float)
+signal update_health(int)
 signal update_coins(int)
 signal set_display(active:bool)
 signal swap_display(set_top:bool)
@@ -99,23 +103,9 @@ func check_screen_pos() ->void:
 		print("activating display - " + str(screen_pos.y))
 		in_center_screen = true
 
-#func check_nearby_walls(dir:float) ->bool:
-	#var space_state = get_world_2d().direct_space_state
-	#var ray_end := Vector2(position.x + (8.5 * dir), position.y)
-	#var top_ray = PhysicsRayQueryParameters2D.create(position, Vector2(ray_end.x, ray_end.y - 4.0), 0)
-	#var bottom_ray = PhysicsRayQueryParameters2D.create(position, Vector2(ray_end.x, ray_end.y + 4.0), 0)
-	#top_ray.exclude = [self]
-	#bottom_ray.exclude = [self]
-	#
-	#var top_result := space_state.intersect_ray(top_ray)
-	#var bottom_result := space_state.intersect_ray(bottom_ray)
-	#
-	#return !top_result.is_empty() or !bottom_result.is_empty()
-
 func swap_movement_direction() ->void:
 	vert_vel *= -1.0
 	emit_signal("swap_display", vert_vel > 0.0)
-
 
 func start_lowering() ->void:
 	print("start_lowering")
@@ -134,12 +124,25 @@ func change_player_state(new_state:PlayerState):
 	
 	current_player_state = new_state
 
+func on_hit() ->void:
+	health -= 1
+	emit_signal("update_health", health)
+	invi_timer.start()
+	player_anim.play("invincible")
+
+func on_invincible_timeout() ->void:
+	if !hurting:
+		player_anim.stop()
+		return
+	
+	on_hit()
+
 # Grab / Release Functions
 
 func grab() ->void:
 	if grabbing: return
 	elif !grab_obj:
-		# clamp_sfx.play()
+		clamp_sfx.play()
 		claw_sprite.play("EmptyGrab")
 		return
 	
@@ -148,6 +151,7 @@ func grab() ->void:
 	grab_obj.on_grab()
 	remote_trans.remote_path = grab_obj.get_path()
 	grab_sprite.texture = grab_obj.get_sprite()
+	grab_sfx.play()
 	claw_sprite.play("Closed")
 
 func release() ->void:
@@ -174,11 +178,14 @@ func on_grab_area_exited(area:Area2D) ->void:
 	
 	if grab_obj == area: grab_obj = null
 
-func on_hurt_area_entered(_area:Area2D) ->void:
-	hurting = true
+func on_hurt_area_entered(body:Node2D) ->void:
+	if !hurting:
+		hurting = true
+		on_hit()
 
-func on_hurt_area_exited(_area:Area2D) ->void:
-	hurting = false
+func on_hurt_area_exited(body:Node2D) ->void:
+	if hurt_area.get_overlapping_areas().size() == 0: hurting = false
+	print("Hurting: " + str(hurting))
 
 # Enable / Disable / Reset Functions
 
@@ -190,6 +197,8 @@ func disable_input() ->void:
 
 func reset() ->void:
 	release()
+	change_player_state(PlayerState.IDLE)
 	grab_sprite.texture = null
 	claw_sprite.play("Open")
+	vert_vel = 0.0
 	position = start_pos

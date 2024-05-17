@@ -20,3 +20,6 @@ func _process(delta: float) -> void:
 		var linear_point = lerp(player.position, chain_base.position, normalized_value)
 		#print(str(point) + " | " + str(normalized_value) + " -=- " + str(linear_point))
 		points[point] = linear_point #* (move_curve.sample(normalized_value) * (1.0 + player.velocity.normalized().x)) #Vector2(move_curve.sample(1.0 - normalized_value), linear_point.y)
+
+func reset_chain() ->void:
+	pass

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://j65ty34fqvn"
-path="res://.godot/imported/CollectionSpot2.png-0afc6a98a0d129af00690bc1881c311b.ctex"
+uid="uid://ck76khbrhvshb"
+path="res://.godot/imported/MachineSet_1.2.png-abf2abfaf5d209120cd5ce0d86575218.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/TileSets/CollectionSpot2.png"
-dest_files=["res://.godot/imported/CollectionSpot2.png-0afc6a98a0d129af00690bc1881c311b.ctex"]
+source_file="res://Sprites/TileSets/MachineSet_1.2.png"
+dest_files=["res://.godot/imported/MachineSet_1.2.png-abf2abfaf5d209120cd5ce0d86575218.ctex"]
 
 [params]
 

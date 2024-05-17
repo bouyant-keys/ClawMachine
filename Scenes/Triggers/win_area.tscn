@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b7n33vixj6112" path="res://Sprites/TileSets/WinArea_alt.png" id="2_1hnut"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4wbi8"]
-size = Vector2(16, 12)
+size = Vector2(8, 12)
 
 [node name="WinArea" type="Area2D"]
 collision_layer = 0
