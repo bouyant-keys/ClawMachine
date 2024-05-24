@@ -15,7 +15,7 @@ radius = 6.0
 height = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8q57j"]
-radius = 7.0
+radius = 8.0
 
 [node name="Goal" type="RigidBody2D"]
 collision_layer = 2
@@ -27,7 +27,6 @@ texture = ExtResource("2_g6dcq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_r5hlg")
-debug_color = Color(1, 0.698039, 0.25098, 0.419608)
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2
@@ -36,4 +35,4 @@ monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_8q57j")
-debug_color = Color(0, 0.847059, 0, 0.419608)
+debug_color = Color(1, 1, 0, 0.419608)

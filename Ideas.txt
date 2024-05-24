@@ -22,3 +22,36 @@ Mechanics?:
 	Shop?:
 		Coins/Tokens? +
 		Buy palettes, keychain toys?
+
+
+Levels:
+	- Grabbing / Releasing Tutorial (Short Level)
+	- Grabbing / Releasing Advanced 1 (Long Level + Directions Swapping)
+	- Grabbing / Releasing Advanced 2 (Moving Blocks)
+	- Blocks & Buttons Tutorial (Short Level)
+	- Blocks & Buttons Advanced 1 (Multiple blocks/doors)
+	- Blocks & Buttons Advanced 2 (Multiple doors, single block)
+	- Enemies Tutorial (Short-er Level)
+	- Enemies Advanced 1 (Enemies + Blocks/Doors)
+	- Enemies Advanced 1 (Simple Moving Enemies + Long Level)
+	- Combo 1 (MovingBlocks-Safe + Enemies)
+	- Combo 2 ()
+	- Combo 3 (Complex moving enemies + Multiple Doors / Single Block)
+	- Win Level
+
+
+Stuff to do:
+	
+	Add:
+		- Replace coins/tickets with a timer + display time on level finish
+		- Implement camera shake (On hit with dangerous obj, on collision with wall?)
+		- Levels 7-12 + win level
+		- Add tutorial text on ui bars for first few levels
+		- Add music (idle, playing, on lose, on win)
+		- Add SFX (starting game, lose, win fireworks, bonk on walls, zapping, objects colliding, etc.)
+		- 
+	
+	Fix:
+		- Weird speed acceleration on level change 
+		- Vertical speed change is sometimes disabled on level change
+		- 

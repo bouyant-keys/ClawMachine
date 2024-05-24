@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ch4wglb7cfc7"]
+[gd_scene load_steps=18 format=3 uid="uid://ch4wglb7cfc7"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_kn0tk"]
 [ext_resource type="Texture2D" uid="uid://22qcxjft1nwm" path="res://Sprites/Blocks/GoalCapsule.png" id="2_56148"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://brrq0m2xrngja" path="res://Sprites/ClawOpen_Swap.png" id="3_ld5u5"]
 [ext_resource type="AudioStream" uid="uid://f7dku23xcf24" path="res://Audio/Effects/Grab.wav" id="5_8y0ge"]
 [ext_resource type="AudioStream" uid="uid://dg7civ3l4w3j7" path="res://Audio/Effects/EmptyGrab.wav" id="6_17la2"]
+[ext_resource type="AudioStream" uid="uid://ds84v42p7lecc" path="res://Audio/Effects/VertTick_2.wav" id="7_thy5k"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xm8gq"]
 animations = [{
@@ -45,6 +46,21 @@ size = Vector2(16, 4)
 [sub_resource type="CircleShape2D" id="CircleShape2D_jehkn"]
 radius = 8.0
 
+[sub_resource type="Animation" id="Animation_10qqr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClawSprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_patul"]
 resource_name = "invincible"
 loop_mode = 1
@@ -61,25 +77,47 @@ tracks/0/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="Animation" id="Animation_10qqr"]
-length = 0.001
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ypmtt"]
+_data = {
+"RESET": SubResource("Animation_10qqr"),
+"invincible": SubResource("Animation_patul")
+}
+
+[sub_resource type="Animation" id="Animation_uvhhd"]
+resource_name = "tick_loop"
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ClawSprite:visible")
+tracks/0/path = NodePath("VertTick_SFX:playing")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ypmtt"]
+[sub_resource type="Animation" id="Animation_o6bnx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VertTick_SFX:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0hcoi"]
 _data = {
-"RESET": SubResource("Animation_10qqr"),
-"invincible": SubResource("Animation_patul")
+"RESET": SubResource("Animation_o6bnx"),
+"tick_loop": SubResource("Animation_uvhhd")
 }
 
 [node name="Player" type="CharacterBody2D"]
@@ -135,6 +173,7 @@ stream = ExtResource("6_17la2")
 bus = &"SFX"
 
 [node name="VertTick_SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_thy5k")
 bus = &"SFX"
 
 [node name="HorizTick_SFX" type="AudioStreamPlayer" parent="."]
@@ -143,6 +182,11 @@ bus = &"SFX"
 [node name="player_anim" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ypmtt")
+}
+
+[node name="Tick_anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0hcoi")
 }
 
 [connection signal="area_entered" from="GrabArea" to="." method="on_grab_area_entered"]

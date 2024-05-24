@@ -14,7 +14,7 @@ var grab_obj : Grab_Block
 var grabbing := false
 var hurting := false
 var in_center_screen := false
-var vert_vel := 0.0
+var vert_dir := 0.0
 var prev_x_dir : float
 var start_pos : Vector2
 
@@ -28,6 +28,7 @@ enum PlayerState {IDLE, MOVING}
 @onready var remote_trans = $RemoteTransform2D as RemoteTransform2D
 @onready var invi_timer: Timer = $InvincibleTimer
 @onready var player_anim: AnimationPlayer = $player_anim
+@onready var tick_anim: AnimationPlayer = $Tick_anim
 @onready var grab_sfx = $Grab_SFX as AudioStreamPlayer
 @onready var clamp_sfx = $Clamp_SFX as AudioStreamPlayer
 @onready var verttick_sfx = $VertTick_SFX as AudioStreamPlayer
@@ -63,7 +64,7 @@ func _physics_process(delta):
 	velocity.x = clampf(velocity.x, -MAX_SPEED, MAX_SPEED)
 	
 	if !is_on_floor() and current_player_state == PlayerState.MOVING:
-		var y_speed := -vert_vel if grabbing else vert_vel
+		var y_speed := vert_dir * VERTICAL_SPEED
 		var y_dir := Input.get_axis("Up", "Down")
 		# Slow or Increase the lowering speed by pressing Up or Down
 		# Works inversely when claw is moving upwards (up increases speed instead)
@@ -78,7 +79,8 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Swap"):
 		if current_player_state == PlayerState.IDLE: 
 			change_player_state(PlayerState.MOVING)
-			start_lowering()
+			change_lowering_speed(1.0, 1.0)
+			tick_anim.play("tick_loop")
 		else:
 			swap_movement_direction()
 	
@@ -104,20 +106,18 @@ func check_screen_pos() ->void:
 		in_center_screen = true
 
 func swap_movement_direction() ->void:
-	vert_vel *= -1.0
-	emit_signal("swap_display", vert_vel > 0.0)
+	vert_dir *= -1.0
+	emit_signal("swap_display", vert_dir > 0.0)
 
-func start_lowering() ->void:
-	print("start_lowering")
+func change_lowering_speed(new_vel:float, time:float) ->void:
+	if vert_dir == new_vel: return
 	
-	await get_tree().create_timer(1.0).timeout # Allow time for camera move
 	var vert_vel_tween := get_tree().create_tween()
-	vert_vel_tween.tween_property(self, "vert_vel", VERTICAL_SPEED, 1.0)
+	vert_vel_tween.tween_method(set_v_velocity, vert_dir, new_vel, time)
 
-func pause_lowering() ->void:
-	vert_vel = 0.0
-	await get_tree().create_timer(0.5).timeout
-	vert_vel = VERTICAL_SPEED
+func set_v_velocity(value:float) ->void:
+	vert_dir = value
+	tick_anim.speed_scale = 1.0 - (abs(value) * 0.2)
 
 func change_player_state(new_state:PlayerState):
 	if current_player_state == new_state: return
@@ -146,7 +146,8 @@ func grab() ->void:
 		claw_sprite.play("EmptyGrab")
 		return
 	
-	pause_lowering()
+	#pause_lowering()
+	swap_movement_direction()
 	grabbing = true
 	grab_obj.on_grab()
 	remote_trans.remote_path = grab_obj.get_path()
@@ -157,7 +158,8 @@ func grab() ->void:
 func release() ->void:
 	if !grabbing: return
 	
-	pause_lowering()
+	#pause_lowering()
+	swap_movement_direction()
 	grabbing = false
 	grab_obj.on_release()
 	remote_trans.remote_path = ""
@@ -200,5 +202,5 @@ func reset() ->void:
 	change_player_state(PlayerState.IDLE)
 	grab_sprite.texture = null
 	claw_sprite.play("Open")
-	vert_vel = 0.0
+	vert_dir = 0.0
 	position = start_pos
