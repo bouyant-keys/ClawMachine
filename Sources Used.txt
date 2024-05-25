@@ -11,4 +11,9 @@ Color Palettes from lospec.com:
 Fonts sourced from BitFontMaker2:
 	
 
+
+
 Transition Shader by DDRKirby(ISQ) at https://ddrkirby.com/articles/shader-based-transitions/shader-based-transitions.html 
+
+SFX:
+	"Fire Crackers Go Off" from freesfx.co.uk
