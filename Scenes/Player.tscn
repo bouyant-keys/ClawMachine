@@ -38,10 +38,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_idxcs"]
-size = Vector2(16, 4)
+[sub_resource type="CircleShape2D" id="CircleShape2D_10cpu"]
+radius = 3.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_cyivv"]
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_rtkoj"]
+b = Vector2(0, 12)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jehkn"]
 radius = 8.0
@@ -136,11 +137,11 @@ frame = 1
 frame_progress = 1.0
 
 [node name="CenterCollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
-shape = SubResource("RectangleShape2D_idxcs")
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_10cpu")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
-position = Vector2(0, 14)
+position = Vector2(0, 9)
 
 [node name="GrabArea" type="Area2D" parent="." groups=["Player"]]
 position = Vector2(0, 12)
@@ -148,7 +149,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrabArea"]
-shape = SubResource("CircleShape2D_cyivv")
+shape = SubResource("SegmentShape2D_rtkoj")
 debug_color = Color(0.643137, 0.521569, 0, 0.419608)
 
 [node name="HurtArea" type="Area2D" parent="." groups=["Player"]]

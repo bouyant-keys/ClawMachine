@@ -3,7 +3,7 @@ class_name GameManager
 
 var paused := false
 
-@onready var transition: ColorRect = $"../CanvasLayer/TransitionShader"
+@onready var transition: Transition_Shader = $"../CanvasLayer/TransitionShader"
 
 signal start_process
 signal win_process
@@ -30,6 +30,8 @@ func win() ->void:
 	
 	await transition.fade_out(Vector2.ZERO)
 	emit_signal("reset_process")
+	
+	await transition.play_level_change()
 	
 	await transition.fade_in(Vector2.ZERO)
 	emit_signal("start_process")

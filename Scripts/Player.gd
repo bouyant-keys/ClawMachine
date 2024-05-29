@@ -4,7 +4,7 @@ class_name Player
 static var input_enabled := true
 
 const MAX_SPEED := 120.0
-const ACCEL := 60.0
+const ACCEL := 40.0
 const DECEL := 40.0
 const VERTICAL_SPEED := 1000.0
 const SPEED_CHANGE := 400.0
@@ -39,7 +39,8 @@ signal update_health(int)
 signal update_coins(int)
 signal set_display(active:bool)
 signal swap_display(set_top:bool)
-signal change_palette(int)
+signal set_cam_follow(bool)
+#signal change_palette(int)
 #signal object_grab(String, bool)
 
 
@@ -87,8 +88,8 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Grab"): grab()
 	elif Input.is_action_just_released("Grab"): release()
 	
-	if Input.is_action_just_pressed("Inc_Palette"): emit_signal("change_palette", 1)
-	elif Input.is_action_just_pressed("Dec_Palette"): emit_signal("change_palette", -1)
+	#if Input.is_action_just_pressed("Inc_Palette"): emit_signal("change_palette", 1)
+	#elif Input.is_action_just_pressed("Dec_Palette"): emit_signal("change_palette", -1)
 	
 	check_screen_pos()
 
@@ -102,11 +103,12 @@ func check_screen_pos() ->void:
 	else: # if in center
 		if in_center_screen: return
 		emit_signal("set_display", true)
-		print("activating display - " + str(screen_pos.y))
+		#print("activating display - " + str(screen_pos.y))
 		in_center_screen = true
 
 func swap_movement_direction() ->void:
 	vert_dir *= -1.0
+	up_direction *= -1.0
 	emit_signal("swap_display", vert_dir > 0.0)
 
 func change_lowering_speed(new_vel:float, time:float) ->void:
@@ -203,4 +205,6 @@ func reset() ->void:
 	grab_sprite.texture = null
 	claw_sprite.play("Open")
 	vert_dir = 0.0
+	up_direction = Vector2(0.0, -1.0)
+	velocity = Vector2.ZERO
 	position = start_pos

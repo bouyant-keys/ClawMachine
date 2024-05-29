@@ -15,6 +15,9 @@ var off_hp_sprite = preload("res://Sprites/UI/hpoff_unit.png") as Texture2D
 func update_tickets(value:int) ->void:
 	ticket_label.text = "x" + str(value)
 
+func update_time(value:int) ->void:
+	var min := value % 60
+
 func update_health(value:int) ->void: 
 	var temp := 0
 	for unit in hp_units:

@@ -6,15 +6,16 @@ var dir : Vector2
 @export var wipe_time := 1.5
 @export var hold_time := 1.0
 
-@onready var start_label = $Label as Label
+@onready var level_label: Label = $LevelChangeText
+@onready var level_sfx: AudioStreamPlayer = $LevelChange_SFX
 
-signal start_transition
-signal end_transition
-
+#signal start_transition
+#signal end_transition
+signal change_palette(int)
 
 func _ready() -> void:
 	show()
-	#start_label.show()
+	level_label.hide()
 	material.set_shader_parameter("progress", 1.0)
 
 func fade_out(new_dir:Vector2) ->void:
@@ -47,3 +48,13 @@ func fade_in(new_dir:Vector2) ->void:
 
 func update_shader_progress(value:float) ->void:
 	material.set_shader_parameter("progress", value)
+
+func play_level_change() ->void:
+	level_label.text = "Level: " + str(MainLevel.current_level)
+	level_label.show()
+	await get_tree().create_timer(1.0).timeout
+	emit_signal("change_palette", MainLevel.current_level)
+	level_label.text = "Level: " + str(MainLevel.current_level+1)
+	level_sfx.play()
+	await get_tree().create_timer(1.0).timeout
+	level_label.hide()

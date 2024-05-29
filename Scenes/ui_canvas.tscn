@@ -213,3 +213,5 @@ vertical_alignment = 1
 libraries = {
 "": SubResource("AnimationLibrary_35uom")
 }
+
+[node name="LevelChange_SFX" type="AudioStreamPlayer" parent="."]

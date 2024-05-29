@@ -1,17 +1,21 @@
 extends Node2D
+class_name MainLevel
 
+static var current_level := 0
 var current_floor := 0
 
 @export var level_list : LevelList
-@export var current_level : int
+@export var start_level : int
 
 @onready var level_container = $CurrentLevel as Node2D
 @onready var game_manager: GameManager = $"../GameManager"
 
 signal screen_wipe(Vector2)
 signal update_camera(Vector2)
+signal new_level(int)
 
 func _ready() -> void:
+	current_level = start_level
 	load_level()
 
 func update_camera_pos(to_floor:int, enter_dir:Vector2) ->void:
@@ -31,6 +35,7 @@ func load_level() ->void:
 	
 	var new_level = level_list.levels[current_level].instantiate() as Node
 	level_container.add_child(new_level)
+	emit_signal("new_level", current_level)
 
 func on_win() ->void:
 	current_level += 1
