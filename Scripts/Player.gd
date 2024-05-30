@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 static var input_enabled := true
+static var retries := 0
 
 const MAX_SPEED := 120.0
 const ACCEL := 40.0
@@ -40,8 +41,6 @@ signal update_coins(int)
 signal set_display(active:bool)
 signal swap_display(set_top:bool)
 signal set_cam_follow(bool)
-#signal change_palette(int)
-#signal object_grab(String, bool)
 
 
 func _ready():
@@ -87,9 +86,6 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("Grab"): grab()
 	elif Input.is_action_just_released("Grab"): release()
-	
-	#if Input.is_action_just_pressed("Inc_Palette"): emit_signal("change_palette", 1)
-	#elif Input.is_action_just_pressed("Dec_Palette"): emit_signal("change_palette", -1)
 	
 	check_screen_pos()
 

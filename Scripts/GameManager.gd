@@ -1,6 +1,11 @@
 extends Node
 class_name GameManager
 
+static var game_completed_once := false
+static var deaths := 0
+static var times_zapped := 0
+static var total_time := 0 # value in miliseconds
+
 var paused := false
 
 @onready var transition: Transition_Shader = $"../CanvasLayer/TransitionShader"

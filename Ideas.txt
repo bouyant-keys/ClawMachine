@@ -52,6 +52,4 @@ Stuff to do:
 		- 
 	
 	Fix:
-		- Weird speed acceleration on level change 
-		- Vertical speed change is sometimes disabled on level change
-		- 
+		- Go back over levels to ensure they are possible / work the way I want
