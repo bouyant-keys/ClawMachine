@@ -8,6 +8,8 @@ var dir : Vector2
 
 @onready var level_label: Label = $LevelChangeText
 @onready var level_sfx: AudioStreamPlayer = $LevelChange_SFX
+@onready var fade_in_sfx: AudioStreamPlayer = $FadeIn_SFX
+@onready var fade_out_sfx: AudioStreamPlayer = $FadeOut_SFX
 
 #signal start_transition
 #signal end_transition
@@ -20,6 +22,7 @@ func _ready() -> void:
 
 func fade_out(new_dir:Vector2) ->void:
 	show()
+	
 	var mult = 0.0
 	dir = new_dir
 	material.set_shader_parameter("direction", dir)
@@ -29,6 +32,7 @@ func fade_out(new_dir:Vector2) ->void:
 	
 	var wipe_tween = get_tree().create_tween()
 	wipe_tween.tween_method(update_shader_progress, 0.0, 1.0, wipe_time)
+	#fade_out_sfx.play()
 	
 	await wipe_tween.finished
 
@@ -42,6 +46,7 @@ func fade_in(new_dir:Vector2) ->void:
 	
 	var wipe_tween = get_tree().create_tween()
 	wipe_tween.tween_method(update_shader_progress, 1.0, 0.0, wipe_time)
+	#fade_in_sfx.play()
 	
 	await wipe_tween.finished
 	hide()

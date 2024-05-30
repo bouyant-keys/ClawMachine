@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpg5ed8ojadqn"]
+[gd_scene load_steps=8 format=3 uid="uid://dpg5ed8ojadqn"]
 
 [ext_resource type="Shader" path="res://Materials/DiamondWipe.gdshader" id="1_nxi1x"]
 [ext_resource type="Script" path="res://Scripts/TransitionShader.gd" id="2_icn20"]
 [ext_resource type="FontFile" uid="uid://cvjdwac354t8g" path="res://Fonts/BasicHandwritingbyNoahK.ttf" id="3_8307l"]
 [ext_resource type="AudioStream" uid="uid://bnoe2u2y8yhri" path="res://Audio/Effects/LevelChange.wav" id="4_57we0"]
+[ext_resource type="AudioStream" uid="uid://bjo1d6pjhuo1o" path="res://Audio/Effects/Fade_In.wav" id="5_pamjg"]
+[ext_resource type="AudioStream" uid="uid://bpdkdwgxbgiv" path="res://Audio/Effects/Fade_Out.wav" id="6_tu61b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aa7sp"]
 shader = ExtResource("1_nxi1x")
@@ -45,3 +47,12 @@ vertical_alignment = 1
 
 [node name="LevelChange_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_57we0")
+bus = &"SFX"
+
+[node name="FadeIn_SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_pamjg")
+bus = &"SFX"
+
+[node name="FadeOut_SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_tu61b")
+bus = &"SFX"
