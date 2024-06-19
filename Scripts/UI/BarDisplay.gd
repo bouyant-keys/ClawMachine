@@ -7,16 +7,20 @@ var off_hp_sprite = preload("res://Sprites/UI/hpoff_unit.png") as Texture2D
 @export var onscreen_y : float
 @export var offscreen_y : float
 
-@onready var ticket_label = $TicketLabel as Label
+@onready var tutorial_text: Label = $TutorialText
+@onready var time = $TimeLabel as Label
 @onready var hp_units = [$HBoxContainer/TextureRect as TextureRect, 
 							$HBoxContainer/TextureRect2 as TextureRect, 
 							$HBoxContainer/TextureRect3 as TextureRect]
 
-func update_tickets(value:int) ->void:
-	ticket_label.text = "x" + str(value)
+func update_tutorial(text:String) ->void:
+	tutorial_text.text = text
 
 func update_time(value:int) ->void:
-	var min := value % 60
+	var temp := value / 10
+	var min := temp / 60
+	var sec := temp % 60
+	time.text = str(min) + ":" + str(sec)
 
 func update_health(value:int) ->void: 
 	var temp := 0

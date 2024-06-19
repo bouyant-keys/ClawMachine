@@ -1,15 +1,19 @@
-[gd_scene load_steps=13 format=3 uid="uid://006i5i72bun1"]
+[gd_scene load_steps=15 format=3 uid="uid://006i5i72bun1"]
 
 [ext_resource type="Script" path="res://Scripts/Level_Main.gd" id="1_5miic"]
 [ext_resource type="Resource" uid="uid://dh6xmcwp31cgo" path="res://Scripts/Resources/LevelList.tres" id="2_gemkk"]
 [ext_resource type="TileSet" uid="uid://bfrx7f5cwkkor" path="res://Sprites/TileSets/TileSet_Main.tres" id="3_ibtqt"]
 [ext_resource type="TileSet" uid="uid://bytays7o1v2t1" path="res://Sprites/TileSets/TileSet_Background.tres" id="4_blxbp"]
 [ext_resource type="PackedScene" uid="uid://d14csjxl4pxdr" path="res://Scenes/Levels/level_1.tscn" id="6_ybi8k"]
+[ext_resource type="PackedScene" uid="uid://b5tk71rbe180r" path="res://Scenes/Triggers/tutorial_trigger.tscn" id="7_m2x45"]
 [ext_resource type="Script" path="res://Scripts/Trigger_CamUpdate.gd" id="12_3tfj6"]
 [ext_resource type="Texture2D" uid="uid://c1koeytaanf25" path="res://Sprites/cloud.png" id="17_t8pnq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s7ku3"]
 size = Vector2(128, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1dh7"]
+size = Vector2(128, 48)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pxbl8"]
 particle_flag_disable_z = true
@@ -84,6 +88,14 @@ enter_direction = Vector2i(0, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/CamUpdate_Level1"]
 shape = SubResource("RectangleShape2D_s7ku3")
+
+[node name="TutorialTrigger" parent="Triggers" instance=ExtResource("7_m2x45")]
+position = Vector2(80, 64)
+tutorial_text = "Speed (W/S)"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/TutorialTrigger"]
+shape = SubResource("RectangleShape2D_p1dh7")
+debug_color = Color(7.70092e-07, 0.63786, 0.386501, 0.42)
 
 [node name="WinParticles" type="GPUParticles2D" parent="."]
 self_modulate = Color(0.25098, 0, 0, 1)

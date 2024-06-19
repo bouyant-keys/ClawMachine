@@ -13,8 +13,10 @@ func press_button(active:bool) ->void:
 	is_pressed = active
 	if active:
 		anim.play("Pressing")
+		on_press.emit()
 	else:
 		anim.play("Releasing")
+		on_release.emit()
 
 func on_area_entered(area:Area2D) ->void:
 	press_button(true)

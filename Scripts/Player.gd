@@ -38,6 +38,7 @@ enum PlayerState {IDLE, MOVING}
 signal player_lose
 signal update_health(int)
 signal update_coins(int)
+signal update_tutorial(String)
 signal set_display(active:bool)
 signal swap_display(set_top:bool)
 signal set_cam_follow(bool)
@@ -171,12 +172,17 @@ func on_grab_area_entered(area:Area2D) ->void:
 	if grabbing: return
 	
 	var temp_obj := area.get_parent()
-	if temp_obj is Grab_Block: grab_obj = temp_obj
+	if temp_obj is Grab_Block: 
+		grab_obj = temp_obj
+		emit_signal("update_tutorial", 4)
 
 func on_grab_area_exited(area:Area2D) ->void:
-	if !grabbing: return
+	if grabbing: return
 	
-	if grab_obj == area: grab_obj = null
+	var temp_obj := area.get_parent()
+	if grab_obj == temp_obj: 
+		grab_obj = null
+		emit_signal("update_tutorial", -1)
 
 func on_hurt_area_entered(body:Node2D) ->void:
 	if !hurting:

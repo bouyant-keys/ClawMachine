@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://drj2lq0wsin3i" path="res://Sprites/UI/hp_unit.png" id="5_cqqbw"]
 
 [sub_resource type="Animation" id="Animation_yt15o"]
-length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -81,7 +80,7 @@ script = ExtResource("4_yx2gg")
 onscreen_y = -16.0
 offscreen_y = -36.0
 
-[node name="TicketLabel" type="Label" parent="HUD/TopBar"]
+[node name="TimeLabel" type="Label" parent="HUD/TopBar"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -91,8 +90,21 @@ offset_top = -14.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("4_6r2kv")
-text = "x10 "
+text = "00:00 "
 horizontal_alignment = 2
+
+[node name="TutorialText" type="Label" parent="HUD/TopBar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_6r2kv")
+text = "............................... "
+horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD/TopBar"]
 layout_mode = 1
@@ -136,15 +148,25 @@ script = ExtResource("4_yx2gg")
 onscreen_y = 128.0
 offscreen_y = 148.0
 
-[node name="TicketLabel" type="Label" parent="HUD/BottomBar"]
+[node name="TimeLabel" type="Label" parent="HUD/BottomBar"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 14.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("4_6r2kv")
-text = "x10 "
+text = "00:00 "
 horizontal_alignment = 2
+
+[node name="TutorialText" type="Label" parent="HUD/BottomBar"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 14.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_6r2kv")
+text = "............................... "
+horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD/BottomBar"]
 layout_mode = 1
@@ -210,6 +232,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PauseAnimPlayer" type="AnimationPlayer" parent="Pause"]
+process_mode = 2
 libraries = {
 "": SubResource("AnimationLibrary_35uom")
 }

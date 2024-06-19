@@ -84,9 +84,8 @@ _data = {
 "invincible": SubResource("Animation_patul")
 }
 
-[sub_resource type="Animation" id="Animation_uvhhd"]
-resource_name = "tick_loop"
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_o6bnx"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -100,8 +99,9 @@ tracks/0/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_o6bnx"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_uvhhd"]
+resource_name = "tick_loop"
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true

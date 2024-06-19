@@ -97,7 +97,7 @@ script = ExtResource("2_w01u1")
 bus = &"Music"
 
 [node name="MainLevel" parent="." instance=ExtResource("1_bu0eb")]
-start_level = 1
+start_level = 3
 
 [node name="WinArea" parent="." instance=ExtResource("4_giia6")]
 position = Vector2(80, 83)
@@ -127,7 +127,6 @@ libraries = {
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="UICanvas" parent="CanvasLayer" instance=ExtResource("4_0rokx")]
-visible = false
 
 [node name="TransitionShader" parent="CanvasLayer" instance=ExtResource("6_x3bfk")]
 
@@ -149,6 +148,7 @@ script = ExtResource("9_btm2a")
 [connection signal="reset_process" from="GameManager" to="Chain" method="reset_chain"]
 [connection signal="reset_process" from="GameManager" to="Player" method="reset"]
 [connection signal="reset_process" from="GameManager" to="Camera2D" method="reset_camera"]
+[connection signal="reset_process" from="GameManager" to="CanvasLayer/UICanvas" method="reset"]
 [connection signal="start_process" from="GameManager" to="Player" method="enable_input"]
 [connection signal="unpause" from="GameManager" to="CanvasLayer/UICanvas" method="on_unpause"]
 [connection signal="update_camera" from="GameManager" to="Camera2D" method="update_camera_pos"]

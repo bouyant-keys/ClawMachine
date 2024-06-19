@@ -1,12 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://ddpummoxyscf"]
+[gd_scene load_steps=8 format=3 uid="uid://ddpummoxyscf"]
 
 [ext_resource type="TileSet" uid="uid://bfrx7f5cwkkor" path="res://Sprites/TileSets/TileSet_Main.tres" id="1_mq8hb"]
 [ext_resource type="TileSet" uid="uid://bytays7o1v2t1" path="res://Sprites/TileSets/TileSet_Background.tres" id="2_kj7mn"]
 [ext_resource type="PackedScene" uid="uid://d258hxwh1n74s" path="res://Scenes/Objects/Obj_Goal.tscn" id="4_rem0m"]
+[ext_resource type="PackedScene" uid="uid://b5tk71rbe180r" path="res://Scenes/Triggers/tutorial_trigger.tscn" id="5_ds8b1"]
 [ext_resource type="PackedScene" uid="uid://ccdqwkrucicfk" path="res://Scenes/Triggers/cam_follow.tscn" id="5_ufsie"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5fbmc"]
 size = Vector2(128, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gmpwo"]
+size = Vector2(128, 48)
 
 [node name="Level_2" type="TileMap"]
 tile_set = ExtResource("1_mq8hb")
@@ -28,3 +32,19 @@ shape = SubResource("RectangleShape2D_5fbmc")
 
 [node name="Goal" parent="." instance=ExtResource("4_rem0m")]
 position = Vector2(80, 280)
+
+[node name="TutorialTrigger" parent="." instance=ExtResource("5_ds8b1")]
+position = Vector2(80, 144)
+tutorial_text = "Swap (SPACE) "
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TutorialTrigger"]
+shape = SubResource("RectangleShape2D_gmpwo")
+debug_color = Color(7.70092e-07, 0.63786, 0.386501, 0.42)
+
+[node name="TutorialTrigger2" parent="." instance=ExtResource("5_ds8b1")]
+position = Vector2(80, 272)
+tutorial_text = "Grab (E) "
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TutorialTrigger2"]
+shape = SubResource("RectangleShape2D_gmpwo")
+debug_color = Color(7.70092e-07, 0.63786, 0.386501, 0.42)

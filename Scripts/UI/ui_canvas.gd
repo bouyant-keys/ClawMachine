@@ -25,11 +25,6 @@ func _process(delta: float) -> void:
 	top_bar.update_time(current_time)
 	bottom_bar.update_time(current_time)
 
-
-func update_grab_display(new_text:String, set_display:bool) ->void:
-	pass
-	#grab_display.update_text(new_text, set_display)
-
 func swap_data_displays(set_top:bool) ->void:
 	top = set_top
 	
@@ -46,9 +41,9 @@ func update_health(value:float) ->void:
 	top_bar.update_health(value)
 	bottom_bar.update_health(value)
 
-func update_coins(value:int) ->void:
-	top_bar.update_tickets(value)
-	bottom_bar.update_tickets(value)
+func update_tutorial(text:String) ->void:
+	top_bar.update_tutorial(text)
+	bottom_bar.update_tutorial(text)
 
 func start_stopwatch() ->void:
 	stopwatch_active = true
@@ -59,16 +54,24 @@ func stop_stopwatch() ->void:
 
 func on_pause() ->void:
 	print("pausing")
-	hud_menu.hide()
 	pause_menu.show()
 	pause_anim.play("paused_anim")
 	pause_time_value = current_time
 	stopwatch_active = false
-	
 
 func on_unpause() ->void:
 	print("unpausing")
 	hud_menu.show()
 	pause_menu.hide()
-	pause_anim.stop()
 	start_stopwatch()
+
+func reset() ->void:
+	update_tutorial("Start (SPACE) ") #Default on reset value
+	swap_data_displays(true)
+	set_displaying(false)
+	
+	start_time = 0.0
+	current_time = 0.0
+	pause_time_value = 0.0
+	top_bar.update_time(0.0)
+	bottom_bar.update_time(0.0)
