@@ -42,7 +42,7 @@ animations = [{
 radius = 3.0
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_rtkoj"]
-b = Vector2(0, 12)
+b = Vector2(0, 24)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jehkn"]
 radius = 8.0
@@ -86,34 +86,27 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_o6bnx"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("VertTick_SFX:playing")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_uvhhd"]
 resource_name = "tick_loop"
+length = 0.3
 loop_mode = 1
-tracks/0/type = "value"
+step = 0.05
+tracks/0/type = "audio"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("VertTick_SFX:playing")
+tracks/0/path = NodePath("VertTick_SFX")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("7_thy5k")
+}],
+"times": PackedFloat32Array(0)
 }
+tracks/0/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0hcoi"]
 _data = {
@@ -143,7 +136,6 @@ shape = SubResource("CircleShape2D_10cpu")
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 
 [node name="GrabArea" type="Area2D" parent="." groups=["Player"]]
-position = Vector2(0, 12)
 collision_layer = 0
 collision_mask = 2
 
@@ -164,6 +156,10 @@ debug_color = Color(0.726223, 3.41728e-06, 5.77569e-07, 0.419608)
 [node name="InvincibleTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="IdleTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [node name="Grab_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_8y0ge")
 bus = &"SFX"
@@ -173,7 +169,6 @@ stream = ExtResource("6_17la2")
 bus = &"SFX"
 
 [node name="VertTick_SFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_thy5k")
 bus = &"SFX"
 
 [node name="HorizTick_SFX" type="AudioStreamPlayer" parent="."]
@@ -184,7 +179,7 @@ libraries = {
 "": SubResource("AnimationLibrary_ypmtt")
 }
 
-[node name="Tick_anim" type="AnimationPlayer" parent="."]
+[node name="tick_anim" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_0hcoi")
 }
@@ -194,3 +189,4 @@ libraries = {
 [connection signal="body_entered" from="HurtArea" to="." method="on_hurt_area_entered"]
 [connection signal="body_exited" from="HurtArea" to="." method="on_hurt_area_exited"]
 [connection signal="timeout" from="InvincibleTimer" to="." method="on_invincible_timeout"]
+[connection signal="timeout" from="IdleTimer" to="." method="on_idle_timeout"]

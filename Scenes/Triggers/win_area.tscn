@@ -1,7 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1q3hty38mbi2"]
+[gd_scene load_steps=9 format=3 uid="uid://c1q3hty38mbi2"]
 
 [ext_resource type="Script" path="res://Scripts/Trigger_CollectObj.gd" id="1_uuo7p"]
-[ext_resource type="Texture2D" uid="uid://b7n33vixj6112" path="res://Sprites/TileSets/WinArea_alt.png" id="2_1hnut"]
+[ext_resource type="Texture2D" uid="uid://b0x8usm3wlun4" path="res://Sprites/GoalArrow.png" id="2_l2ecm"]
+[ext_resource type="Texture2D" uid="uid://brv2x5rv8o60w" path="res://Sprites/TileSets/WinArea_Set.png" id="3_fafgw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70ioy"]
+atlas = ExtResource("3_fafgw")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5hup"]
+atlas = ExtResource("3_fafgw")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ya55"]
+atlas = ExtResource("3_fafgw")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dd4i6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70ioy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5hup")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ya55")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4wbi8"]
 size = Vector2(8, 12)
@@ -12,8 +42,14 @@ collision_mask = 2
 monitorable = false
 script = ExtResource("1_uuo7p")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_1hnut")
+[node name="ArrowSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -8)
+texture = ExtResource("2_l2ecm")
+
+[node name="AreaSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dd4i6")
+frame_progress = 0.330306
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
@@ -26,4 +62,4 @@ bus = &"SFX"
 [node name="DefCollect_SFX" type="AudioStreamPlayer" parent="."]
 bus = &"SFX"
 
-[connection signal="area_entered" from="." to="." method="on_area_entered"]
+[connection signal="body_entered" from="." to="." method="on_area_entered"]

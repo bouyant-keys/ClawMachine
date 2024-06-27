@@ -43,10 +43,7 @@ Levels:
 Stuff to do:
 	
 	Add:
-		- Replace coins/tickets with a timer + display time on level finish
 		- Implement camera shake (On hit with dangerous obj, on collision with wall?)
-		- Levels 7-12 + win level
-		- Add tutorial text on ui bars for first few levels
 		- Add music (idle, playing, on lose, on win)
 		- Add SFX (starting game, lose, win fireworks, bonk on walls, zapping, objects colliding, etc.)
 		- 

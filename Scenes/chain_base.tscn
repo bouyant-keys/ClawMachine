@@ -1,10 +1,38 @@
-[gd_scene load_steps=3 format=3 uid="uid://uj8cf506ml5v"]
+[gd_scene load_steps=6 format=3 uid="uid://uj8cf506ml5v"]
 
 [ext_resource type="Script" path="res://Scripts/ChainBase.gd" id="1_spxkt"]
 [ext_resource type="Texture2D" uid="uid://bhvb807ls8eta" path="res://Sprites/ChainBase.png" id="2_vpma6"]
 
+[sub_resource type="Curve" id="Curve_tmhpv"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.16544, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_w1gdt"]
+curve = SubResource("Curve_tmhpv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2kf35"]
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 60.0
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+scale_min = 2.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_w1gdt")
+
 [node name="ChainBase" type="Node2D"]
 script = ExtResource("1_spxkt")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(0, 4)
+process_material = SubResource("ParticleProcessMaterial_2kf35")
+lifetime = 0.5
+explosiveness = 0.6
+interpolate = false
+fract_delta = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_vpma6")

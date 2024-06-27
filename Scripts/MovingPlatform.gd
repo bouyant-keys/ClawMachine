@@ -4,7 +4,7 @@ var paused := false
 
 @export var closed_loop : bool
 @export var speed := 2.0
-@export var speed_scale : float
+@export var speed_scale := 1.0
 @export var body_size : Vector2i
 @export var body_sprite : Texture2D
 
@@ -15,18 +15,18 @@ var paused := false
 
 func _ready() -> void:
 	var coll_shape := RectangleShape2D.new()
-	coll_shape.size = body_size
+	coll_shape.size = body_size 
 	block_coll.shape = coll_shape
-	
-	for point : int in curve.point_count:
-		path_tex.points.append(curve.get_point_position(point))
+	#
+	#for point : int in curve.point_count:
+		#path_tex.points.append(curve.get_point_position(point))
 	
 	if !closed_loop: 
 		anim.play("move")
 		anim.speed_scale = speed_scale
 		set_process(false)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if paused: return
 	follower.progress += speed * speed_scale
 

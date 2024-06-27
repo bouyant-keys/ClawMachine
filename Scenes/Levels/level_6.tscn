@@ -33,10 +33,6 @@ shape = SubResource("RectangleShape2D_olq34")
 position = Vector2(96, 80)
 rotation = -1.5708
 
-[node name="Button" parent="." instance=ExtResource("6_cyq7i")]
-visible = false
-position = Vector2(60, 56)
-
 [node name="Button2" parent="." instance=ExtResource("6_cyq7i")]
 position = Vector2(128, 184)
 
@@ -46,7 +42,5 @@ position = Vector2(64, 56)
 [node name="Goal" parent="." instance=ExtResource("3_jpbqx")]
 position = Vector2(128, 176)
 
-[connection signal="on_press" from="Button" to="Door" method="open"]
-[connection signal="on_release" from="Button" to="Door" method="close"]
 [connection signal="on_press" from="Button2" to="Door" method="open"]
 [connection signal="on_release" from="Button2" to="Door" method="close"]

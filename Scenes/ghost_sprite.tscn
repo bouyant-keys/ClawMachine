@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0r8obm85wx4n"]
+
+[ext_resource type="Script" path="res://Scripts/GhostSprite.gd" id="1_mmddy"]
+
+[node name="GhostSprite" type="Sprite2D"]
+script = ExtResource("1_mmddy")

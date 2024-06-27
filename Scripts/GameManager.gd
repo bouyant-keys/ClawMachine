@@ -6,6 +6,7 @@ static var deaths := 0
 static var times_zapped := 0
 static var total_time := 0 # value in miliseconds
 
+var transitioning := false
 var paused := false
 
 @onready var transition: Transition_Shader = $"../CanvasLayer/TransitionShader"
@@ -14,6 +15,7 @@ signal start_process
 signal win_process
 signal lose_process
 signal reset_process
+signal freeze_process(bool)
 signal pause
 signal unpause
 signal update_camera(Vector2)
@@ -24,14 +26,17 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
-		if event.is_action_pressed("Pause"): set_pause()
+		if event.is_action_pressed("Pause") && !transitioning: set_pause()
 
 func intro() ->void:
+	transitioning = true
 	await transition.fade_in(Vector2.ZERO)
+	transitioning = false
 	emit_signal("start_process")
 
 func win() ->void:
 	emit_signal("win_process")
+	transitioning = true
 	
 	await transition.fade_out(Vector2.ZERO)
 	emit_signal("reset_process")
@@ -39,25 +44,30 @@ func win() ->void:
 	await transition.play_level_change()
 	
 	await transition.fade_in(Vector2.ZERO)
+	transitioning = false
 	emit_signal("start_process")
 
 func lose() ->void:
 	emit_signal("lose_process")
+	transitioning = true
 	
 	await transition.fade_out(Vector2.ZERO)
 	emit_signal("reset_process")
 	
 	await transition.fade_in(Vector2.ZERO)
+	transitioning = false
 	emit_signal("start_process")
 
 func change_floor(floor:int, dir:Vector2) ->void:
-	Player.input_enabled = false
+	emit_signal("freeze_process", true)
+	transitioning = true
 	
 	await transition.fade_out(dir)
 	emit_signal("update_camera", Vector2(80.0, 72.0 + (144.0 * floor)))
 	
 	await transition.fade_in(dir)
-	Player.input_enabled = true
+	emit_signal("freeze_process", false)
+	transitioning = false
 
 func set_pause() ->void:
 	if paused:

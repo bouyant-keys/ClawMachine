@@ -16,32 +16,37 @@ var grabbing := false
 var hurting := false
 var in_center_screen := false
 var vert_dir := 0.0
+var y_speed := 0.0
 var prev_x_dir : float
 var start_pos : Vector2
+var ghosts := false
 
 enum PlayerState {IDLE, MOVING}
 
 @export var current_player_state : PlayerState
+#@export_node_path() var ghost_parent_path
 
 @onready var claw_sprite = $ClawSprite as AnimatedSprite2D
 @onready var grab_sprite = $GrabObj_Sprite as Sprite2D
 @onready var hurt_area: Area2D = $HurtArea
 @onready var remote_trans = $RemoteTransform2D as RemoteTransform2D
 @onready var invi_timer: Timer = $InvincibleTimer
+@onready var idle_timer: Timer = $IdleTimer
 @onready var player_anim: AnimationPlayer = $player_anim
-@onready var tick_anim: AnimationPlayer = $Tick_anim
+@onready var tick_anim: AnimationPlayer = $tick_anim
 @onready var grab_sfx = $Grab_SFX as AudioStreamPlayer
 @onready var clamp_sfx = $Clamp_SFX as AudioStreamPlayer
-@onready var verttick_sfx = $VertTick_SFX as AudioStreamPlayer
-@onready var horiztick_sfx = $HorizTick_SFX as AudioStreamPlayer
+#@onready var ghost_parent = get_node(ghost_parent_path) as Node2D
+#@onready var ghost_sprite := preload("res://Scenes/ghost_sprite.tscn")
 
 signal player_lose
 signal update_health(int)
-signal update_coins(int)
+signal update_depth(int)
 signal update_tutorial(String)
 signal set_display(active:bool)
 signal swap_display(set_top:bool)
 signal set_cam_follow(bool)
+signal goal_grabbed(bool)
 
 
 func _ready():
@@ -65,7 +70,7 @@ func _physics_process(delta):
 	velocity.x = clampf(velocity.x, -MAX_SPEED, MAX_SPEED)
 	
 	if !is_on_floor() and current_player_state == PlayerState.MOVING:
-		var y_speed := vert_dir * VERTICAL_SPEED
+		y_speed = vert_dir * VERTICAL_SPEED
 		var y_dir := Input.get_axis("Up", "Down")
 		# Slow or Increase the lowering speed by pressing Up or Down
 		# Works inversely when claw is moving upwards (up increases speed instead)
@@ -85,15 +90,16 @@ func _process(_delta):
 		else:
 			swap_movement_direction()
 	
-	if Input.is_action_just_pressed("Grab"): grab()
-	elif Input.is_action_just_released("Grab"): release()
+	if Input.is_action_just_pressed("Grab") && !grabbing: grab()
+	elif Input.is_action_just_released("Grab") && grabbing: release()
 	
+	tick_anim.speed_scale = abs(y_speed / VERTICAL_SPEED)
 	check_screen_pos()
 
 func check_screen_pos() ->void:
-	var screen_pos := get_global_transform_with_canvas().get_origin()
+	var screen_y := get_global_transform_with_canvas().get_origin().y
 	
-	if screen_pos.y < 32.0 or screen_pos.y > 112.0: # if not in center
+	if screen_y < 32.0 or screen_y > 112.0: # if not in center
 		if !in_center_screen: return
 		emit_signal("set_display", false)
 		in_center_screen = false
@@ -126,26 +132,25 @@ func change_player_state(new_state:PlayerState):
 func on_hit() ->void:
 	health -= 1
 	emit_signal("update_health", health)
-	invi_timer.start()
-	player_anim.play("invincible")
-
-func on_invincible_timeout() ->void:
-	if !hurting:
-		player_anim.stop()
-		return
 	
-	on_hit()
+	if health != 0:
+		invi_timer.start()
+		player_anim.play("invincible")
+	else:
+		retries += 1
+		player_lose.emit()
 
 # Grab / Release Functions
 
 func grab() ->void:
-	if grabbing: return
-	elif !grab_obj:
+	if !grab_obj:
 		clamp_sfx.play()
 		claw_sprite.play("EmptyGrab")
 		return
 	
-	#pause_lowering()
+	if grab_obj.block_data.obj_action == BlockData.Object_Action.WIN:
+		goal_grabbed.emit(true)
+	
 	swap_movement_direction()
 	grabbing = true
 	grab_obj.on_grab()
@@ -155,9 +160,9 @@ func grab() ->void:
 	claw_sprite.play("Closed")
 
 func release() ->void:
-	if !grabbing: return
+	if grab_obj.block_data.obj_action == BlockData.Object_Action.WIN:
+		goal_grabbed.emit(false)
 	
-	#pause_lowering()
 	swap_movement_direction()
 	grabbing = false
 	grab_obj.on_release()
@@ -165,6 +170,24 @@ func release() ->void:
 	grab_sprite.texture = null
 	claw_sprite.play("Open")
 	grab_obj = null
+
+# Timer Timeouts
+
+func on_invincible_timeout() ->void:
+	if !hurting:
+		player_anim.stop()
+		return
+	
+	on_hit()
+
+func on_idle_timeout() ->void:
+	set_display.emit(true)
+	update_tutorial.emit("Start (SPACE)")
+
+#func on_ghost_timeout() -> void:
+	#var ghost_instance := ghost_sprite.instantiate()
+	#ghost_instance.position = self.position
+	#ghost_parent.add_child(ghost_instance)
 
 # Area Functions
 
@@ -174,7 +197,7 @@ func on_grab_area_entered(area:Area2D) ->void:
 	var temp_obj := area.get_parent()
 	if temp_obj is Grab_Block: 
 		grab_obj = temp_obj
-		emit_signal("update_tutorial", 4)
+		emit_signal("update_tutorial", "Grab (E)")
 
 func on_grab_area_exited(area:Area2D) ->void:
 	if grabbing: return
@@ -182,7 +205,7 @@ func on_grab_area_exited(area:Area2D) ->void:
 	var temp_obj := area.get_parent()
 	if grab_obj == temp_obj: 
 		grab_obj = null
-		emit_signal("update_tutorial", -1)
+		emit_signal("update_tutorial", "")
 
 func on_hurt_area_entered(body:Node2D) ->void:
 	if !hurting:
@@ -195,6 +218,14 @@ func on_hurt_area_exited(body:Node2D) ->void:
 
 # Enable / Disable / Reset Functions
 
+func freeze(frozen:bool) ->void:
+	if frozen:
+		input_enabled = false
+		tick_anim.stop()
+	else:
+		input_enabled = true
+		tick_anim.play("tick_loop")
+
 func enable_input() ->void:
 	input_enabled = true
 
@@ -202,7 +233,7 @@ func disable_input() ->void:
 	input_enabled = false
 
 func reset() ->void:
-	release()
+	if grabbing: release()
 	change_player_state(PlayerState.IDLE)
 	grab_sprite.texture = null
 	claw_sprite.play("Open")
@@ -210,3 +241,5 @@ func reset() ->void:
 	up_direction = Vector2(0.0, -1.0)
 	velocity = Vector2.ZERO
 	position = start_pos
+
+

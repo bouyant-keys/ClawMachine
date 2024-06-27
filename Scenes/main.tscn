@@ -97,7 +97,8 @@ script = ExtResource("2_w01u1")
 bus = &"Music"
 
 [node name="MainLevel" parent="." instance=ExtResource("1_bu0eb")]
-start_level = 3
+gm_path = NodePath("../GameManager")
+start_level = 2
 
 [node name="WinArea" parent="." instance=ExtResource("4_giia6")]
 position = Vector2(80, 83)
@@ -106,12 +107,12 @@ position = Vector2(80, 83)
 base_path = NodePath("../ChainBase")
 player_path = NodePath("../Player")
 
-[node name="Player" parent="." instance=ExtResource("3_nfab3")]
-position = Vector2(80, 28)
-
 [node name="ChainBase" parent="." instance=ExtResource("5_33amq")]
 position = Vector2(80, 20)
 player_path = NodePath("../Player")
+
+[node name="Player" parent="." instance=ExtResource("3_nfab3")]
+position = Vector2(80, 28)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(80, 72)
@@ -141,6 +142,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_btm2a")
 
+[connection signal="freeze_process" from="GameManager" to="Player" method="freeze"]
 [connection signal="lose_process" from="GameManager" to="Player" method="disable_input"]
 [connection signal="lose_process" from="GameManager" to="CanvasLayer/UICanvas" method="hide_displays"]
 [connection signal="pause" from="GameManager" to="CanvasLayer/UICanvas" method="on_pause"]
@@ -158,10 +160,12 @@ script = ExtResource("9_btm2a")
 [connection signal="screen_wipe" from="MainLevel" to="CanvasLayer/TransitionShader" method="transition"]
 [connection signal="update_camera" from="MainLevel" to="Camera2D" method="update_camera_pos"]
 [connection signal="win_signal" from="WinArea" to="GameManager" method="win"]
+[connection signal="goal_grabbed" from="Player" to="WinArea" method="display_arrow"]
 [connection signal="player_lose" from="Player" to="GameManager" method="lose"]
 [connection signal="set_cam_follow" from="Player" to="Camera2D" method="set_camera_follow"]
 [connection signal="set_display" from="Player" to="CanvasLayer/UICanvas" method="set_displaying"]
 [connection signal="swap_display" from="Player" to="CanvasLayer/UICanvas" method="swap_data_displays"]
-[connection signal="update_coins" from="Player" to="CanvasLayer/UICanvas" method="update_coins"]
+[connection signal="update_depth" from="Player" to="CanvasLayer/UICanvas" method="update_depth"]
 [connection signal="update_health" from="Player" to="CanvasLayer/UICanvas" method="update_health"]
+[connection signal="update_tutorial" from="Player" to="CanvasLayer/UICanvas" method="update_tutorial"]
 [connection signal="change_palette" from="CanvasLayer/TransitionShader" to="CanvasLayer/PaletteShader" method="change_palette"]

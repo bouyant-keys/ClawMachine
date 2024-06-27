@@ -42,11 +42,13 @@ shape = SubResource("RectangleShape2D_olq34")
 [node name="MovingPlatform" parent="." instance=ExtResource("5_vtjwv")]
 position = Vector2(88, 48)
 curve = SubResource("Curve2D_5x65d")
+speed_scale = 0.3
 body_size = Vector2i(16, 16)
 
 [node name="MovingPlatform2" parent="." instance=ExtResource("5_vtjwv")]
 position = Vector2(56, 248)
 curve = SubResource("Curve2D_idbec")
+speed_scale = 0.3
 body_size = Vector2i(16, 16)
 
 [node name="Goal" parent="." instance=ExtResource("4_uurjf")]

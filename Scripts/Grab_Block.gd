@@ -7,13 +7,13 @@ class_name Grab_Block
 @onready var area: Area2D = $Area2D
 
 func on_grab() ->void:
-	print("grabbing object")
+	print("grabbing object: " + name)
 	freeze = true
 	area.hide()
 	hide()
 
 func on_release() ->void:
-	print("releasing object")
+	print("releasing object: " + name)
 	freeze = false
 	area.show()
 	show()
