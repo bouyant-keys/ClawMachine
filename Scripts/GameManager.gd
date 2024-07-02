@@ -30,10 +30,12 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("Pause") && !transitioning: set_pause()
 
 func intro() ->void:
+	emit_signal("freeze_process", true)
 	transitioning = true
+	
 	await transition.fade_in(Vector2.ZERO)
 	transitioning = false
-	emit_signal("start_process")
+	emit_signal("freeze_process", false)
 
 func win() ->void:
 	MainLevel.current_level += 1

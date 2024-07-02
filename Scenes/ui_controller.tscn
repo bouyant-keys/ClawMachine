@@ -1,0 +1,112 @@
+[gd_scene load_steps=6 format=3 uid="uid://caqp2s3n5m7og"]
+
+[ext_resource type="Script" path="res://Scripts/UIController.gd" id="1_xx844"]
+[ext_resource type="Texture2D" uid="uid://ekyx3pxpk572" path="res://Sprites/Chain_Side.png" id="3_1rq8j"]
+[ext_resource type="Texture2D" uid="uid://b8bi0sirjijyg" path="res://Sprites/TileSets/Star_1.png" id="3_o0ox7"]
+[ext_resource type="Script" path="res://Scripts/ControllerKnob.gd" id="4_4ghb5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h1lgf"]
+
+[node name="UIController" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_xx844")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_1rq8j")
+stretch_mode = 1
+
+[node name="LeftPoint" type="Control" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="RightPoint" type="Control" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="CenterPoint" type="Control" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="UpPoint" type="Control" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="DownPoint" type="Control" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Knob" type="Control" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("4_4ghb5")
+
+[node name="KnobSprite" type="TextureRect" parent="TextureRect/Knob"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_o0ox7")
+stretch_mode = 3
+
+[node name="Area2D" type="Area2D" parent="TextureRect/Knob"]
+collision_layer = 16
+collision_mask = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TextureRect/Knob/Area2D"]
+shape = SubResource("CircleShape2D_h1lgf")
+
+[connection signal="h_dir_changed" from="TextureRect/Knob" to="." method="on_h_slider_changed"]
+[connection signal="v_dir_changed" from="TextureRect/Knob" to="." method="on_v_slider_changed"]
+[connection signal="mouse_entered" from="TextureRect/Knob/Area2D" to="TextureRect/Knob" method="mouse_entered"]
+[connection signal="mouse_exited" from="TextureRect/Knob/Area2D" to="TextureRect/Knob" method="mouse_exited"]

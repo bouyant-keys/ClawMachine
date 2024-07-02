@@ -4,11 +4,12 @@ class_name Player
 static var input_enabled := true
 static var retries := 0
 
-const MAX_SPEED := 120.0
-const ACCEL := 40.0
-const DECEL := 40.0
-const VERTICAL_SPEED := 1000.0
-const SPEED_CHANGE := 400.0
+const ACCEL := 15.0
+const DECEL := 60.0
+const MAX_VEL_Y := 600.0
+const MAX_VEL_X := 600.0
+#const VERTICAL_SPEED := 1000.0
+#const SPEED_CHANGE := 400.0
 
 var health := 3
 var grab_obj : Grab_Block
@@ -17,9 +18,13 @@ var hurting := false
 var in_center_screen := false
 var vert_dir := 0.0
 var y_speed := 0.0
-var prev_x_dir : float
 var start_pos : Vector2
-var ghosts := false
+
+var x_dir := 0.0
+var y_dir := 0.0
+var prev_x_dir : float
+var prev_y_dir : float
+
 
 enum PlayerState {IDLE, MOVING}
 
@@ -58,45 +63,14 @@ func _ready():
 func _physics_process(delta):
 	if !input_enabled: return
 	
-	# Horizontal movement works regardless of lowering
-	var x_dir := Input.get_axis("Left", "Right")
-	if x_dir != 0.0:
-		velocity.x += (x_dir * ACCEL) * delta
-		prev_x_dir = x_dir
-	else:
-		if abs(velocity.x) > DECEL * delta:
-			velocity.x -= (prev_x_dir * DECEL) * delta
-		else:
-			velocity.x = 0.0
-	velocity.x = clampf(velocity.x, -MAX_SPEED, MAX_SPEED)
+	var move_dir := Vector2(x_dir * MAX_VEL_X, y_dir * MAX_VEL_Y)
+	velocity = move_dir * delta
 	
-	if !is_on_floor() and current_player_state == PlayerState.MOVING:
-		y_speed = vert_dir * VERTICAL_SPEED
-		var y_dir := Input.get_axis("Up", "Down")
-		# Slow or Increase the lowering speed by pressing Up or Down
-		# Works inversely when claw is moving upwards (up increases speed instead)
-		y_speed += y_dir * SPEED_CHANGE
-		velocity.y = y_speed * delta
+	if tick_anim.is_playing(): tick_anim.speed_scale = abs(y_dir)
 	
 	update_depth.emit(position.y)
-	move_and_slide()
-
-func _process(_delta):
-	if !input_enabled: return
-	
-	if Input.is_action_just_pressed("Swap"):
-		if current_player_state == PlayerState.IDLE: 
-			change_player_state(PlayerState.MOVING)
-			change_lowering_speed(1.0, 1.0)
-			tick_anim.play("tick_loop")
-		else:
-			swap_movement_direction()
-	
-	if Input.is_action_just_pressed("Grab") && !grabbing: grab()
-	elif Input.is_action_just_released("Grab") && grabbing: release()
-	
-	if tick_anim.is_playing(): tick_anim.speed_scale = abs(y_speed / VERTICAL_SPEED)
 	check_screen_pos()
+	move_and_slide()
 
 func check_screen_pos() ->void:
 	var screen_y := get_global_transform_with_canvas().get_origin().y
@@ -111,25 +85,31 @@ func check_screen_pos() ->void:
 		#print("activating display - " + str(screen_pos.y))
 		in_center_screen = true
 
-func swap_movement_direction() ->void:
-	vert_dir *= -1.0
-	up_direction *= -1.0
-	emit_signal("swap_display", vert_dir > 0.0)
+func update_v_movement(dir:float) ->void:
+	y_dir = (2.0 * dir) - 1.0 # Converting 0<->1 value to -1<->1
 
-func change_lowering_speed(new_vel:float, time:float) ->void:
-	if vert_dir == new_vel: return
-	
-	var vert_vel_tween := get_tree().create_tween()
-	vert_vel_tween.tween_method(set_v_velocity, vert_dir, new_vel, time)
+func update_h_movement(dir:float) ->void:
+	x_dir = (2.0 * dir) - 1.0 # Converting 0<->1 value to -1<->1
 
-func set_v_velocity(value:float) ->void:
-	vert_dir = value
-	tick_anim.speed_scale = 1.0 - (abs(value) * 0.2)
-
-func change_player_state(new_state:PlayerState):
-	if current_player_state == new_state: return
-	
-	current_player_state = new_state
+#func swap_movement_direction() ->void:
+	#vert_dir *= -1.0
+	#up_direction *= -1.0
+	#emit_signal("swap_display", vert_dir > 0.0)
+#
+#func change_lowering_speed(new_vel:float, time:float) ->void:
+	#if vert_dir == new_vel: return
+	#
+	#var vert_vel_tween := get_tree().create_tween()
+	#vert_vel_tween.tween_method(set_v_velocity, vert_dir, new_vel, time)
+#
+#func set_v_velocity(value:float) ->void:
+	#vert_dir = value
+	#tick_anim.speed_scale = 1.0 - (abs(value) * 0.2)
+#
+#func change_player_state(new_state:PlayerState):
+	#if current_player_state == new_state: return
+	#
+	#current_player_state = new_state
 
 func on_hit() ->void:
 	health -= 1
@@ -143,6 +123,9 @@ func on_hit() ->void:
 		player_lose.emit()
 
 # Grab / Release Functions
+func on_grab_pressed() ->void:
+	if !grabbing: grab()
+	else: release()
 
 func grab() ->void:
 	if !grab_obj:
@@ -153,7 +136,7 @@ func grab() ->void:
 	if grab_obj.block_data.obj_action == BlockData.Object_Action.WIN:
 		goal_grabbed.emit(true)
 	
-	swap_movement_direction()
+	#swap_movement_direction()
 	grabbing = true
 	grab_obj.on_grab()
 	remote_trans.remote_path = grab_obj.get_path()
@@ -165,7 +148,7 @@ func release() ->void:
 	if grab_obj.block_data.obj_action == BlockData.Object_Action.WIN:
 		goal_grabbed.emit(false)
 	
-	swap_movement_direction()
+	#swap_movement_direction()
 	grabbing = false
 	grab_obj.on_release()
 	remote_trans.remote_path = ""
@@ -185,11 +168,6 @@ func on_invincible_timeout() ->void:
 func on_idle_timeout() ->void:
 	set_display.emit(true)
 	update_tutorial.emit("Start (SPACE)")
-
-#func on_ghost_timeout() -> void:
-	#var ghost_instance := ghost_sprite.instantiate()
-	#ghost_instance.position = self.position
-	#ghost_parent.add_child(ghost_instance)
 
 # Area Functions
 
@@ -240,11 +218,13 @@ func disable_input() ->void:
 
 func reset() ->void:
 	if grabbing: release()
-	change_player_state(PlayerState.IDLE)
+	#change_player_state(PlayerState.IDLE)
+	y_dir = 0.0
+	x_dir = 0.0
 	grab_sprite.texture = null
 	claw_sprite.play("Open")
-	vert_dir = 0.0
-	up_direction = Vector2(0.0, -1.0)
+	#vert_dir = 0.0
+	#up_direction = Vector2(0.0, -1.0)
 	velocity = Vector2.ZERO
 	position = start_pos
 

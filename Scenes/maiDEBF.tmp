@@ -166,6 +166,3 @@ script = ExtResource("9_btm2a")
 [connection signal="update_health" from="Player" to="CanvasLayer/UICanvas" method="update_health"]
 [connection signal="update_tutorial" from="Player" to="CanvasLayer/UICanvas" method="update_tutorial"]
 [connection signal="change_palette" from="CanvasLayer/TransitionShader" to="CanvasLayer/PaletteShader" method="change_palette"]
-[connection signal="grab_pressed" from="CanvasLayer/UIController" to="Player" method="on_grab_pressed"]
-[connection signal="h_speed_changed" from="CanvasLayer/UIController" to="Player" method="update_h_movement"]
-[connection signal="v_speed_changed" from="CanvasLayer/UIController" to="Player" method="update_v_movement"]

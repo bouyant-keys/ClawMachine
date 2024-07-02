@@ -38,7 +38,7 @@ func update_health(value:float) ->void:
 	bottom_bar.update_health(value)
 
 func update_depth(value:float) ->void:
-	var temp : int = roundi(value / 100.0)
+	var temp : int = roundi(value / 20.0)
 	top_bar.update_health(temp)
 	bottom_bar.update_health(temp)
 
