@@ -9,11 +9,12 @@ static var total_time := 0 # value in miliseconds
 var transitioning := false
 var paused := false
 
+#@onready var main_level: MainLevel = $"../MainLevel"
 @onready var transition: Transition_Shader = $"../CanvasLayer/TransitionShader"
 
-signal start_process
-signal win_process
-signal lose_process
+#signal start_process
+#signal win_process
+#signal lose_process
 signal reset_process
 signal freeze_process(bool)
 signal pause
@@ -35,7 +36,8 @@ func intro() ->void:
 	emit_signal("start_process")
 
 func win() ->void:
-	emit_signal("win_process")
+	MainLevel.current_level += 1
+	emit_signal("freeze_process", true)
 	transitioning = true
 	
 	await transition.fade_out(Vector2.ZERO)
@@ -45,10 +47,10 @@ func win() ->void:
 	
 	await transition.fade_in(Vector2.ZERO)
 	transitioning = false
-	emit_signal("start_process")
+	emit_signal("freeze_process", false)
 
 func lose() ->void:
-	emit_signal("lose_process")
+	emit_signal("freeze_process", true)
 	transitioning = true
 	
 	await transition.fade_out(Vector2.ZERO)
@@ -56,14 +58,14 @@ func lose() ->void:
 	
 	await transition.fade_in(Vector2.ZERO)
 	transitioning = false
-	emit_signal("start_process")
+	emit_signal("freeze_process", false)
 
-func change_floor(floor:int, dir:Vector2) ->void:
+func change_floor(new_floor:int, dir:Vector2) ->void:
 	emit_signal("freeze_process", true)
 	transitioning = true
 	
 	await transition.fade_out(dir)
-	emit_signal("update_camera", Vector2(80.0, 72.0 + (144.0 * floor)))
+	emit_signal("update_camera", Vector2(80.0, 72.0 + (144.0 * new_floor)))
 	
 	await transition.fade_in(dir)
 	emit_signal("freeze_process", false)

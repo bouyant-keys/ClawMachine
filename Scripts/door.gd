@@ -19,10 +19,10 @@ func open() ->void:
 func close() ->void:
 	set_door_state(false)
 
-func set_door_state(open:bool) ->void:
-	if open == is_open: return
+func set_door_state(set_open:bool) ->void:
+	if set_open == is_open: return
 	
-	is_open = open
+	is_open = set_open
 	if is_open: 
 		sprite.play("Opening")
 		await sprite.animation_finished

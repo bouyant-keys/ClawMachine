@@ -41,11 +41,12 @@ enum PlayerState {IDLE, MOVING}
 
 signal player_lose
 signal update_health(int)
-signal update_depth(int)
+signal update_depth(float)
 signal update_tutorial(String)
 signal set_display(active:bool)
 signal swap_display(set_top:bool)
 signal set_cam_follow(bool)
+signal cam_shake
 signal goal_grabbed(bool)
 
 
@@ -77,6 +78,7 @@ func _physics_process(delta):
 		y_speed += y_dir * SPEED_CHANGE
 		velocity.y = y_speed * delta
 	
+	update_depth.emit(position.y)
 	move_and_slide()
 
 func _process(_delta):
@@ -93,7 +95,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Grab") && !grabbing: grab()
 	elif Input.is_action_just_released("Grab") && grabbing: release()
 	
-	tick_anim.speed_scale = abs(y_speed / VERTICAL_SPEED)
+	if tick_anim.is_playing(): tick_anim.speed_scale = abs(y_speed / VERTICAL_SPEED)
 	check_screen_pos()
 
 func check_screen_pos() ->void:
@@ -207,12 +209,13 @@ func on_grab_area_exited(area:Area2D) ->void:
 		grab_obj = null
 		emit_signal("update_tutorial", "")
 
-func on_hurt_area_entered(body:Node2D) ->void:
+func on_hurt_area_entered(_body:Node2D) ->void:
 	if !hurting:
 		hurting = true
 		on_hit()
+	print("Hurting: " + str(hurting))
 
-func on_hurt_area_exited(body:Node2D) ->void:
+func on_hurt_area_exited(_body:Node2D) ->void:
 	if hurt_area.get_overlapping_areas().size() == 0: hurting = false
 	print("Hurting: " + str(hurting))
 
@@ -224,7 +227,10 @@ func freeze(frozen:bool) ->void:
 		tick_anim.stop()
 	else:
 		input_enabled = true
-		tick_anim.play("tick_loop")
+		if current_player_state == PlayerState.MOVING:
+			tick_anim.play("tick_loop")
+	
+	print(tick_anim.is_playing())
 
 func enable_input() ->void:
 	input_enabled = true

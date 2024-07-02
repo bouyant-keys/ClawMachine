@@ -37,16 +37,17 @@ func update_health(value:float) ->void:
 	top_bar.update_health(value)
 	bottom_bar.update_health(value)
 
-func update_depth(value:int) ->void:
-	top_bar.update_health(str(value))
-	bottom_bar.update_health(str(value))
+func update_depth(value:float) ->void:
+	var temp : int = roundi(value / 100.0)
+	top_bar.update_health(temp)
+	bottom_bar.update_health(temp)
 
 func update_tutorial(text:String) ->void:
 	top_bar.update_tutorial(text)
 	bottom_bar.update_tutorial(text)
 
-func enable_arrows(top:bool) ->void:
-	if top: 
+func enable_arrows(top_arrows:bool) ->void:
+	if top_arrows: 
 		t_arrows.show()
 		b_arrows.hide()
 	else:

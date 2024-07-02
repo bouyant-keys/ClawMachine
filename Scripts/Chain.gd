@@ -9,7 +9,7 @@ var start_point_pos : Array[Vector2]
 @onready var chain_base : Node2D = get_node(base_path)
 @onready var player : CharacterBody2D = get_node(player_path)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	#if !player.input_enabled: return
 	
 	# Simple adapting line by me :)

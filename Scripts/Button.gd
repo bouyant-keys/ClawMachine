@@ -18,8 +18,8 @@ func press_button(active:bool) ->void:
 		anim.play("Releasing")
 		on_release.emit()
 
-func on_area_entered(area:Area2D) ->void:
+func on_area_entered(_area:Area2D) ->void:
 	press_button(true)
 
-func on_area_exited(area:Area2D) ->void:
+func on_area_exited(_area:Area2D) ->void:
 	press_button(false)

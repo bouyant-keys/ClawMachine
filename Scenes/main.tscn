@@ -98,7 +98,6 @@ bus = &"Music"
 
 [node name="MainLevel" parent="." instance=ExtResource("1_bu0eb")]
 gm_path = NodePath("../GameManager")
-start_level = 2
 
 [node name="WinArea" parent="." instance=ExtResource("4_giia6")]
 position = Vector2(80, 83)
@@ -143,23 +142,18 @@ mouse_filter = 2
 script = ExtResource("9_btm2a")
 
 [connection signal="freeze_process" from="GameManager" to="Player" method="freeze"]
-[connection signal="lose_process" from="GameManager" to="Player" method="disable_input"]
-[connection signal="lose_process" from="GameManager" to="CanvasLayer/UICanvas" method="hide_displays"]
 [connection signal="pause" from="GameManager" to="CanvasLayer/UICanvas" method="on_pause"]
 [connection signal="reset_process" from="GameManager" to="MainLevel" method="load_level"]
 [connection signal="reset_process" from="GameManager" to="Chain" method="reset_chain"]
 [connection signal="reset_process" from="GameManager" to="Player" method="reset"]
 [connection signal="reset_process" from="GameManager" to="Camera2D" method="reset_camera"]
 [connection signal="reset_process" from="GameManager" to="CanvasLayer/UICanvas" method="reset"]
-[connection signal="start_process" from="GameManager" to="Player" method="enable_input"]
 [connection signal="unpause" from="GameManager" to="CanvasLayer/UICanvas" method="on_unpause"]
 [connection signal="update_camera" from="GameManager" to="Camera2D" method="update_camera_pos"]
-[connection signal="win_process" from="GameManager" to="MainLevel" method="on_win"]
-[connection signal="win_process" from="GameManager" to="Player" method="disable_input"]
-[connection signal="win_process" from="GameManager" to="CanvasLayer/UICanvas" method="hide_displays"]
 [connection signal="screen_wipe" from="MainLevel" to="CanvasLayer/TransitionShader" method="transition"]
 [connection signal="update_camera" from="MainLevel" to="Camera2D" method="update_camera_pos"]
 [connection signal="win_signal" from="WinArea" to="GameManager" method="win"]
+[connection signal="cam_shake" from="Player" to="Camera2D" method="camera_shake"]
 [connection signal="goal_grabbed" from="Player" to="WinArea" method="display_arrow"]
 [connection signal="player_lose" from="Player" to="GameManager" method="lose"]
 [connection signal="set_cam_follow" from="Player" to="Camera2D" method="set_camera_follow"]

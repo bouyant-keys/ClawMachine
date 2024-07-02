@@ -3,6 +3,7 @@ extends Area2D
 signal win_signal
 
 @onready var arrow: Sprite2D = $ArrowSprite
+@onready var stars: GPUParticles2D = $StarParticles
 
 func on_area_entered(body:Node2D) ->void:
 	if win_signal.get_connections().size() == 0: 
@@ -24,3 +25,4 @@ func on_area_entered(body:Node2D) ->void:
 
 func display_arrow(active:bool) ->void:
 	arrow.visible = active
+	stars.emitting = active

@@ -42,5 +42,5 @@ func load_level() ->void:
 	level_container.add_child(new_level)
 	#emit_signal("new_level", current_level)
 
-func on_win() ->void:
-	current_level += 1
+#func on_win() ->void:
+	#current_level += 1

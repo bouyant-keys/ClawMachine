@@ -8,7 +8,7 @@ var following := false
 @onready var player : Player = get_node(player_path)
 @onready var cam_anim: AnimationPlayer = $CamAnim
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !following: return
 	
 	position.y = player.position.y
@@ -20,7 +20,7 @@ func _input(event: InputEvent) -> void:
 
 func set_camera_follow(active:bool) ->void:
 	following = active
-	print("Camera following: " + str(active))
+	#print("Camera following: " + str(active))
 
 func update_camera_pos(new_pos:Vector2) ->void:
 	position = new_pos
