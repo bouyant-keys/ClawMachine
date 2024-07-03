@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1koeytaanf25"
-path="res://.godot/imported/cloud.png-f8c227979852edeaf9c5c33caa7e7e1f.ctex"
+uid="uid://dqhdur20rp8f6"
+path="res://.godot/imported/DepthMeter_Fill.png-531f888a184b610b99fca84b45c5a873.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/cloud.png"
-dest_files=["res://.godot/imported/cloud.png-f8c227979852edeaf9c5c33caa7e7e1f.ctex"]
+source_file="res://Sprites/UI/DepthMeter_Fill.png"
+dest_files=["res://.godot/imported/DepthMeter_Fill.png-531f888a184b610b99fca84b45c5a873.ctex"]
 
 [params]
 

@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://Scripts/UIController.gd" id="1_xx844"]
 [ext_resource type="Texture2D" uid="uid://ekyx3pxpk572" path="res://Sprites/Chain_Side.png" id="3_1rq8j"]
-[ext_resource type="Texture2D" uid="uid://b8bi0sirjijyg" path="res://Sprites/TileSets/Star_1.png" id="3_o0ox7"]
 [ext_resource type="Script" path="res://Scripts/ControllerKnob.gd" id="4_4ghb5"]
+[ext_resource type="Texture2D" uid="uid://drj2lq0wsin3i" path="res://Sprites/UI/hp_unit.png" id="4_iocb2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h1lgf"]
 
@@ -95,7 +95,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_o0ox7")
+texture = ExtResource("4_iocb2")
 stretch_mode = 3
 
 [node name="Area2D" type="Area2D" parent="TextureRect/Knob"]
