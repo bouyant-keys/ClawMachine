@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://uj8cf506ml5v"]
 
 [ext_resource type="Script" path="res://Scripts/ChainBase.gd" id="1_spxkt"]
-[ext_resource type="Texture2D" uid="uid://bhvb807ls8eta" path="res://Sprites/ChainBase.png" id="2_vpma6"]
+[ext_resource type="Texture2D" uid="uid://bkegnoj1x466w" path="res://Sprites/ChainBase_2.png" id="2_pmuf0"]
 
 [sub_resource type="Curve" id="Curve_tmhpv"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.16544, 0.0, 0, 0]
@@ -35,4 +35,4 @@ interpolate = false
 fract_delta = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_vpma6")
+texture = ExtResource("2_pmuf0")

@@ -15,7 +15,7 @@ var current_floor := 0
 
 signal screen_wipe(Vector2)
 signal update_camera(Vector2)
-#signal new_level(int)
+signal goal_position(Node2D)
 
 func _ready() -> void:
 	current_level = start_level
@@ -40,6 +40,15 @@ func load_level() ->void:
 	
 	var new_level = level_list.levels[current_level].instantiate() as Node
 	level_container.add_child(new_level)
+	
+	for child : int in new_level.get_child_count():
+		var current_child := new_level.get_child(child)
+		if current_child.get_groups().size() == 0: continue
+		
+		for group in current_child.get_groups():
+			if group != "Goal": continue
+			
+		goal_position.emit(current_child)
 	#emit_signal("new_level", current_level)
 
 #func on_win() ->void:

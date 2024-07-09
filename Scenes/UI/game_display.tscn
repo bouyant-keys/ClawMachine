@@ -1,0 +1,126 @@
+[gd_scene load_steps=11 format=3 uid="uid://x43hhp23efsb"]
+
+[ext_resource type="Script" path="res://Scripts/UI/game_display.gd" id="1_6nmy3"]
+[ext_resource type="Texture2D" uid="uid://niphjphwcyjk" path="res://Sprites/UI/DepthMeter_BG.png" id="1_hpgv5"]
+[ext_resource type="Texture2D" uid="uid://dj07thm1geu7a" path="res://Sprites/UI/DepthMeter_Frame.png" id="2_l58c0"]
+[ext_resource type="Texture2D" uid="uid://dqhdur20rp8f6" path="res://Sprites/UI/DepthMeter_Fill.png" id="3_ormxu"]
+[ext_resource type="Texture2D" uid="uid://oslgl4aatmiu" path="res://Sprites/DirectionArrows_1.png" id="4_2cm5w"]
+[ext_resource type="Script" path="res://Scripts/UI/DepthMeter.gd" id="5_73m1k"]
+[ext_resource type="Texture2D" uid="uid://b6kgf0ceu77vw" path="res://Sprites/DirectionArrows_2.png" id="5_ii1xm"]
+
+[sub_resource type="Animation" id="Animation_d8kh8"]
+resource_name = "ArrowBlink"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BottomArrows:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("4_2cm5w"), ExtResource("5_ii1xm")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TopArrows:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("4_2cm5w"), ExtResource("5_ii1xm")]
+}
+
+[sub_resource type="Animation" id="Animation_j3n4n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BottomArrows:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_2cm5w")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TopArrows:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_2cm5w")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qnd3h"]
+_data = {
+"ArrowBlink": SubResource("Animation_d8kh8"),
+"RESET": SubResource("Animation_j3n4n")
+}
+
+[node name="GameDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6nmy3")
+
+[node name="DepthMeter" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -56.0
+offset_bottom = 56.0
+grow_horizontal = 0
+grow_vertical = 2
+max_value = 1.0
+step = 0.01
+fill_mode = 2
+texture_under = ExtResource("1_hpgv5")
+texture_over = ExtResource("2_l58c0")
+texture_progress = ExtResource("3_ormxu")
+script = ExtResource("5_73m1k")
+
+[node name="TopArrows" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+texture = ExtResource("4_2cm5w")
+stretch_mode = 3
+flip_v = true
+
+[node name="BottomArrows" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("4_2cm5w")
+stretch_mode = 3
+
+[node name="DisplayAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qnd3h")
+}

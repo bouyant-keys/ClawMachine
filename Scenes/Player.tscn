@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ch4wglb7cfc7"]
+[gd_scene load_steps=16 format=3 uid="uid://ch4wglb7cfc7"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_kn0tk"]
 [ext_resource type="Texture2D" uid="uid://22qcxjft1nwm" path="res://Sprites/Blocks/GoalCapsule.png" id="2_56148"]
@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://brrq0m2xrngja" path="res://Sprites/ClawOpen_Swap.png" id="3_ld5u5"]
 [ext_resource type="AudioStream" uid="uid://f7dku23xcf24" path="res://Audio/Effects/Grab.wav" id="5_8y0ge"]
 [ext_resource type="AudioStream" uid="uid://dg7civ3l4w3j7" path="res://Audio/Effects/EmptyGrab.wav" id="6_17la2"]
-[ext_resource type="AudioStream" uid="uid://ds84v42p7lecc" path="res://Audio/Effects/VertTick_2.wav" id="7_thy5k"]
+[ext_resource type="AudioStream" uid="uid://clkbu4g6yctyc" path="res://Audio/Effects/ChainMove_Loop.wav" id="7_b66oh"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xm8gq"]
 animations = [{
@@ -61,6 +61,32 @@ tracks/0/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ClawSprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_ieh2g"]
+resource_name = "bump"
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClawSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, -0.10472, -0.1, 0, 0.1, 0, 0.10472, -0.1, 0, 0.1, 0, -0.08, -0.1, 0, 0.1, 0, 0, -0.1, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.65, 1)
+}
 
 [sub_resource type="Animation" id="Animation_patul"]
 resource_name = "invincible"
@@ -81,37 +107,8 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ypmtt"]
 _data = {
 "RESET": SubResource("Animation_10qqr"),
+"bump": SubResource("Animation_ieh2g"),
 "invincible": SubResource("Animation_patul")
-}
-
-[sub_resource type="Animation" id="Animation_o6bnx"]
-length = 0.001
-
-[sub_resource type="Animation" id="Animation_uvhhd"]
-resource_name = "tick_loop"
-length = 0.3
-loop_mode = 1
-step = 0.05
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("VertTick_SFX")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("7_thy5k")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/0/use_blend = true
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_0hcoi"]
-_data = {
-"RESET": SubResource("Animation_o6bnx"),
-"tick_loop": SubResource("Animation_uvhhd")
 }
 
 [node name="Player" type="CharacterBody2D"]
@@ -123,11 +120,11 @@ position = Vector2(0, 12)
 texture = ExtResource("2_56148")
 
 [node name="ClawSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 7)
 sprite_frames = SubResource("SpriteFrames_xm8gq")
 animation = &"EmptyGrab"
 frame = 1
 frame_progress = 1.0
+offset = Vector2(0, 8)
 
 [node name="CenterCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
@@ -156,10 +153,6 @@ debug_color = Color(0.726223, 3.41728e-06, 5.77569e-07, 0.419608)
 [node name="InvincibleTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="IdleTimer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-
 [node name="Grab_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_8y0ge")
 bus = &"SFX"
@@ -168,10 +161,13 @@ bus = &"SFX"
 stream = ExtResource("6_17la2")
 bus = &"SFX"
 
-[node name="VertTick_SFX" type="AudioStreamPlayer" parent="."]
+[node name="Bump_SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_17la2")
 bus = &"SFX"
 
-[node name="HorizTick_SFX" type="AudioStreamPlayer" parent="."]
+[node name="Move_SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_b66oh")
+volume_db = -12.0
 bus = &"SFX"
 
 [node name="player_anim" type="AnimationPlayer" parent="."]
@@ -179,14 +175,8 @@ libraries = {
 "": SubResource("AnimationLibrary_ypmtt")
 }
 
-[node name="tick_anim" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_0hcoi")
-}
-
 [connection signal="area_entered" from="GrabArea" to="." method="on_grab_area_entered"]
 [connection signal="area_exited" from="GrabArea" to="." method="on_grab_area_exited"]
 [connection signal="body_entered" from="HurtArea" to="." method="on_hurt_area_entered"]
 [connection signal="body_exited" from="HurtArea" to="." method="on_hurt_area_exited"]
 [connection signal="timeout" from="InvincibleTimer" to="." method="on_invincible_timeout"]
-[connection signal="timeout" from="IdleTimer" to="." method="on_idle_timeout"]

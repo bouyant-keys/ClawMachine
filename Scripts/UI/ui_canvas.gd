@@ -62,15 +62,7 @@ func disable_arrows() ->void:
 	t_arrows.hide()
 	b_arrows.hide()
 
-func on_pause() ->void:
-	print("pausing")
-	pause_menu.show()
-	pause_anim.play("paused_anim")
 
-func on_unpause() ->void:
-	print("unpausing")
-	hud_menu.show()
-	pause_menu.hide()
 
 func reset() ->void:
 	swap_data_displays(true)

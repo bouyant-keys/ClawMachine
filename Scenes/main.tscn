@@ -1,19 +1,38 @@
-[gd_scene load_steps=21 format=3 uid="uid://b3d7gawmwn128"]
+[gd_scene load_steps=27 format=3 uid="uid://b3d7gawmwn128"]
 
 [ext_resource type="PackedScene" uid="uid://006i5i72bun1" path="res://Scenes/main_level.tscn" id="1_bu0eb"]
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_ryie0"]
 [ext_resource type="Script" path="res://Scripts/MusicManager.gd" id="2_w01u1"]
+[ext_resource type="AudioStream" uid="uid://cq5tj2wf5j7nl" path="res://Audio/Music/Blippy Trance.mp3" id="3_lp5p5"]
 [ext_resource type="PackedScene" uid="uid://ch4wglb7cfc7" path="res://Scenes/Player.tscn" id="3_nfab3"]
-[ext_resource type="PackedScene" uid="uid://cjimp4jwk24co" path="res://Scenes/ui_canvas.tscn" id="4_0rokx"]
 [ext_resource type="PackedScene" uid="uid://c1q3hty38mbi2" path="res://Scenes/Triggers/win_area.tscn" id="4_giia6"]
 [ext_resource type="PackedScene" uid="uid://ovd4lsqu07bh" path="res://Scenes/chain.tscn" id="4_pdtj6"]
 [ext_resource type="PackedScene" uid="uid://uj8cf506ml5v" path="res://Scenes/chain_base.tscn" id="5_33amq"]
 [ext_resource type="Script" path="res://Scripts/MainCamera.gd" id="5_kpbsb"]
 [ext_resource type="PackedScene" uid="uid://dpg5ed8ojadqn" path="res://Scenes/transition_shader.tscn" id="6_x3bfk"]
 [ext_resource type="Shader" path="res://Materials/SetColorPalette.gdshader" id="7_4qc8k"]
+[ext_resource type="Script" path="res://Scripts/BumpParticles.gd" id="7_eg0vb"]
 [ext_resource type="Texture2D" uid="uid://b8ckqp3m8in1g" path="res://Sprites/palettes_flip.png" id="8_6gf24"]
 [ext_resource type="Script" path="res://Scripts/Shader_Palette.gd" id="9_btm2a"]
+[ext_resource type="PackedScene" uid="uid://x43hhp23efsb" path="res://Scenes/UI/game_display.tscn" id="11_qti71"]
+[ext_resource type="PackedScene" uid="uid://gvsaqucmvlmu" path="res://Scenes/UI/pause_display.tscn" id="12_85uhn"]
 [ext_resource type="PackedScene" uid="uid://caqp2s3n5m7og" path="res://Scenes/ui_controller.tscn" id="14_8al8u"]
+
+[sub_resource type="Curve" id="Curve_npoln"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.82692, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_jur8o"]
+curve = SubResource("Curve_npoln")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c4cu5"]
+particle_flag_disable_z = true
+radial_velocity_min = 15.0
+radial_velocity_max = 30.0
+gravity = Vector3(0, 50, 0)
+scale_min = 2.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_jur8o")
 
 [sub_resource type="Animation" id="Animation_kquip"]
 length = 0.001
@@ -95,6 +114,8 @@ script = ExtResource("1_ryie0")
 script = ExtResource("2_w01u1")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="MusicManager"]
+stream = ExtResource("3_lp5p5")
+volume_db = -12.0
 bus = &"Music"
 
 [node name="MainLevel" parent="." instance=ExtResource("1_bu0eb")]
@@ -110,6 +131,13 @@ player_path = NodePath("../Player")
 [node name="ChainBase" parent="." instance=ExtResource("5_33amq")]
 position = Vector2(80, 20)
 player_path = NodePath("../Player")
+
+[node name="BumpParticles" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_c4cu5")
+one_shot = true
+explosiveness = 1.0
+script = ExtResource("7_eg0vb")
 
 [node name="Player" parent="." instance=ExtResource("3_nfab3")]
 position = Vector2(80, 28)
@@ -127,7 +155,11 @@ libraries = {
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="UICanvas" parent="CanvasLayer" instance=ExtResource("4_0rokx")]
+[node name="GameDisplay" parent="CanvasLayer" instance=ExtResource("11_qti71")]
+
+[node name="PauseDisplay" parent="CanvasLayer" instance=ExtResource("12_85uhn")]
+
+[node name="UIController" parent="CanvasLayer" instance=ExtResource("14_8al8u")]
 
 [node name="TransitionShader" parent="CanvasLayer" instance=ExtResource("6_x3bfk")]
 
@@ -142,17 +174,16 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_btm2a")
 
-[node name="UIController" parent="CanvasLayer" instance=ExtResource("14_8al8u")]
-
 [connection signal="freeze_process" from="GameManager" to="Player" method="freeze"]
-[connection signal="pause" from="GameManager" to="CanvasLayer/UICanvas" method="on_pause"]
+[connection signal="pause" from="GameManager" to="CanvasLayer/PauseDisplay" method="on_pause"]
 [connection signal="reset_process" from="GameManager" to="MainLevel" method="load_level"]
 [connection signal="reset_process" from="GameManager" to="Chain" method="reset_chain"]
 [connection signal="reset_process" from="GameManager" to="Player" method="reset"]
 [connection signal="reset_process" from="GameManager" to="Camera2D" method="reset_camera"]
-[connection signal="reset_process" from="GameManager" to="CanvasLayer/UICanvas" method="reset"]
-[connection signal="unpause" from="GameManager" to="CanvasLayer/UICanvas" method="on_unpause"]
+[connection signal="reset_process" from="GameManager" to="CanvasLayer/GameDisplay" method="reset"]
+[connection signal="unpause" from="GameManager" to="CanvasLayer/PauseDisplay" method="on_unpause"]
 [connection signal="update_camera" from="GameManager" to="Camera2D" method="update_camera_pos"]
+[connection signal="goal_position" from="MainLevel" to="Player" method="set_goal"]
 [connection signal="screen_wipe" from="MainLevel" to="CanvasLayer/TransitionShader" method="transition"]
 [connection signal="update_camera" from="MainLevel" to="Camera2D" method="update_camera_pos"]
 [connection signal="win_signal" from="WinArea" to="GameManager" method="win"]
@@ -160,12 +191,11 @@ script = ExtResource("9_btm2a")
 [connection signal="goal_grabbed" from="Player" to="WinArea" method="display_arrow"]
 [connection signal="player_lose" from="Player" to="GameManager" method="lose"]
 [connection signal="set_cam_follow" from="Player" to="Camera2D" method="set_camera_follow"]
-[connection signal="set_display" from="Player" to="CanvasLayer/UICanvas" method="set_displaying"]
-[connection signal="swap_display" from="Player" to="CanvasLayer/UICanvas" method="swap_data_displays"]
-[connection signal="update_depth" from="Player" to="CanvasLayer/UICanvas" method="update_depth"]
-[connection signal="update_health" from="Player" to="CanvasLayer/UICanvas" method="update_health"]
-[connection signal="update_tutorial" from="Player" to="CanvasLayer/UICanvas" method="update_tutorial"]
-[connection signal="change_palette" from="CanvasLayer/TransitionShader" to="CanvasLayer/PaletteShader" method="change_palette"]
+[connection signal="update_depth" from="Player" to="CanvasLayer/GameDisplay" method="update_depth"]
+[connection signal="update_health" from="Player" to="CanvasLayer/GameDisplay" method="update_health"]
+[connection signal="wall_bumped" from="Player" to="BumpParticles" method="on_bump"]
 [connection signal="grab_pressed" from="CanvasLayer/UIController" to="Player" method="on_grab_pressed"]
 [connection signal="h_speed_changed" from="CanvasLayer/UIController" to="Player" method="update_h_movement"]
+[connection signal="pause_pressed" from="CanvasLayer/UIController" to="GameManager" method="set_pause"]
 [connection signal="v_speed_changed" from="CanvasLayer/UIController" to="Player" method="update_v_movement"]
+[connection signal="change_palette" from="CanvasLayer/TransitionShader" to="CanvasLayer/PaletteShader" method="change_palette"]

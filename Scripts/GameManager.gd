@@ -12,9 +12,6 @@ var paused := false
 #@onready var main_level: MainLevel = $"../MainLevel"
 @onready var transition: Transition_Shader = $"../CanvasLayer/TransitionShader"
 
-#signal start_process
-#signal win_process
-#signal lose_process
 signal reset_process
 signal freeze_process(bool)
 signal pause

@@ -17,7 +17,7 @@ height = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_8q57j"]
 radius = 8.0
 
-[node name="Goal" type="RigidBody2D"]
+[node name="Goal" type="RigidBody2D" groups=["Goal"]]
 collision_layer = 2
 script = ExtResource("3_u2r7o")
 block_data = SubResource("Resource_yvpi3")

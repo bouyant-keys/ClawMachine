@@ -1,11 +1,58 @@
-[gd_scene load_steps=6 format=3 uid="uid://caqp2s3n5m7og"]
+[gd_scene load_steps=21 format=3 uid="uid://caqp2s3n5m7og"]
 
 [ext_resource type="Script" path="res://Scripts/UIController.gd" id="1_xx844"]
-[ext_resource type="Texture2D" uid="uid://ekyx3pxpk572" path="res://Sprites/Chain_Side.png" id="3_1rq8j"]
+[ext_resource type="Texture2D" uid="uid://7m8jcppj3qxf" path="res://Sprites/UI/UI_Bar.png" id="2_dg3mu"]
+[ext_resource type="Texture2D" uid="uid://4418kp8ve5dl" path="res://Sprites/UI/Controller_Bar.png" id="2_smda5"]
 [ext_resource type="Script" path="res://Scripts/ControllerKnob.gd" id="4_4ghb5"]
-[ext_resource type="Texture2D" uid="uid://drj2lq0wsin3i" path="res://Sprites/UI/hp_unit.png" id="4_iocb2"]
+[ext_resource type="Texture2D" uid="uid://t512tddbjekv" path="res://Sprites/UI/hpoff_unit.png" id="4_mgobu"]
+[ext_resource type="AudioStream" uid="uid://cs2535saxrxko" path="res://Audio/Effects/vClick.wav" id="5_wvpgk"]
+[ext_resource type="AudioStream" uid="uid://dr0jrb63pe81o" path="res://Audio/Effects/hClick.wav" id="6_e5b5s"]
+[ext_resource type="Script" path="res://Scripts/UI/TexButton.gd" id="8_5avfk"]
+[ext_resource type="Texture2D" uid="uid://dl0bhdebrb7lg" path="res://Sprites/UI/GrabButton.png" id="8_ddaej"]
+[ext_resource type="Texture2D" uid="uid://dhesxsyiv0sx0" path="res://Sprites/UI/DropButton.png" id="9_tvu8m"]
+[ext_resource type="Texture2D" uid="uid://dgpocy10jhlnd" path="res://Sprites/UI/GrabButton_Press.png" id="10_nmjlf"]
+[ext_resource type="Texture2D" uid="uid://bwvn7if86ypng" path="res://Sprites/UI/DropButton_Press.png" id="11_no82r"]
+[ext_resource type="Texture2D" uid="uid://crwh0byps6dr6" path="res://Sprites/UI/PauseButton.png" id="13_risul"]
+[ext_resource type="Texture2D" uid="uid://8ecd75ndi1ic" path="res://Sprites/UI/PauseButton_Press.png" id="14_jssxh"]
+[ext_resource type="Texture2D" uid="uid://dyebnlvtlkauh" path="res://Sprites/UI/ResumeButton.png" id="15_qvrwc"]
+[ext_resource type="Texture2D" uid="uid://ilnbhogat2uy" path="res://Sprites/UI/ResumeButton_press.png" id="16_ns2xl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h1lgf"]
+
+[sub_resource type="Animation" id="Animation_ytuma"]
+resource_name = "RevealControls"
+length = 1.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ControllerBG:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(148, 0, 0, 0, -14.7211, 127, -0.6, -3.92211, 0, 0),
+"times": PackedFloat32Array(0, 1.5)
+}
+
+[sub_resource type="Animation" id="Animation_oue7b"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ControllerBG:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(148, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pvgcd"]
+_data = {
+"RESET": SubResource("Animation_oue7b"),
+"RevealControls": SubResource("Animation_ytuma")
+}
 
 [node name="UIController" type="Control"]
 layout_mode = 3
@@ -17,31 +64,47 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_xx844")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="ControllerBG" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 4.0
+offset_bottom = 36.0001
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("3_1rq8j")
-stretch_mode = 1
+texture = ExtResource("2_dg3mu")
+flip_v = true
 
-[node name="LeftPoint" type="Control" parent="TextureRect"]
+[node name="ControllerBar" type="TextureRect" parent="ControllerBG"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 1.0
+offset_bottom = 17.0
+grow_horizontal = 2
+texture = ExtResource("2_smda5")
+stretch_mode = 3
+
+[node name="LeftPoint" type="Control" parent="ControllerBG/ControllerBar"]
 layout_mode = 1
 anchors_preset = 0
+offset_left = 8.0
+offset_right = 8.0
 mouse_filter = 2
 
-[node name="RightPoint" type="Control" parent="TextureRect"]
+[node name="RightPoint" type="Control" parent="ControllerBG/ControllerBar"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
+offset_left = -8.0
+offset_right = -8.0
 grow_horizontal = 0
 mouse_filter = 2
 
-[node name="CenterPoint" type="Control" parent="TextureRect"]
+[node name="CenterPoint" type="Control" parent="ControllerBG/ControllerBar"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -52,7 +115,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="UpPoint" type="Control" parent="TextureRect"]
+[node name="UpPoint" type="Control" parent="ControllerBG/ControllerBar"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -63,7 +126,7 @@ grow_horizontal = 2
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="DownPoint" type="Control" parent="TextureRect"]
+[node name="DownPoint" type="Control" parent="ControllerBG/ControllerBar"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -76,7 +139,7 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="Knob" type="Control" parent="TextureRect"]
+[node name="Knob" type="Control" parent="ControllerBG/ControllerBar"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -88,25 +151,85 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("4_4ghb5")
 
-[node name="KnobSprite" type="TextureRect" parent="TextureRect/Knob"]
+[node name="KnobSprite" type="TextureRect" parent="ControllerBG/ControllerBar/Knob"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_iocb2")
+texture = ExtResource("4_mgobu")
 stretch_mode = 3
 
-[node name="Area2D" type="Area2D" parent="TextureRect/Knob"]
+[node name="Area2D" type="Area2D" parent="ControllerBG/ControllerBar/Knob"]
 collision_layer = 16
 collision_mask = 0
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TextureRect/Knob/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ControllerBG/ControllerBar/Knob/Area2D"]
 shape = SubResource("CircleShape2D_h1lgf")
 
-[connection signal="h_dir_changed" from="TextureRect/Knob" to="." method="on_h_slider_changed"]
-[connection signal="v_dir_changed" from="TextureRect/Knob" to="." method="on_v_slider_changed"]
-[connection signal="mouse_entered" from="TextureRect/Knob/Area2D" to="TextureRect/Knob" method="mouse_entered"]
-[connection signal="mouse_exited" from="TextureRect/Knob/Area2D" to="TextureRect/Knob" method="mouse_exited"]
+[node name="VertClick_SFX" type="AudioStreamPlayer" parent="ControllerBG/ControllerBar/Knob"]
+stream = ExtResource("5_wvpgk")
+volume_db = -6.0
+bus = &"SFX"
+
+[node name="HorizClick_SFX" type="AudioStreamPlayer" parent="ControllerBG/ControllerBar/Knob"]
+stream = ExtResource("6_e5b5s")
+volume_db = -6.0
+bus = &"SFX"
+
+[node name="GrabButton" type="TextureButton" parent="ControllerBG/ControllerBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -8.0
+offset_right = -2.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("8_ddaej")
+stretch_mode = 3
+script = ExtResource("8_5avfk")
+normal_tex = ExtResource("8_ddaej")
+normal_tex_press = ExtResource("10_nmjlf")
+alt_tex = ExtResource("9_tvu8m")
+alt_tex_press = ExtResource("11_no82r")
+is_grab_button = true
+
+[node name="PauseButton" type="TextureButton" parent="ControllerBG/ControllerBar"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 2.0
+offset_top = -8.0
+offset_right = 18.0
+offset_bottom = 8.0
+grow_vertical = 2
+scale = Vector2(1, 1.00428)
+texture_normal = ExtResource("13_risul")
+script = ExtResource("8_5avfk")
+normal_tex = ExtResource("13_risul")
+normal_tex_press = ExtResource("14_jssxh")
+alt_tex = ExtResource("15_qvrwc")
+alt_tex_press = ExtResource("16_ns2xl")
+
+[node name="Controller_Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pvgcd")
+}
+
+[connection signal="h_dir_changed" from="ControllerBG/ControllerBar/Knob" to="." method="on_h_slider_changed"]
+[connection signal="v_dir_changed" from="ControllerBG/ControllerBar/Knob" to="." method="on_v_slider_changed"]
+[connection signal="mouse_entered" from="ControllerBG/ControllerBar/Knob/Area2D" to="ControllerBG/ControllerBar/Knob" method="mouse_entered"]
+[connection signal="mouse_exited" from="ControllerBG/ControllerBar/Knob/Area2D" to="ControllerBG/ControllerBar/Knob" method="mouse_exited"]
+[connection signal="button_up" from="ControllerBG/ControllerBar/GrabButton" to="." method="on_grab_pressed"]
+[connection signal="button_up" from="ControllerBG/ControllerBar/GrabButton" to="ControllerBG/ControllerBar/GrabButton" method="swap_button_texture"]
+[connection signal="button_up" from="ControllerBG/ControllerBar/PauseButton" to="." method="on_pause_pressed"]
+[connection signal="button_up" from="ControllerBG/ControllerBar/PauseButton" to="ControllerBG/ControllerBar/PauseButton" method="swap_button_texture"]
