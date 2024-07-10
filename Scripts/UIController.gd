@@ -1,16 +1,20 @@
 extends Control
 
 @onready var controller_bg: TextureRect = $ControllerBG
-@onready var anim: AnimationPlayer = $Controller_Anim
 
 signal v_speed_changed(dir:float)
 signal h_speed_changed(dir:float)
 signal grab_pressed
 signal pause_pressed
 
-func display_controls() ->void:
-	controller_bg.show()
-	anim.play("RevealControls")
+func _ready() -> void:
+	controller_bg.hide()
+
+func display_controls(hide:bool) ->void:
+	if !hide:
+		controller_bg.show()
+	else:
+		controller_bg.hide()
 
 func on_v_slider_changed(value:float) ->void:
 	v_speed_changed.emit(value)

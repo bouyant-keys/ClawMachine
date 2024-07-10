@@ -175,6 +175,7 @@ mouse_filter = 2
 script = ExtResource("9_btm2a")
 
 [connection signal="freeze_process" from="GameManager" to="Player" method="freeze"]
+[connection signal="freeze_process" from="GameManager" to="CanvasLayer/UIController" method="display_controls"]
 [connection signal="pause" from="GameManager" to="CanvasLayer/PauseDisplay" method="on_pause"]
 [connection signal="reset_process" from="GameManager" to="MainLevel" method="load_level"]
 [connection signal="reset_process" from="GameManager" to="Chain" method="reset_chain"]
@@ -189,6 +190,7 @@ script = ExtResource("9_btm2a")
 [connection signal="win_signal" from="WinArea" to="GameManager" method="win"]
 [connection signal="cam_shake" from="Player" to="Camera2D" method="camera_shake"]
 [connection signal="goal_grabbed" from="Player" to="WinArea" method="display_arrow"]
+[connection signal="goal_grabbed" from="Player" to="CanvasLayer/GameDisplay" method="update_depth_fill"]
 [connection signal="player_lose" from="Player" to="GameManager" method="lose"]
 [connection signal="set_cam_follow" from="Player" to="Camera2D" method="set_camera_follow"]
 [connection signal="update_depth" from="Player" to="CanvasLayer/GameDisplay" method="update_depth"]

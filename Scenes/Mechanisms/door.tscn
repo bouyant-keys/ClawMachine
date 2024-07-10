@@ -1,7 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://d3871c50y6jgn"]
+[gd_scene load_steps=21 format=3 uid="uid://d3871c50y6jgn"]
 
 [ext_resource type="Script" path="res://Scripts/door.gd" id="1_5j2xv"]
 [ext_resource type="Texture2D" uid="uid://ddqdo0akebn5b" path="res://Sprites/Mechanisms/DoorSet.png" id="1_lusdu"]
+[ext_resource type="AudioStream" uid="uid://cw2pmb6cn5880" path="res://Audio/Effects/DoorOpen.wav" id="3_cfjs6"]
+[ext_resource type="AudioStream" uid="uid://csnrn8x4wy54r" path="res://Audio/Effects/DoorClose.wav" id="3_rrbav"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_viah8"]
 atlas = ExtResource("1_lusdu")
@@ -82,15 +84,15 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2grc5")
 }, {
-"duration": 1.0,
+"duration": 2.0,
 "texture": SubResource("AtlasTexture_r4fq8")
 }, {
-"duration": 1.5,
+"duration": 2.0,
 "texture": SubResource("AtlasTexture_y56dv")
 }],
 "loop": false,
 "name": &"Closing",
-"speed": 6.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -121,7 +123,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Opening",
-"speed": 6.0
+"speed": 8.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5pyrr"]
@@ -133,7 +135,15 @@ script = ExtResource("1_5j2xv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_bgrvk")
-animation = &"Open"
+animation = &"Closing"
+frame = 5
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5pyrr")
+
+[node name="DoorOpen_SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_cfjs6")
+
+[node name="DoorClose_SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_rrbav")

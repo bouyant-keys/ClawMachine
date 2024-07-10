@@ -4,6 +4,8 @@ extends Control
 @onready var t_arrows: TextureRect = $TopArrows
 @onready var b_arrows: TextureRect = $BottomArrows
 @onready var ui_anim: AnimationPlayer = $DisplayAnim
+@onready var normal_fill := preload("res://Sprites/UI/DepthMeter_Fill.png") as Texture2D
+@onready var goal_fill := preload("res://Sprites/UI/FillFrames/DepthFillAnim.tres") as AnimatedTexture
 
 func update_health(value:float) ->void:
 	pass
@@ -12,6 +14,12 @@ func update_health(value:float) ->void:
 
 func update_depth(value:float) ->void:
 	depth_meter.value = value
+
+func update_depth_fill(active:bool) ->void:
+	if active:
+		depth_meter.texture_progress = goal_fill
+	else:
+		depth_meter.texture_progress = normal_fill
 
 func enable_arrows(top_arrows:bool) ->void:
 	if top_arrows: 
@@ -30,6 +38,5 @@ func disable_arrows() ->void:
 	b_arrows.hide()
 
 func reset() ->void:
-	pass
-	#swap_data_displays(true)
-	#set_displaying(false)
+	depth_meter.value = 0.0
+	depth_meter.texture_progress = normal_fill

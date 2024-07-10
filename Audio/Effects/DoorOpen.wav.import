@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://ds84v42p7lecc"
-path="res://.godot/imported/VertTick_2.wav-47a7bb4bb9544235a2cb6fbdec294b2e.sample"
+uid="uid://cw2pmb6cn5880"
+path="res://.godot/imported/DoorOpen.wav-189f99df341ae9a2cae5d80cd09757f9.sample"
 
 [deps]
 
-source_file="res://Audio/Effects/VertTick_2.wav"
-dest_files=["res://.godot/imported/VertTick_2.wav-47a7bb4bb9544235a2cb6fbdec294b2e.sample"]
+source_file="res://Audio/Effects/DoorOpen.wav"
+dest_files=["res://.godot/imported/DoorOpen.wav-189f99df341ae9a2cae5d80cd09757f9.sample"]
 
 [params]
 

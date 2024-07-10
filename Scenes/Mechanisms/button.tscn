@@ -99,6 +99,10 @@ texture = ExtResource("3_qs811")
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_pd3yr")
 
+[node name="Press_SFX" type="AudioStreamPlayer" parent="."]
+
+[node name="Release_SFX" type="AudioStreamPlayer" parent="."]
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_sude5")

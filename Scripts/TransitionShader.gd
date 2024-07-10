@@ -8,8 +8,8 @@ var dir : Vector2
 
 @onready var level_label: Label = $LevelChangeText
 @onready var level_sfx: AudioStreamPlayer = $LevelChange_SFX
-@onready var fade_in_sfx: AudioStreamPlayer = $FadeIn_SFX
-@onready var fade_out_sfx: AudioStreamPlayer = $FadeOut_SFX
+#@onready var fade_in_sfx: AudioStreamPlayer = $FadeIn_SFX
+#@onready var fade_out_sfx: AudioStreamPlayer = $FadeOut_SFX
 #@onready var level_pfx: GPUParticles2D = $LevelChangeParticles
 
 #signal start_transition

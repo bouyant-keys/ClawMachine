@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://caqp2s3n5m7og"]
+[gd_scene load_steps=18 format=3 uid="uid://caqp2s3n5m7og"]
 
 [ext_resource type="Script" path="res://Scripts/UIController.gd" id="1_xx844"]
 [ext_resource type="Texture2D" uid="uid://7m8jcppj3qxf" path="res://Sprites/UI/UI_Bar.png" id="2_dg3mu"]
@@ -19,41 +19,6 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h1lgf"]
 
-[sub_resource type="Animation" id="Animation_ytuma"]
-resource_name = "RevealControls"
-length = 1.5
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ControllerBG:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(2, 0),
-"points": PackedFloat32Array(148, 0, 0, 0, -14.7211, 127, -0.6, -3.92211, 0, 0),
-"times": PackedFloat32Array(0, 1.5)
-}
-
-[sub_resource type="Animation" id="Animation_oue7b"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ControllerBG:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(148, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_pvgcd"]
-_data = {
-"RESET": SubResource("Animation_oue7b"),
-"RevealControls": SubResource("Animation_ytuma")
-}
-
 [node name="UIController" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -70,11 +35,12 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 4.0
-offset_bottom = 36.0001
+offset_top = -17.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("2_dg3mu")
+stretch_mode = 3
 flip_v = true
 
 [node name="ControllerBar" type="TextureRect" parent="ControllerBG"]
@@ -200,6 +166,7 @@ normal_tex_press = ExtResource("10_nmjlf")
 alt_tex = ExtResource("9_tvu8m")
 alt_tex_press = ExtResource("11_no82r")
 is_grab_button = true
+press_sfx_path = NodePath("../UIButton_SFX")
 
 [node name="PauseButton" type="TextureButton" parent="ControllerBG/ControllerBar"]
 process_mode = 3
@@ -219,11 +186,12 @@ normal_tex = ExtResource("13_risul")
 normal_tex_press = ExtResource("14_jssxh")
 alt_tex = ExtResource("15_qvrwc")
 alt_tex_press = ExtResource("16_ns2xl")
+press_sfx_path = NodePath("../UIButton_SFX")
 
-[node name="Controller_Anim" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_pvgcd")
-}
+[node name="UIButton_SFX" type="AudioStreamPlayer" parent="ControllerBG/ControllerBar"]
+stream = ExtResource("5_wvpgk")
+volume_db = -6.0
+bus = &"SFX"
 
 [connection signal="h_dir_changed" from="ControllerBG/ControllerBar/Knob" to="." method="on_h_slider_changed"]
 [connection signal="v_dir_changed" from="ControllerBG/ControllerBar/Knob" to="." method="on_v_slider_changed"]

@@ -5,10 +5,14 @@ extends TextureButton
 @export var alt_tex : Texture2D
 @export var alt_tex_press : Texture2D
 @export var is_grab_button := false
+@export_node_path() var press_sfx_path
+
 var show_normal := true
+var press_sfx : AudioStreamPlayer
 
 
 func _ready() -> void:
+	press_sfx = get_node(press_sfx_path) as AudioStreamPlayer
 	texture_normal = normal_tex
 	texture_pressed = normal_tex_press
 
@@ -18,6 +22,8 @@ func swap_button_texture() ->void:
 		show_normal = Player.grabbing
 	else:
 		show_normal = !show_normal
+	
+	press_sfx.play()
 	
 	if show_normal:
 		texture_normal = normal_tex

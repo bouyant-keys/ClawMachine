@@ -89,6 +89,7 @@ func set_goal(obj:Node2D) ->void:
 # Needs to be activated from somewhere
 func on_bump() ->void:
 	player_anim.play("bump")
+	bump_sfx.pitch_scale = randf_range(1.0, 2.5)
 	bump_sfx.play()
 	wall_bumped.emit(position) #maybe pass collision point ?
 

@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://v30hlwgsccl4"
-path="res://.godot/imported/Zap.wav-8d24de53e4bccbba8aad7fcd1d1f02ec.sample"
+uid="uid://co1mf0ok2bjgl"
+path="res://.godot/imported/Zap2.wav-4489861cbc28855aca8ba5227f8afeb9.sample"
 
 [deps]
 
-source_file="res://Audio/Effects/Zap.wav"
-dest_files=["res://.godot/imported/Zap.wav-8d24de53e4bccbba8aad7fcd1d1f02ec.sample"]
+source_file="res://Audio/Effects/Zap2.wav"
+dest_files=["res://.godot/imported/Zap2.wav-4489861cbc28855aca8ba5227f8afeb9.sample"]
 
 [params]
 

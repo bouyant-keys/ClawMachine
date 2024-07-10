@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ch4wglb7cfc7"]
+[gd_scene load_steps=18 format=3 uid="uid://ch4wglb7cfc7"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_kn0tk"]
 [ext_resource type="Texture2D" uid="uid://22qcxjft1nwm" path="res://Sprites/Blocks/GoalCapsule.png" id="2_56148"]
@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://brrq0m2xrngja" path="res://Sprites/ClawOpen_Swap.png" id="3_ld5u5"]
 [ext_resource type="AudioStream" uid="uid://f7dku23xcf24" path="res://Audio/Effects/Grab.wav" id="5_8y0ge"]
 [ext_resource type="AudioStream" uid="uid://dg7civ3l4w3j7" path="res://Audio/Effects/EmptyGrab.wav" id="6_17la2"]
+[ext_resource type="AudioStream" uid="uid://bl2i0x1alqnr7" path="res://Audio/Effects/Bump.wav" id="7_8ioh1"]
 [ext_resource type="AudioStream" uid="uid://clkbu4g6yctyc" path="res://Audio/Effects/ChainMove_Loop.wav" id="7_b66oh"]
+[ext_resource type="AudioStream" uid="uid://co1mf0ok2bjgl" path="res://Audio/Effects/Zap2.wav" id="8_jada8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xm8gq"]
 animations = [{
@@ -162,11 +164,16 @@ stream = ExtResource("6_17la2")
 bus = &"SFX"
 
 [node name="Bump_SFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_17la2")
+stream = ExtResource("7_8ioh1")
 bus = &"SFX"
 
 [node name="Move_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_b66oh")
+volume_db = -12.0
+bus = &"SFX"
+
+[node name="Zap_SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_jada8")
 volume_db = -12.0
 bus = &"SFX"
 

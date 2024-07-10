@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://denp8u031vka3"
-path="res://.godot/imported/VertTick_2Edit.wav-5aee4616df804d5ba964b1a717f97b09.sample"
+path="res://.godot/imported/VertTick_2Edit.wav-ba2f84fca13a86bf415fdda426ce960f.sample"
 
 [deps]
 
-source_file="res://Audio/Effects/VertTick_2Edit.wav"
-dest_files=["res://.godot/imported/VertTick_2Edit.wav-5aee4616df804d5ba964b1a717f97b09.sample"]
+source_file="res://Audio/Effects/Unused/VertTick_2Edit.wav"
+dest_files=["res://.godot/imported/VertTick_2Edit.wav-ba2f84fca13a86bf415fdda426ce960f.sample"]
 
 [params]
 
