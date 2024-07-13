@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://m2tp72rlob43"]
+
+[ext_resource type="TileSet" uid="uid://bfrx7f5cwkkor" path="res://Sprites/TileSets/TileSet_Main.tres" id="1_0smkg"]
+[ext_resource type="PackedScene" uid="uid://d258hxwh1n74s" path="res://Scenes/Objects/Obj_Goal.tscn" id="3_jr244"]
+[ext_resource type="PackedScene" uid="uid://ccdqwkrucicfk" path="res://Scenes/Triggers/cam_follow.tscn" id="3_u743w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rowxl"]
+size = Vector2(128, 144)
+
+[node name="Level_1" type="TileMap"]
+tile_set = ExtResource("1_0smkg")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 262144, 2, 65536, 65536, 0, 9, 327680, 2, 65545, 0, 0, 131072, 65536, 1, 196608, 65536, 2, 262144, 262144, 2, 327680, 65536, 0, 393216, 65536, 2, 458752, 131072, 0, 262145, 196609, 2, 327681, 196609, 2, 393217, 196609, 2, 458753, 262144, 0, 327682, 196609, 2, 393218, 196609, 2, 458754, 262144, 1, 393219, 196609, 2, 458755, 262144, 0, 458756, 327680, 0, 458757, 327680, 0, 393222, 196609, 2, 458758, 262144, 1, 458759, 262144, 0, 131081, 0, 1, 196617, 0, 2, 262153, 327680, 2, 327689, 0, 0, 393225, 0, 2, 458761, 196608, 0, 196609, 196609, 2, 393223, 196609, 2, 327688, 196609, 2, 393224, 196609, 2, 458760, 262144, 1, 262152, 196609, 2, 196616, 196609, 2, 524288, 262144, 3, 524289, 262144, 3, 524290, 262144, 3, 524291, 262144, 3, 524292, 262144, 3, 524293, 262144, 3, 524294, 262144, 3, 524295, 262144, 3, 524296, 262144, 3, 524297, 262144, 3, 524298, 262144, 3, 458762, 262144, 3, 393226, 262144, 3, 327690, 262144, 3, 262154, 262144, 3, 196618, 262144, 3, 131082, 262144, 3, 65546, 262144, 3, 10, 262144, 3, 65535, 262144, 3, 131071, 262144, 3, 196607, 262144, 3, 262143, 262144, 3, 327679, 262144, 3, 393215, 262144, 3, 458751, 262144, 3, 524287, 262144, 3, 589823, 262144, 3)
+
+[node name="Goal" parent="." instance=ExtResource("3_jr244")]
+position = Vector2(80, 104)
+
+[node name="CamFollow" parent="." instance=ExtResource("3_u743w")]
+position = Vector2(80, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CamFollow"]
+shape = SubResource("RectangleShape2D_rowxl")

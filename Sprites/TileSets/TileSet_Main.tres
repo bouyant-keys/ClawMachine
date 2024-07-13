@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" load_steps=7 format=3 uid="uid://bfrx7f5cwkkor"]
 
 [ext_resource type="Texture2D" uid="uid://d00rq3xxostls" path="res://Sprites/TileSets/MachineSet_3.0.png" id="1_8vc07"]
-[ext_resource type="Texture2D" uid="uid://6y2gmfhtcyh5" path="res://Sprites/TileSets/ObstacleSet_1.1.png" id="2_ey6qt"]
+[ext_resource type="Texture2D" uid="uid://btwk7tomfcntu" path="res://Sprites/TileSets/ObstacleSet_2.png" id="2_rytuw"]
 [ext_resource type="Texture2D" uid="uid://csm5axgy88i58" path="res://Sprites/TileSets/WinAreaSet.png" id="3_mdkac"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_muxv1"]
@@ -95,8 +95,8 @@ texture = ExtResource("1_8vc07")
 4:3/0/physics_layer_0/angular_velocity = 0.0
 4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d3v6c"]
-texture = ExtResource("2_ey6qt")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n0w8r"]
+texture = ExtResource("2_rytuw")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
@@ -119,7 +119,6 @@ texture = ExtResource("2_ey6qt")
 2:1/0 = 0
 2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:1/0/physics_layer_0/angular_velocity = 0.0
-2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, 0, 8, 0, 8, -8)
 3:1/0 = 0
 3:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:1/0/physics_layer_0/angular_velocity = 0.0
@@ -132,7 +131,6 @@ texture = ExtResource("2_ey6qt")
 2:2/0 = 0
 2:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:2/0/physics_layer_0/angular_velocity = 0.0
-2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 0, -8, 0, 8, -8, 8)
 3:2/0 = 0
 3:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:2/0/physics_layer_0/angular_velocity = 0.0
@@ -153,5 +151,5 @@ texture = ExtResource("3_mdkac")
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
 sources/2 = SubResource("TileSetAtlasSource_0hval")
-sources/1 = SubResource("TileSetAtlasSource_d3v6c")
 sources/0 = SubResource("TileSetAtlasSource_muxv1")
+sources/1 = SubResource("TileSetAtlasSource_n0w8r")

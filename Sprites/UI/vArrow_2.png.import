@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2vwxj38ocjr"
-path="res://.godot/imported/wipe_mask2.png-7f4a4969b901d61fc4e1b790387ac10f.ctex"
+uid="uid://bu47mjyu77und"
+path="res://.godot/imported/vArrow_2.png-96223bd33ca4ecc868c51aaffaad6d65.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Transition/wipe_mask2.png"
-dest_files=["res://.godot/imported/wipe_mask2.png-7f4a4969b901d61fc4e1b790387ac10f.ctex"]
+source_file="res://Sprites/UI/vArrow_2.png"
+dest_files=["res://.godot/imported/vArrow_2.png-96223bd33ca4ecc868c51aaffaad6d65.ctex"]
 
 [params]
 

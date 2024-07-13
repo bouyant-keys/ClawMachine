@@ -1,23 +1,35 @@
-[gd_scene load_steps=18 format=3 uid="uid://caqp2s3n5m7og"]
+[gd_scene load_steps=24 format=3 uid="uid://caqp2s3n5m7og"]
 
 [ext_resource type="Script" path="res://Scripts/UIController.gd" id="1_xx844"]
 [ext_resource type="Texture2D" uid="uid://7m8jcppj3qxf" path="res://Sprites/UI/UI_Bar.png" id="2_dg3mu"]
 [ext_resource type="Texture2D" uid="uid://4418kp8ve5dl" path="res://Sprites/UI/Controller_Bar.png" id="2_smda5"]
 [ext_resource type="Script" path="res://Scripts/ControllerKnob.gd" id="4_4ghb5"]
-[ext_resource type="Texture2D" uid="uid://t512tddbjekv" path="res://Sprites/UI/hpoff_unit.png" id="4_mgobu"]
+[ext_resource type="Texture2D" uid="uid://d41lhg4cd8f5" path="res://Sprites/UI/Controller_Slider.png" id="4_rat24"]
+[ext_resource type="Texture2D" uid="uid://c0enpbnbymdae" path="res://Sprites/UI/VArrowAnim.tres" id="5_p0w2o"]
 [ext_resource type="AudioStream" uid="uid://cs2535saxrxko" path="res://Audio/Effects/vClick.wav" id="5_wvpgk"]
 [ext_resource type="AudioStream" uid="uid://dr0jrb63pe81o" path="res://Audio/Effects/hClick.wav" id="6_e5b5s"]
+[ext_resource type="Texture2D" uid="uid://d3eyl0vusejm7" path="res://Sprites/UI/HArrowAnim.tres" id="6_evgpq"]
 [ext_resource type="Script" path="res://Scripts/UI/TexButton.gd" id="8_5avfk"]
 [ext_resource type="Texture2D" uid="uid://dl0bhdebrb7lg" path="res://Sprites/UI/GrabButton.png" id="8_ddaej"]
+[ext_resource type="Texture2D" uid="uid://dm1dxhtiv5nix" path="res://Sprites/UI/Controller_Knob.png" id="8_uyfte"]
 [ext_resource type="Texture2D" uid="uid://dhesxsyiv0sx0" path="res://Sprites/UI/DropButton.png" id="9_tvu8m"]
 [ext_resource type="Texture2D" uid="uid://dgpocy10jhlnd" path="res://Sprites/UI/GrabButton_Press.png" id="10_nmjlf"]
 [ext_resource type="Texture2D" uid="uid://bwvn7if86ypng" path="res://Sprites/UI/DropButton_Press.png" id="11_no82r"]
 [ext_resource type="Texture2D" uid="uid://crwh0byps6dr6" path="res://Sprites/UI/PauseButton.png" id="13_risul"]
 [ext_resource type="Texture2D" uid="uid://8ecd75ndi1ic" path="res://Sprites/UI/PauseButton_Press.png" id="14_jssxh"]
 [ext_resource type="Texture2D" uid="uid://dyebnlvtlkauh" path="res://Sprites/UI/ResumeButton.png" id="15_qvrwc"]
+[ext_resource type="Texture2D" uid="uid://t6fn564y2b0w" path="res://Sprites/UI/ButtonHighlight.png" id="15_tyhih"]
 [ext_resource type="Texture2D" uid="uid://ilnbhogat2uy" path="res://Sprites/UI/ResumeButton_press.png" id="16_ns2xl"]
+[ext_resource type="Texture2D" uid="uid://cu6ajfwx8jdol" path="res://Sprites/UI/Empty.png" id="16_t7ftd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h1lgf"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_y66sv"]
+frames = 2
+frame_0/texture = ExtResource("15_tyhih")
+frame_0/duration = 0.5
+frame_1/texture = ExtResource("16_t7ftd")
+frame_1/duration = 0.5
 
 [node name="UIController" type="Control"]
 layout_mode = 3
@@ -35,8 +47,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -17.0
-offset_bottom = 15.0
+offset_top = -20.0
+offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("2_dg3mu")
@@ -53,24 +65,7 @@ grow_horizontal = 2
 texture = ExtResource("2_smda5")
 stretch_mode = 3
 
-[node name="LeftPoint" type="Control" parent="ControllerBG/ControllerBar"]
-layout_mode = 1
-anchors_preset = 0
-offset_left = 8.0
-offset_right = 8.0
-mouse_filter = 2
-
-[node name="RightPoint" type="Control" parent="ControllerBG/ControllerBar"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -8.0
-offset_right = -8.0
-grow_horizontal = 0
-mouse_filter = 2
-
-[node name="CenterPoint" type="Control" parent="ControllerBG/ControllerBar"]
+[node name="Slider" type="Control" parent="ControllerBG/ControllerBar"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -79,31 +74,22 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 
-[node name="UpPoint" type="Control" parent="ControllerBG/ControllerBar"]
+[node name="SliderSprite" type="TextureRect" parent="ControllerBG/ControllerBar/Slider"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_top = 2.0
-offset_bottom = 2.0
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
 grow_horizontal = 2
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="DownPoint" type="Control" parent="ControllerBG/ControllerBar"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_top = -2.0
-offset_bottom = -2.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 2
+grow_vertical = 2
+texture = ExtResource("4_rat24")
+stretch_mode = 3
 
 [node name="Knob" type="Control" parent="ControllerBG/ControllerBar"]
 layout_mode = 1
@@ -117,6 +103,74 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("4_4ghb5")
 
+[node name="Arrows" type="Control" parent="ControllerBG/ControllerBar/Knob"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Up" type="TextureRect" parent="ControllerBG/ControllerBar/Knob/Arrows"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 8.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("5_p0w2o")
+stretch_mode = 3
+
+[node name="Down" type="TextureRect" parent="ControllerBG/ControllerBar/Knob/Arrows"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 16.0
+grow_horizontal = 2
+texture = ExtResource("5_p0w2o")
+stretch_mode = 3
+flip_v = true
+
+[node name="Left" type="TextureRect" parent="ControllerBG/ControllerBar/Knob/Arrows"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -8.0
+offset_right = -1.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("6_evgpq")
+stretch_mode = 3
+flip_h = true
+flip_v = true
+
+[node name="Right" type="TextureRect" parent="ControllerBG/ControllerBar/Knob/Arrows"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = -8.0
+offset_right = 17.0
+offset_bottom = 8.0
+grow_vertical = 2
+texture = ExtResource("6_evgpq")
+stretch_mode = 3
+flip_v = true
+
 [node name="KnobSprite" type="TextureRect" parent="ControllerBG/ControllerBar/Knob"]
 layout_mode = 1
 anchors_preset = 15
@@ -124,7 +178,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_mgobu")
+texture = ExtResource("8_uyfte")
 stretch_mode = 3
 
 [node name="Area2D" type="Area2D" parent="ControllerBG/ControllerBar/Knob"]
@@ -167,6 +221,15 @@ alt_tex = ExtResource("9_tvu8m")
 alt_tex_press = ExtResource("11_no82r")
 is_grab_button = true
 press_sfx_path = NodePath("../UIButton_SFX")
+
+[node name="Highlight" type="TextureRect" parent="ControllerBG/ControllerBar/GrabButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AnimatedTexture_y66sv")
 
 [node name="PauseButton" type="TextureButton" parent="ControllerBG/ControllerBar"]
 process_mode = 3

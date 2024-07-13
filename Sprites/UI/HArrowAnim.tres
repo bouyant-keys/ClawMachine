@@ -1,0 +1,11 @@
+[gd_resource type="AnimatedTexture" load_steps=3 format=3 uid="uid://d3eyl0vusejm7"]
+
+[ext_resource type="Texture2D" uid="uid://cyl0mgchpjvj2" path="res://Sprites/UI/hArrow_1.png" id="1_chlnl"]
+[ext_resource type="Texture2D" uid="uid://bdf2srmqoaqn2" path="res://Sprites/UI/hArrow_2.png" id="2_yrwvk"]
+
+[resource]
+frames = 2
+frame_0/texture = ExtResource("1_chlnl")
+frame_0/duration = 0.5
+frame_1/texture = ExtResource("2_yrwvk")
+frame_1/duration = 0.5

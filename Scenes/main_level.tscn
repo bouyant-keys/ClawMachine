@@ -1,102 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://006i5i72bun1"]
+[gd_scene load_steps=4 format=3 uid="uid://006i5i72bun1"]
 
 [ext_resource type="Script" path="res://Scripts/Level_Main.gd" id="1_5miic"]
 [ext_resource type="Resource" uid="uid://dh6xmcwp31cgo" path="res://Scripts/Resources/LevelList.tres" id="2_gemkk"]
-[ext_resource type="TileSet" uid="uid://bfrx7f5cwkkor" path="res://Sprites/TileSets/TileSet_Main.tres" id="3_ibtqt"]
-[ext_resource type="Texture2D" uid="uid://oslgl4aatmiu" path="res://Sprites/DirectionArrows_1.png" id="3_nolnj"]
-[ext_resource type="TileSet" uid="uid://bytays7o1v2t1" path="res://Sprites/TileSets/TileSet_Background.tres" id="4_blxbp"]
-[ext_resource type="Texture2D" uid="uid://b6kgf0ceu77vw" path="res://Sprites/DirectionArrows_2.png" id="4_kr5yr"]
 [ext_resource type="PackedScene" uid="uid://d14csjxl4pxdr" path="res://Scenes/Levels/level_1.tscn" id="6_ybi8k"]
-[ext_resource type="PackedScene" uid="uid://b5tk71rbe180r" path="res://Scenes/Triggers/tutorial_trigger.tscn" id="7_m2x45"]
-[ext_resource type="Script" path="res://Scripts/Trigger_CamUpdate.gd" id="12_3tfj6"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_dp5co"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_nolnj")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_kr5yr")
-}],
-"loop": true,
-"name": &"default",
-"speed": 3.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s7ku3"]
-size = Vector2(128, 10)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1dh7"]
-size = Vector2(128, 48)
 
 [node name="MainLevel" type="Node2D"]
 script = ExtResource("1_5miic")
 level_list = ExtResource("2_gemkk")
 
-[node name="DownArrows" type="AnimatedSprite2D" parent="."]
-visible = false
-position = Vector2(80, 136)
-sprite_frames = SubResource("SpriteFrames_dp5co")
-
-[node name="UpArrows" type="AnimatedSprite2D" parent="."]
-visible = false
-position = Vector2(80, 152)
-sprite_frames = SubResource("SpriteFrames_dp5co")
-frame_progress = 0.902683
-flip_v = true
-
-[node name="MachineTiles" type="TileMap" parent="."]
-tile_set = ExtResource("3_ibtqt")
-format = 2
-layer_0/tile_data = PackedInt32Array(458752, 65536, 2, 458761, 0, 2, 0, 0, 3, 196608, 65536, 2, 262144, 262144, 2, 327680, 65536, 0, 393216, 65536, 1, 524288, 262144, 2, 1, 65536, 3, 2, 196608, 3, 3, 65536, 3, 4, 196608, 3, 5, 196608, 3, 6, 65536, 3, 7, 196608, 3, 8, 65536, 3, 9, 131072, 3, 196617, 0, 2, 262153, 327680, 2, 327689, 0, 0, 393225, 0, 1, 524297, 327680, 2, 65536, 65536, 0, 131072, 65536, 1, 65545, 0, 0, 131081, 0, 1, 327684, 2, 0, 327685, 65538, 0, 65537, 196608, 1, 65544, 196608, 2, 65543, 131072, 2, 65542, 131072, 2, 65541, 131072, 2, 65540, 131072, 2, 65539, 131072, 2, 65538, 131072, 2)
-
-[node name="BackgroundTiles" type="TileMap" parent="."]
-position = Vector2(0, -8)
-tile_set = ExtResource("4_blxbp")
-format = 2
-layer_0/z_index = -1
-layer_0/tile_data = PackedInt32Array(8, 0, 0, 9, 131072, 0, 0, 0, 0, 1, 131072, 0, 65544, 0, 2, 131080, 0, 0, 65545, 131072, 2, 131081, 131072, 0, 65536, 0, 2, 131072, 0, 0, 65537, 131072, 2, 131073, 131072, 0, 196608, 0, 2, 262144, 0, 0, 196609, 131072, 2, 262145, 131072, 0, 196616, 0, 2, 262152, 0, 0, 196617, 131072, 2, 262153, 131072, 0, 2, 0, 1, 65538, 0, 2, 131074, 0, 0, 3, 65536, 1, 65539, 65536, 2, 131075, 65536, 0, 4, 131072, 1, 65540, 131072, 2, 131076, 131072, 0, 5, 0, 1, 65541, 0, 2, 131077, 0, 0, 6, 65536, 1, 65542, 65536, 2, 131078, 65536, 0, 7, 131072, 1, 65543, 131072, 2, 131079, 131072, 0, 196610, 0, 1, 262146, 0, 2, 327682, 0, 0, 196611, 65536, 1, 262147, 65536, 2, 327683, 65536, 0, 196612, 131072, 1, 262148, 131072, 2, 327684, 131072, 0, 196613, 0, 1, 262149, 0, 2, 327685, 0, 0, 196614, 65536, 1, 262150, 65536, 2, 327686, 65536, 0, 196615, 131072, 1, 262151, 131072, 2, 327687, 131072, 0, 393218, 0, 1, 458754, 0, 2, 524290, 0, 0, 393219, 65536, 1, 458755, 65536, 2, 524291, 65536, 0, 393220, 131072, 1, 458756, 131072, 2, 524292, 131072, 0, 393221, 0, 1, 458757, 0, 2, 524293, 0, 0, 393222, 65536, 1, 458758, 65536, 2, 524294, 65536, 0, 393223, 131072, 1, 458759, 131072, 2, 524295, 131072, 0, 589826, 0, 1, 589827, 65536, 1, 589828, 131072, 1, 589829, 0, 1, 589830, 65536, 1, 589831, 131072, 1, 327680, 0, 2, 393216, 0, 0, 327681, 131072, 2, 393217, 131072, 0, 458752, 0, 2, 524288, 0, 0, 458753, 131072, 2, 524289, 131072, 0, 589824, 0, 2, 589825, 131072, 2, 589832, 0, 2, 589833, 131072, 2, 458760, 0, 2, 524296, 0, 0, 458761, 131072, 2, 524297, 131072, 0, 327688, 0, 2, 393224, 0, 0, 327689, 131072, 2, 393225, 131072, 0)
-
-[node name="CurrentLevel" type="Node2D" parent="."]
-position = Vector2(0, 144)
-
-[node name="Level_1" parent="CurrentLevel" instance=ExtResource("6_ybi8k")]
-
-[node name="Triggers" type="Node2D" parent="."]
-
-[node name="CamUpdate_VMain" type="Area2D" parent="Triggers"]
-position = Vector2(80, 136)
-collision_layer = 0
-collision_mask = 8
-monitorable = false
-script = ExtResource("12_3tfj6")
-enter_direction = Vector2i(0, 1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/CamUpdate_VMain"]
-shape = SubResource("RectangleShape2D_s7ku3")
-
-[node name="CamUpdate_Level1" type="Area2D" parent="Triggers"]
-position = Vector2(80, 152)
-collision_layer = 0
-collision_mask = 8
-monitorable = false
-script = ExtResource("12_3tfj6")
-to_floor = 1
-enter_direction = Vector2i(0, -1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/CamUpdate_Level1"]
-shape = SubResource("RectangleShape2D_s7ku3")
-
-[node name="TutorialTrigger" parent="Triggers" instance=ExtResource("7_m2x45")]
-position = Vector2(80, 64)
-tutorial_text = "Speed (W/S)"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Triggers/TutorialTrigger"]
-shape = SubResource("RectangleShape2D_p1dh7")
-debug_color = Color(7.70092e-07, 0.63786, 0.386501, 0.42)
-
-[connection signal="body_entered" from="Triggers/CamUpdate_VMain" to="Triggers/CamUpdate_VMain" method="on_area_entered"]
-[connection signal="change_floor" from="Triggers/CamUpdate_VMain" to="." method="update_camera_pos"]
-[connection signal="body_entered" from="Triggers/CamUpdate_Level1" to="Triggers/CamUpdate_Level1" method="on_area_entered"]
-[connection signal="change_floor" from="Triggers/CamUpdate_Level1" to="." method="update_camera_pos"]
+[node name="Level_1" parent="." instance=ExtResource("6_ybi8k")]

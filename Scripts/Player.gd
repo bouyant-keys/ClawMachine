@@ -37,9 +37,7 @@ var y_dir := 0.0
 signal player_lose
 signal update_health(int)
 signal update_depth(float)
-#signal update_tutorial(String)
-#signal set_display(active:bool)
-#signal swap_display(set_top:bool)
+signal obj_nearby(bool)
 signal set_cam_follow(bool)
 signal wall_bumped(at:Vector2)
 signal cam_shake
@@ -158,6 +156,7 @@ func on_grab_area_entered(area:Area2D) ->void:
 	var temp_obj := area.get_parent()
 	if temp_obj is Grab_Block: 
 		grab_obj = temp_obj
+		obj_nearby.emit(true)
 
 func on_grab_area_exited(area:Area2D) ->void:
 	if grabbing: return
@@ -165,6 +164,7 @@ func on_grab_area_exited(area:Area2D) ->void:
 	var temp_obj := area.get_parent()
 	if grab_obj == temp_obj: 
 		grab_obj = null
+		obj_nearby.emit(false)
 
 func on_hurt_area_entered(_body:Node2D) ->void:
 	if !hurting:

@@ -8,6 +8,13 @@ extends Control
 @onready var goal_fill := preload("res://Sprites/UI/FillFrames/DepthFillAnim.tres") as AnimatedTexture
 
 func update_health(value:float) ->void:
+	#var temp := 0
+	#for unit in hp_units:
+		#if temp > value - 1:
+			#unit.texture = on_hp_sprite
+		#else:
+			#unit.texture = off_hp_sprite
+		#temp += 1
 	pass
 	#top_bar.update_health(value)
 	#bottom_bar.update_health(value)

@@ -5,7 +5,6 @@
 [ext_resource type="Script" path="res://Scripts/MusicManager.gd" id="2_w01u1"]
 [ext_resource type="AudioStream" uid="uid://cq5tj2wf5j7nl" path="res://Audio/Music/Blippy Trance.mp3" id="3_lp5p5"]
 [ext_resource type="PackedScene" uid="uid://ch4wglb7cfc7" path="res://Scenes/Player.tscn" id="3_nfab3"]
-[ext_resource type="PackedScene" uid="uid://c1q3hty38mbi2" path="res://Scenes/Triggers/win_area.tscn" id="4_giia6"]
 [ext_resource type="PackedScene" uid="uid://ovd4lsqu07bh" path="res://Scenes/chain.tscn" id="4_pdtj6"]
 [ext_resource type="PackedScene" uid="uid://uj8cf506ml5v" path="res://Scenes/chain_base.tscn" id="5_33amq"]
 [ext_resource type="Script" path="res://Scripts/MainCamera.gd" id="5_kpbsb"]
@@ -17,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://x43hhp23efsb" path="res://Scenes/UI/game_display.tscn" id="11_qti71"]
 [ext_resource type="PackedScene" uid="uid://gvsaqucmvlmu" path="res://Scenes/UI/pause_display.tscn" id="12_85uhn"]
 [ext_resource type="PackedScene" uid="uid://caqp2s3n5m7og" path="res://Scenes/ui_controller.tscn" id="14_8al8u"]
+[ext_resource type="PackedScene" uid="uid://dahacdx3umm8n" path="res://Scenes/Background.tscn" id="19_y2reb"]
 
 [sub_resource type="Curve" id="Curve_npoln"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.82692, 0.0, 0, 0]
@@ -121,15 +121,12 @@ bus = &"Music"
 [node name="MainLevel" parent="." instance=ExtResource("1_bu0eb")]
 gm_path = NodePath("../GameManager")
 
-[node name="WinArea" parent="." instance=ExtResource("4_giia6")]
-position = Vector2(80, 83)
-
 [node name="Chain" parent="." instance=ExtResource("4_pdtj6")]
 base_path = NodePath("../ChainBase")
 player_path = NodePath("../Player")
 
 [node name="ChainBase" parent="." instance=ExtResource("5_33amq")]
-position = Vector2(80, 20)
+position = Vector2(80, 4)
 player_path = NodePath("../Player")
 
 [node name="BumpParticles" type="GPUParticles2D" parent="."]
@@ -140,7 +137,7 @@ explosiveness = 1.0
 script = ExtResource("7_eg0vb")
 
 [node name="Player" parent="." instance=ExtResource("3_nfab3")]
-position = Vector2(80, 28)
+position = Vector2(80, 11)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(80, 72)
@@ -174,6 +171,8 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_btm2a")
 
+[node name="ParallaxBackground" parent="CanvasLayer" instance=ExtResource("19_y2reb")]
+
 [connection signal="freeze_process" from="GameManager" to="Player" method="freeze"]
 [connection signal="freeze_process" from="GameManager" to="CanvasLayer/UIController" method="display_controls"]
 [connection signal="pause" from="GameManager" to="CanvasLayer/PauseDisplay" method="on_pause"]
@@ -187,10 +186,9 @@ script = ExtResource("9_btm2a")
 [connection signal="goal_position" from="MainLevel" to="Player" method="set_goal"]
 [connection signal="screen_wipe" from="MainLevel" to="CanvasLayer/TransitionShader" method="transition"]
 [connection signal="update_camera" from="MainLevel" to="Camera2D" method="update_camera_pos"]
-[connection signal="win_signal" from="WinArea" to="GameManager" method="win"]
 [connection signal="cam_shake" from="Player" to="Camera2D" method="camera_shake"]
-[connection signal="goal_grabbed" from="Player" to="WinArea" method="display_arrow"]
 [connection signal="goal_grabbed" from="Player" to="CanvasLayer/GameDisplay" method="update_depth_fill"]
+[connection signal="obj_nearby" from="Player" to="CanvasLayer/UIController" method="highlight_grab"]
 [connection signal="player_lose" from="Player" to="GameManager" method="lose"]
 [connection signal="set_cam_follow" from="Player" to="Camera2D" method="set_camera_follow"]
 [connection signal="update_depth" from="Player" to="CanvasLayer/GameDisplay" method="update_depth"]

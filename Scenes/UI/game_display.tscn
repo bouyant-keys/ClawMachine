@@ -5,8 +5,21 @@
 [ext_resource type="Texture2D" uid="uid://dj07thm1geu7a" path="res://Sprites/UI/DepthMeter_Frame.png" id="2_l58c0"]
 [ext_resource type="Texture2D" uid="uid://dqhdur20rp8f6" path="res://Sprites/UI/DepthMeter_Fill.png" id="3_ormxu"]
 [ext_resource type="Texture2D" uid="uid://oslgl4aatmiu" path="res://Sprites/DirectionArrows_1.png" id="4_2cm5w"]
-[ext_resource type="Script" path="res://Scripts/UI/DepthMeter.gd" id="5_73m1k"]
 [ext_resource type="Texture2D" uid="uid://b6kgf0ceu77vw" path="res://Sprites/DirectionArrows_2.png" id="5_ii1xm"]
+
+[sub_resource type="GDScript" id="GDScript_2kp75"]
+script/source = "extends TextureProgressBar
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="Animation" id="Animation_d8kh8"]
 resource_name = "ArrowBlink"
@@ -96,7 +109,7 @@ fill_mode = 2
 texture_under = ExtResource("1_hpgv5")
 texture_over = ExtResource("2_l58c0")
 texture_progress = ExtResource("3_ormxu")
-script = ExtResource("5_73m1k")
+script = SubResource("GDScript_2kp75")
 
 [node name="TopArrows" type="TextureRect" parent="."]
 visible = false

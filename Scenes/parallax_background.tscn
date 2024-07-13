@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://6odtaqj6txhc"]
+
+[ext_resource type="Texture2D" uid="uid://klevmr46i0g8" path="res://Sprites/ParallaxBG/BG_Far.png" id="1_7dhi7"]
+[ext_resource type="Script" path="res://Scripts/parallax_background.gd" id="1_sjiff"]
+[ext_resource type="Script" path="res://Scripts/ParallaxLayer.gd" id="2_230fa"]
+[ext_resource type="Texture2D" uid="uid://cgbj0nwihavey" path="res://Sprites/ParallaxBG/BG_Mid.png" id="3_5g5e8"]
+
+[node name="ParallaxBackground" type="Node2D"]
+script = ExtResource("1_sjiff")
+
+[node name="FarLayer" type="Node2D" parent="."]
+script = ExtResource("2_230fa")
+scroll_ratio = 0.2
+
+[node name="Sprite2D" type="Sprite2D" parent="FarLayer"]
+texture_repeat = 2
+texture = ExtResource("1_7dhi7")
+centered = false
+
+[node name="MidLayer" type="Node2D" parent="."]
+script = ExtResource("2_230fa")
+scroll_ratio = 0.5
+
+[node name="Sprite2D" type="Sprite2D" parent="MidLayer"]
+texture_repeat = 2
+texture = ExtResource("3_5g5e8")
+centered = false
