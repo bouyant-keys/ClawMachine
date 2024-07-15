@@ -1,36 +1,46 @@
-[gd_scene load_steps=7 format=3 uid="uid://b316nwhiw8pkv"]
+[gd_scene load_steps=10 format=3 uid="uid://b316nwhiw8pkv"]
 
 [ext_resource type="TileSet" uid="uid://bfrx7f5cwkkor" path="res://Sprites/TileSets/TileSet_Main.tres" id="1_gkoog"]
-[ext_resource type="TileSet" uid="uid://bytays7o1v2t1" path="res://Sprites/TileSets/TileSet_Background.tres" id="2_prmm8"]
+[ext_resource type="Script" path="res://Scripts/Level.gd" id="2_cq5h1"]
 [ext_resource type="PackedScene" uid="uid://d258hxwh1n74s" path="res://Scenes/Objects/Obj_Goal.tscn" id="3_i06h7"]
 [ext_resource type="PackedScene" uid="uid://gxh1451tlop0" path="res://Scenes/Objects/Obj_Crate.tscn" id="4_cwgrq"]
 [ext_resource type="PackedScene" uid="uid://d3871c50y6jgn" path="res://Scenes/Mechanisms/door.tscn" id="5_b70ek"]
+[ext_resource type="PackedScene" uid="uid://dm0q2rxk4vbev" path="res://Scenes/collection_box.tscn" id="6_hnsr7"]
 [ext_resource type="PackedScene" uid="uid://ba2jovn5uijl4" path="res://Scenes/Mechanisms/button.tscn" id="6_wgxui"]
+[ext_resource type="PackedScene" uid="uid://ccdqwkrucicfk" path="res://Scenes/Triggers/cam_follow.tscn" id="7_gjdbe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eecjs"]
+size = Vector2(128, 64)
 
 [node name="Level_4" type="TileMap"]
 tile_set = ExtResource("1_gkoog")
 format = 2
-layer_0/tile_data = PackedInt32Array(0, 65536, 0, 65536, 65536, 2, 9, 0, 0, 65545, 0, 2, 131072, 65536, 0, 196608, 65536, 1, 262144, 65536, 2, 327680, 65536, 0, 393216, 65536, 1, 458752, 65536, 2, 524288, 131072, 0, 262145, 1, 0, 327681, 131073, 2, 393217, 1, 0, 458753, 1, 0, 524289, 131072, 1, 262146, 1, 0, 458754, 1, 0, 524290, 131072, 1, 458755, 1, 0, 524291, 131072, 1, 327684, 1, 1, 393220, 1, 0, 458756, 1, 0, 524292, 131072, 1, 327685, 1, 0, 393221, 1, 0, 458757, 1, 0, 524293, 131072, 1, 196614, 1, 0, 262150, 1, 0, 327686, 1, 0, 393222, 1, 0, 458758, 1, 0, 524294, 131072, 1, 458759, 131073, 2, 524295, 131072, 1, 131081, 0, 0, 196617, 0, 1, 262153, 0, 2, 327689, 0, 0, 393225, 0, 1, 458761, 0, 2, 524297, 196608, 0, 196609, 1, 1, 196610, 1, 2, 262147, 196609, 0, 196615, 196609, 0, 393223, 65537, 1, 524296, 131072, 1, 262149, 196609, 1, 196613, 65537, 0, 393219, 196609, 1, 393218, 1, 2, 327682, 65537, 2, 393224, 196609, 1, 458760, 65537, 0, 131078, 1, 2, 131073, 196609, 0, 327687, 196609, 0)
-
-[node name="BackgroundTiles" type="TileMap" parent="."]
-position = Vector2(0, -8)
-tile_set = ExtResource("2_prmm8")
-format = 2
-layer_0/z_index = -5
-layer_0/tile_data = PackedInt32Array(2, 0, 2, 65538, 0, 0, 131074, 0, 1, 196610, 0, 2, 262146, 0, 0, 327682, 0, 1, 393218, 0, 2, 458754, 0, 1, 3, 65536, 2, 65539, 65536, 0, 131075, 65536, 1, 196611, 65536, 2, 262147, 65536, 0, 327683, 65536, 1, 393219, 65536, 2, 458755, 65536, 1, 4, 131072, 2, 65540, 131072, 0, 131076, 131072, 1, 196612, 131072, 2, 262148, 131072, 0, 327684, 131072, 1, 393220, 131072, 2, 458756, 131072, 1, 5, 0, 2, 65541, 0, 0, 131077, 0, 1, 196613, 0, 2, 262149, 0, 0, 327685, 0, 1, 393221, 0, 2, 458757, 0, 1, 6, 65536, 2, 65542, 65536, 0, 131078, 65536, 1, 196614, 65536, 2, 262150, 65536, 0, 327686, 65536, 1, 393222, 65536, 2, 458758, 65536, 1, 7, 131072, 2, 65543, 131072, 0, 131079, 131072, 1, 196615, 131072, 2, 262151, 131072, 0, 327687, 131072, 1, 393223, 131072, 2, 458759, 131072, 1, 8, 0, 2, 65544, 0, 0, 131080, 0, 2, 196616, 0, 0, 262152, 0, 2, 327688, 0, 0, 393224, 0, 2, 458760, 0, 0, 9, 131072, 2, 65545, 131072, 0, 131081, 131072, 2, 196617, 131072, 0, 262153, 131072, 2, 327689, 131072, 0, 393225, 131072, 2, 458761, 131072, 0, 0, 0, 2, 65536, 0, 0, 131072, 0, 2, 196608, 0, 0, 262144, 0, 2, 327680, 0, 0, 393216, 0, 2, 458752, 0, 0, 1, 131072, 2, 65537, 131072, 0, 131073, 131072, 2, 196609, 131072, 0, 262145, 131072, 2, 327681, 131072, 0, 393217, 131072, 2, 458753, 131072, 0, 524292, 131072, 2, 524293, 0, 2, 524288, 0, 2, 524289, 131072, 2, 524290, 0, 2, 524291, 65536, 2, 524294, 65536, 2, 524295, 131072, 2, 524296, 0, 2, 524297, 131072, 2)
+layer_0/tile_data = PackedInt32Array(196608, 65536, 2, 262144, 262144, 2, 327680, 65536, 0, 393216, 65536, 2, 458752, 262144, 2, 524288, 65536, 0, 327681, 196609, 0, 393217, 1, 1, 458753, 1, 0, 524289, 131073, 2, 393218, 1, 2, 458754, 1, 0, 524290, 65537, 2, 458755, 196609, 0, 524292, 1, 1, 393221, 65537, 0, 458757, 196609, 1, 524293, 1, 0, 327686, 1, 2, 393222, 1, 0, 458758, 1, 0, 524294, 1, 0, 393223, 196609, 0, 524295, 196609, 0, 196617, 0, 2, 262153, 327680, 2, 327689, 0, 0, 393225, 0, 2, 458761, 327680, 2, 524297, 0, 0, 589824, 65536, 1, 655360, 65536, 2, 720896, 131072, 0, 589825, 1, 0, 655361, 1, 0, 720897, 262144, 0, 589826, 1, 2, 655362, 1, 0, 720898, 262144, 1, 589827, 196609, 1, 655363, 1, 0, 720899, 131072, 1, 589828, 1, 0, 655364, 1, 0, 720900, 262144, 0, 589829, 1, 0, 655365, 1, 0, 720901, 262144, 1, 589830, 1, 0, 655366, 1, 0, 720902, 131072, 1, 589831, 65537, 1, 655367, 131073, 2, 720903, 262144, 0, 589832, 196609, 1, 655368, 65537, 0, 720904, 262144, 1, 589833, 0, 1, 655369, 0, 2, 720905, 196608, 0, 0, 262144, 2, 9, 327680, 2, 8, 196608, 2, 1, 196608, 1, 2, 131072, 2, 3, 131072, 2, 4, 131072, 2, 5, 131072, 2, 6, 131072, 2, 7, 131072, 2, 65545, 0, 0, 131081, 0, 1, 65536, 65536, 0, 131072, 65536, 1)
+script = ExtResource("2_cq5h1")
+goal_path = NodePath("Goal")
+cam_limit_y = 208.0
 
 [node name="Goal" parent="." instance=ExtResource("3_i06h7")]
-position = Vector2(132, 120)
+position = Vector2(132, 168)
 
 [node name="Obj_Crate" parent="." instance=ExtResource("4_cwgrq")]
-position = Vector2(48, 100)
+position = Vector2(48, 148)
 
 [node name="Door" parent="." instance=ExtResource("5_b70ek")]
-position = Vector2(128, 72)
+position = Vector2(128, 120)
 rotation = 1.5708
 
 [node name="Button" parent="." instance=ExtResource("6_wgxui")]
-position = Vector2(32, 56)
+position = Vector2(32, 104)
+
+[node name="CollectionBox" parent="." instance=ExtResource("6_hnsr7")]
+position = Vector2(80, 80)
+
+[node name="CamFollow" parent="." instance=ExtResource("7_gjdbe")]
+position = Vector2(80, 96)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CamFollow"]
+shape = SubResource("RectangleShape2D_eecjs")
 
 [connection signal="on_press" from="Button" to="Door" method="open"]
 [connection signal="on_release" from="Button" to="Door" method="close"]

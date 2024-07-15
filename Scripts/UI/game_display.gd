@@ -1,23 +1,27 @@
 extends Control
 
+var normal_fill := preload("res://Sprites/UI/DepthMeter_Fill.png") as Texture2D
+var goal_fill := preload("res://Sprites/UI/FillFrames/DepthFillAnim.tres") as AnimatedTexture
+#var on_hp_sprite = preload("res://Sprites/UI/hp_unit.png") as Texture2D
+#var off_hp_sprite = preload("res://Sprites/UI/hpoff_unit.png") as Texture2D
+
 @onready var depth_meter: TextureProgressBar = $DepthMeter
 @onready var t_arrows: TextureRect = $TopArrows
 @onready var b_arrows: TextureRect = $BottomArrows
 @onready var ui_anim: AnimationPlayer = $DisplayAnim
-@onready var normal_fill := preload("res://Sprites/UI/DepthMeter_Fill.png") as Texture2D
-@onready var goal_fill := preload("res://Sprites/UI/FillFrames/DepthFillAnim.tres") as AnimatedTexture
+@onready var hp_units = [$HBoxContainer/TextureRect as TextureRect, 
+							$HBoxContainer/TextureRect2 as TextureRect, 
+							$HBoxContainer/TextureRect3 as TextureRect]
 
 func update_health(value:float) ->void:
-	#var temp := 0
-	#for unit in hp_units:
-		#if temp > value - 1:
-			#unit.texture = on_hp_sprite
-		#else:
-			#unit.texture = off_hp_sprite
-		#temp += 1
-	pass
-	#top_bar.update_health(value)
-	#bottom_bar.update_health(value)
+	var temp = value
+	for unit in hp_units:
+		if temp == 3.0: 
+			unit.show()
+			continue
+		else:
+			unit.hide()
+		temp += 1.0
 
 func update_depth(value:float) ->void:
 	depth_meter.value = value

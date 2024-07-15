@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://x43hhp23efsb"]
+[gd_scene load_steps=12 format=3 uid="uid://x43hhp23efsb"]
 
 [ext_resource type="Script" path="res://Scripts/UI/game_display.gd" id="1_6nmy3"]
 [ext_resource type="Texture2D" uid="uid://niphjphwcyjk" path="res://Sprites/UI/DepthMeter_BG.png" id="1_hpgv5"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dqhdur20rp8f6" path="res://Sprites/UI/DepthMeter_Fill.png" id="3_ormxu"]
 [ext_resource type="Texture2D" uid="uid://oslgl4aatmiu" path="res://Sprites/DirectionArrows_1.png" id="4_2cm5w"]
 [ext_resource type="Texture2D" uid="uid://b6kgf0ceu77vw" path="res://Sprites/DirectionArrows_2.png" id="5_ii1xm"]
+[ext_resource type="Texture2D" uid="uid://drj2lq0wsin3i" path="res://Sprites/UI/hp_unit.png" id="7_f2ow4"]
 
 [sub_resource type="GDScript" id="GDScript_2kp75"]
 script/source = "extends TextureProgressBar
@@ -137,3 +138,24 @@ stretch_mode = 3
 libraries = {
 "": SubResource("AnimationLibrary_qnd3h")
 }
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 32.0
+offset_bottom = 16.0
+theme_override_constants/separation = -8
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_f2ow4")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_f2ow4")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_f2ow4")
+stretch_mode = 2

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ch4wglb7cfc7"]
+[gd_scene load_steps=20 format=3 uid="uid://ch4wglb7cfc7"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_kn0tk"]
 [ext_resource type="Texture2D" uid="uid://22qcxjft1nwm" path="res://Sprites/Blocks/GoalCapsule.png" id="2_56148"]
@@ -49,6 +49,40 @@ b = Vector2(0, 24)
 [sub_resource type="CircleShape2D" id="CircleShape2D_jehkn"]
 radius = 8.0
 
+[sub_resource type="Animation" id="Animation_1tlln"]
+resource_name = "bump"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClawSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.0333333, 0, -0.105, -0.0333333, 0, 0.0666667, 0, 0.105, -0.0666667, 0, 0.116667, 0, -0.08, -0.116667, 0, 0.116667, 0, 0, -0.116667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.65, 1)
+}
+
+[sub_resource type="Animation" id="Animation_c8gx3"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClawSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ftfq4"]
+_data = {
+"RESET": SubResource("Animation_c8gx3"),
+"bump": SubResource("Animation_1tlln")
+}
+
 [sub_resource type="Animation" id="Animation_10qqr"]
 length = 0.001
 tracks/0/type = "value"
@@ -63,36 +97,10 @@ tracks/0/keys = {
 "update": 1,
 "values": [true]
 }
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ClawSprite:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_ieh2g"]
-resource_name = "bump"
-step = 0.05
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ClawSprite:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
-"points": PackedFloat32Array(0, 0, 0, 0, 0, -0.10472, -0.1, 0, 0.1, 0, 0.10472, -0.1, 0, 0.1, 0, -0.08, -0.1, 0, 0.1, 0, 0, -0.1, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.65, 1)
-}
 
 [sub_resource type="Animation" id="Animation_patul"]
 resource_name = "invincible"
-loop_mode = 1
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -100,16 +108,15 @@ tracks/0/path = NodePath("ClawSprite:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [true, false]
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ypmtt"]
 _data = {
 "RESET": SubResource("Animation_10qqr"),
-"bump": SubResource("Animation_ieh2g"),
 "invincible": SubResource("Animation_patul")
 }
 
@@ -146,14 +153,10 @@ debug_color = Color(0.643137, 0.521569, 0, 0.419608)
 position = Vector2(0, 8)
 collision_layer = 0
 collision_mask = 4
-monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea"]
 shape = SubResource("CircleShape2D_jehkn")
 debug_color = Color(0.726223, 3.41728e-06, 5.77569e-07, 0.419608)
-
-[node name="InvincibleTimer" type="Timer" parent="."]
-one_shot = true
 
 [node name="Grab_SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_8y0ge")
@@ -177,7 +180,12 @@ stream = ExtResource("8_jada8")
 volume_db = -12.0
 bus = &"SFX"
 
-[node name="player_anim" type="AnimationPlayer" parent="."]
+[node name="ClawAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ftfq4")
+}
+
+[node name="InvincibleAnim" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ypmtt")
 }
@@ -185,5 +193,3 @@ libraries = {
 [connection signal="area_entered" from="GrabArea" to="." method="on_grab_area_entered"]
 [connection signal="area_exited" from="GrabArea" to="." method="on_grab_area_exited"]
 [connection signal="body_entered" from="HurtArea" to="." method="on_hurt_area_entered"]
-[connection signal="body_exited" from="HurtArea" to="." method="on_hurt_area_exited"]
-[connection signal="timeout" from="InvincibleTimer" to="." method="on_invincible_timeout"]

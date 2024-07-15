@@ -5,9 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://f1s1mvmcuo6p" path="res://Sprites/ParallaxBG/BG_Near.png" id="3_5cuoy"]
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
-scroll_limit_end = Vector2(0, -256)
 
 [node name="FarLayer" type="ParallaxLayer" parent="."]
+position = Vector2(0, -8)
 motion_scale = Vector2(0.3, 0.3)
 motion_mirroring = Vector2(0, 144)
 

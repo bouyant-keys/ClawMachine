@@ -120,6 +120,7 @@ bus = &"Music"
 
 [node name="MainLevel" parent="." instance=ExtResource("1_bu0eb")]
 gm_path = NodePath("../GameManager")
+start_level = 6
 
 [node name="Chain" parent="." instance=ExtResource("4_pdtj6")]
 base_path = NodePath("../ChainBase")
@@ -141,6 +142,10 @@ position = Vector2(80, 11)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(80, 72)
+limit_left = 0
+limit_top = 0
+limit_right = 160
+limit_bottom = 288
 script = ExtResource("5_kpbsb")
 player_path = NodePath("../Player")
 
@@ -185,7 +190,7 @@ script = ExtResource("9_btm2a")
 [connection signal="update_camera" from="GameManager" to="Camera2D" method="update_camera_pos"]
 [connection signal="goal_position" from="MainLevel" to="Player" method="set_goal"]
 [connection signal="screen_wipe" from="MainLevel" to="CanvasLayer/TransitionShader" method="transition"]
-[connection signal="update_camera" from="MainLevel" to="Camera2D" method="update_camera_pos"]
+[connection signal="set_cam_limit" from="MainLevel" to="Camera2D" method="set_cam_limit"]
 [connection signal="cam_shake" from="Player" to="Camera2D" method="camera_shake"]
 [connection signal="goal_grabbed" from="Player" to="CanvasLayer/GameDisplay" method="update_depth_fill"]
 [connection signal="obj_nearby" from="Player" to="CanvasLayer/UIController" method="highlight_grab"]

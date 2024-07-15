@@ -9,8 +9,6 @@ const PULL_VEL_X := 60.0
 
 var health := 3
 var grab_obj : Grab_Block
-var hurting := false
-var in_center_screen := false
 var moving := false
 var start_pos : Vector2
 var goal : Node2D
@@ -27,12 +25,13 @@ var y_dir := 0.0
 @onready var grab_sprite = $GrabObj_Sprite as Sprite2D
 @onready var hurt_area: Area2D = $HurtArea
 @onready var remote_trans = $RemoteTransform2D as RemoteTransform2D
-@onready var invi_timer: Timer = $InvincibleTimer
-@onready var player_anim: AnimationPlayer = $player_anim
+@onready var claw_anim: AnimationPlayer = $ClawAnim
+@onready var invincible_anim: AnimationPlayer = $InvincibleAnim
 @onready var grab_sfx = $Grab_SFX as AudioStreamPlayer
 @onready var clamp_sfx = $Clamp_SFX as AudioStreamPlayer
 @onready var bump_sfx: AudioStreamPlayer = $Bump_SFX
 @onready var move_sfx: AudioStreamPlayer = $Move_SFX
+@onready var zap_sfx: AudioStreamPlayer = $Zap_SFX
 
 signal player_lose
 signal update_health(int)
@@ -57,7 +56,9 @@ func _physics_process(delta):
 	velocity = Vector2(x_vel, y_vel) * delta
 	
 	check_dist_from_goal()
-	move_and_slide()
+	if move_and_slide():
+		var collision := get_last_slide_collision()
+		if velocity.length() != 0.0: on_bump(collision.get_position())
 
 func check_dist_from_goal() ->void:
 	if grabbed_goal: return
@@ -85,24 +86,14 @@ func set_goal(obj:Node2D) ->void:
 	print("Dist to goal from start_pos: " + str(total_goal_dist))
 
 # Needs to be activated from somewhere
-func on_bump() ->void:
-	player_anim.play("bump")
-	bump_sfx.pitch_scale = randf_range(1.0, 2.5)
-	bump_sfx.play()
-	wall_bumped.emit(position) #maybe pass collision point ?
-
-func on_hit() ->void:
-	health -= 1
-	emit_signal("update_health", health)
-	
-	if health != 0:
-		invi_timer.start()
-		player_anim.play("invincible")
-	else:
-		GameManager.deaths += 1
-		player_lose.emit()
+func on_bump(pos:Vector2) ->void:
+	claw_anim.play("bump")
+	#bump_sfx.pitch_scale = randf_range(1.0, 2.5)
+	#bump_sfx.play()
+	wall_bumped.emit(pos) #maybe pass collision point ?
 
 # Grab / Release Functions
+
 func on_grab_pressed() ->void:
 	if !grabbing: grab()
 	else: release()
@@ -139,14 +130,24 @@ func release() ->void:
 	claw_sprite.play("Open")
 	grab_obj = null
 
-# Timer Timeouts
+# Hurt Functions
 
-func on_invincible_timeout() ->void:
-	if !hurting:
-		player_anim.stop()
-		return
+func on_hit() ->void:
+	zap_sfx.play()
+	health -= 1
+	emit_signal("update_health", health)
 	
-	on_hit()
+	if health != 0:
+		invincible_anim.play("invincible")
+	else:
+		GameManager.deaths += 1
+		emit_signal("player_lose")
+	
+	await invincible_anim.animation_finished
+	
+	if hurt_area.get_overlapping_areas().size() != 0:
+		print("still in hurt area")
+		on_hit()
 
 # Area Functions
 
@@ -167,14 +168,10 @@ func on_grab_area_exited(area:Area2D) ->void:
 		obj_nearby.emit(false)
 
 func on_hurt_area_entered(_body:Node2D) ->void:
-	if !hurting:
-		hurting = true
-		on_hit()
-	print("Hurting: " + str(hurting))
-
-func on_hurt_area_exited(_body:Node2D) ->void:
-	if hurt_area.get_overlapping_areas().size() == 0: hurting = false
-	print("Hurting: " + str(hurting))
+	print("Hurt area entered")
+	if invincible_anim.is_playing(): return
+	
+	on_hit()
 
 # Enable / Disable / Reset Functions
 
@@ -195,14 +192,14 @@ func disable_input() ->void:
 
 func reset() ->void:
 	if grabbing: release()
-	#change_player_state(PlayerState.IDLE)
+	
+	health = 3
+	emit_signal("update_health", health)
 	y_dir = 0.0
 	x_pos = 0.0
 	moving = false
 	grab_sprite.texture = null
 	claw_sprite.play("Open")
-	#vert_dir = 0.0
-	#up_direction = Vector2(0.0, -1.0)
 	velocity = Vector2.ZERO
 	position = start_pos
 

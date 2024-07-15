@@ -59,16 +59,16 @@ func lose() ->void:
 	transitioning = false
 	emit_signal("freeze_process", false)
 
-func change_floor(new_floor:int, dir:Vector2) ->void:
-	emit_signal("freeze_process", true)
-	transitioning = true
-	
-	await transition.fade_out(dir)
-	emit_signal("update_camera", Vector2(80.0, 72.0 + (144.0 * new_floor)))
-	
-	await transition.fade_in(dir)
-	emit_signal("freeze_process", false)
-	transitioning = false
+#func change_floor(new_floor:int, dir:Vector2) ->void:
+	#emit_signal("freeze_process", true)
+	#transitioning = true
+	#
+	#await transition.fade_out(dir)
+	#emit_signal("update_camera", Vector2(80.0, 72.0 + (144.0 * new_floor)))
+	#
+	#await transition.fade_in(dir)
+	#emit_signal("freeze_process", false)
+	#transitioning = false
 
 func set_pause() ->void:
 	if paused:
