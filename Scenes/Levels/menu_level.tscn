@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://btoxjwht5ysg8"]
+
+[ext_resource type="Script" path="res://Scripts/menu_level.gd" id="1_he73n"]
+
+[sub_resource type="Animation" id="Animation_ngysp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MenuCamera:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(80, 72)]
+}
+
+[sub_resource type="Animation" id="Animation_axsou"]
+resource_name = "menu_loop"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MenuCamera:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(80, 72), Vector2(80, 576)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gy6e5"]
+_data = {
+"RESET": SubResource("Animation_ngysp"),
+"menu_loop": SubResource("Animation_axsou")
+}
+
+[node name="MenuLevel" type="Node2D"]
+script = ExtResource("1_he73n")
+
+[node name="MenuCamera" type="Camera2D" parent="."]
+position = Vector2(80, 72)
+
+[node name="MenuCamAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gy6e5")
+}

@@ -22,8 +22,14 @@ func set_cam_limit(value:float) ->void:
 func update_camera_pos(new_pos:Vector2) ->void:
 	position = new_pos
 
+func camera_shake() ->void:
+	cam_anim.play("small_shake")
+
 func reset_camera() ->void:
 	position = start_pos
 
-func camera_shake() ->void:
-	cam_anim.play("small_shake")
+func activate_camera() ->void:
+	enabled = true
+
+func deactivate_camera() ->void:
+	enabled = false

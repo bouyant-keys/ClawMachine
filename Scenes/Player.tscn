@@ -49,20 +49,6 @@ b = Vector2(0, 24)
 [sub_resource type="CircleShape2D" id="CircleShape2D_jehkn"]
 radius = 8.0
 
-[sub_resource type="Animation" id="Animation_1tlln"]
-resource_name = "bump"
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ClawSprite:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
-"points": PackedFloat32Array(0, 0, 0, 0.0333333, 0, -0.105, -0.0333333, 0, 0.0666667, 0, 0.105, -0.0666667, 0, 0.116667, 0, -0.08, -0.116667, 0, 0.116667, 0, 0, -0.116667, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.65, 1)
-}
-
 [sub_resource type="Animation" id="Animation_c8gx3"]
 length = 0.001
 tracks/0/type = "bezier"
@@ -75,6 +61,20 @@ tracks/0/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_1tlln"]
+resource_name = "bump"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClawSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.0333333, 0, -0.105, -0.0333333, 0, 0.0666667, 0, 0.105, -0.0666667, 0, 0.116667, 0, -0.08, -0.116667, 0, 0.116667, 0, 0, -0.116667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.65, 1)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ftfq4"]

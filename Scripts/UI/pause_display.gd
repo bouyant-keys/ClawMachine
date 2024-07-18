@@ -10,3 +10,6 @@ func on_pause() ->void:
 func on_unpause() ->void:
 	pause_panel.hide()
 	pause_anim.stop()
+
+#func hide_self() ->void: hide()
+#func show_self() ->void: show()

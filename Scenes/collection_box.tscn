@@ -57,6 +57,7 @@ animations = [{
 }]
 
 [node name="CollectionBox" type="StaticBody2D"]
+collision_mask = 0
 script = ExtResource("1_18chk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -67,6 +68,9 @@ build_mode = 1
 polygon = PackedVector2Array(8, -8, 12, -8, 12, 7, -12, 7, -12, -8, -8, -8, -8, 3, 8, 3)
 
 [node name="CollectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionArea"]
 shape = SubResource("RectangleShape2D_n7l83")

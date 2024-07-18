@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://bix7bxbdv1uqr"]
+
+[ext_resource type="Script" path="res://Scripts/UI/UIMenu.gd" id="1_0hlau"]
+[ext_resource type="Texture2D" uid="uid://bhvb807ls8eta" path="res://Sprites/ChainBase.png" id="2_28uhc"]
+
+[node name="UIMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_0hlau")
+
+[node name="TitleText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "-game title-"
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_28uhc")
+stretch_mode = 0
+
+[connection signal="button_up" from="TextureButton" to="." method="on_start_pressed"]

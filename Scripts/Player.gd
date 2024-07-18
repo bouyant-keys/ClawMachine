@@ -184,12 +184,6 @@ func freeze(frozen:bool) ->void:
 		if y_dir != 0.0:
 			move_sfx.play()
 
-func enable_input() ->void:
-	input_enabled = true
-
-func disable_input() ->void:
-	input_enabled = false
-
 func reset() ->void:
 	if grabbing: release()
 	
@@ -202,5 +196,3 @@ func reset() ->void:
 	claw_sprite.play("Open")
 	velocity = Vector2.ZERO
 	position = start_pos
-
-

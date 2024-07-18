@@ -12,6 +12,8 @@ var paused := false
 #@onready var main_level: MainLevel = $"../MainLevel"
 @onready var transition: Transition_Shader = $"../CanvasLayer/TransitionShader"
 
+signal menu_process
+signal game_process
 signal reset_process
 signal freeze_process(bool)
 signal pause
@@ -20,21 +22,36 @@ signal update_camera(Vector2)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	call_deferred("intro")
+	call_deferred("menu")
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		if event.is_action_pressed("Pause") && !transitioning: set_pause()
+#func _input(event: InputEvent) -> void:
+	#if event is InputEventKey:
+		#if event.is_action_pressed("Pause") && !transitioning: set_pause()
 
-func intro() ->void:
+func menu() ->void:
+	#emit_signal("freeze_process", true)
+	emit_signal("menu_process")
+	transitioning = true
+	
+	await transition.fade_in(Vector2.ZERO)
+	transitioning = false
+	#emit_signal("freeze_process", false)
+
+func start() ->void:
+	print("starting")
 	emit_signal("freeze_process", true)
 	transitioning = true
+	
+	await transition.fade_out(Vector2.ZERO)
+	emit_signal("game_process")
+	emit_signal("reset_process")
 	
 	await transition.fade_in(Vector2.ZERO)
 	transitioning = false
 	emit_signal("freeze_process", false)
 
 func win() ->void:
+	print("win")
 	MainLevel.current_level += 1
 	emit_signal("freeze_process", true)
 	transitioning = true
@@ -49,6 +66,7 @@ func win() ->void:
 	emit_signal("freeze_process", false)
 
 func lose() ->void:
+	print("lose")
 	emit_signal("freeze_process", true)
 	transitioning = true
 	

@@ -11,6 +11,8 @@ signal pause_pressed
 func _ready() -> void:
 	controller_bg.hide()
 
+# In-game functions:
+
 func display_controls(set_hide:bool) ->void:
 	if !set_hide:
 		controller_bg.show()
@@ -34,3 +36,6 @@ func on_pause_pressed() ->void:
 
 func reset() ->void:
 	controller_bg.hide()
+
+func hide_self() ->void: hide()
+func show_self() ->void: show()

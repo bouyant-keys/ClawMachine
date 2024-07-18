@@ -1,6 +1,7 @@
 extends TileMap
 class_name Level
 
+@export var is_menu := false
 @export_node_path() var goal_path
 @export var cam_limit_y := 144.0
 

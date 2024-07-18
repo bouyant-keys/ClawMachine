@@ -51,3 +51,6 @@ func disable_arrows() ->void:
 func reset() ->void:
 	depth_meter.value = 0.0
 	depth_meter.texture_progress = normal_fill
+
+func hide_self() ->void: hide()
+func show_self() ->void: show()

@@ -1,14 +1,21 @@
-extends Node2D
+extends ParallaxBackground
 
-#@export var scroll_speed := 2.0
+@onready var game_far: ParallaxLayer = $Game_Far
+@onready var game_mid: ParallaxLayer = $Game_Mid
+@onready var menu_far: ParallaxLayer = $Menu_Far
+@onready var menu_mid: ParallaxLayer = $Menu_Mid
+@onready var menu_near: ParallaxLayer = $Menu_Near
 
-@export_node_path() var player_path
+func set_menu_background() ->void:
+	game_far.hide()
+	game_mid.hide()
+	menu_far.show()
+	menu_mid.show()
+	menu_near.show()
 
-@onready var player : Node2D = get_node(player_path)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	#scroll_base_offset.y = player.global_position.y
-	#print(scroll_offset)
-	#var new_offset := Vector2(0.0, scroll_speed * delta)
-	position = Vector2(0.0, player.position.y)
+func set_game_background() ->void:
+	game_far.show()
+	game_mid.show()
+	menu_far.hide()
+	menu_mid.hide()
+	menu_near.hide()
