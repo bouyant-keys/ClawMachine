@@ -1,6 +1,6 @@
 extends ColorRect
 
-var current_pattern = 0
+@export var current_pattern = 0
 
 func _ready():
 	show()

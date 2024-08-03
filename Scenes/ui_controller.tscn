@@ -223,6 +223,7 @@ is_grab_button = true
 press_sfx_path = NodePath("../UIButton_SFX")
 
 [node name="Highlight" type="TextureRect" parent="ControllerBG/ControllerBar/GrabButton"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -255,14 +256,6 @@ press_sfx_path = NodePath("../UIButton_SFX")
 stream = ExtResource("5_wvpgk")
 volume_db = -6.0
 bus = &"SFX"
-
-[node name="MainMenuUI" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [connection signal="h_dir_changed" from="ControllerBG/ControllerBar/Knob" to="." method="on_h_slider_changed"]
 [connection signal="v_dir_changed" from="ControllerBG/ControllerBar/Knob" to="." method="on_v_slider_changed"]

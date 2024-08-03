@@ -5,6 +5,7 @@ static var game_completed_once := false
 static var deaths := 0
 static var times_zapped := 0
 static var total_time := 0 # value in miliseconds
+static var instance : GameManager
 
 var transitioning := false
 var paused := false
@@ -22,6 +23,11 @@ signal update_camera(Vector2)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if instance == null:
+		instance = self
+	else:
+		self.queue_free()
+	
 	call_deferred("menu")
 
 #func _input(event: InputEvent) -> void:
@@ -37,8 +43,9 @@ func menu() ->void:
 	transitioning = false
 	#emit_signal("freeze_process", false)
 
-func start() ->void:
+func start(level:int = 0) ->void:
 	print("starting")
+	MainLevel.current_level = level
 	emit_signal("freeze_process", true)
 	transitioning = true
 	

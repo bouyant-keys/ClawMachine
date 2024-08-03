@@ -6,8 +6,6 @@ var goal_fill := preload("res://Sprites/UI/FillFrames/DepthFillAnim.tres") as An
 #var off_hp_sprite = preload("res://Sprites/UI/hpoff_unit.png") as Texture2D
 
 @onready var depth_meter: TextureProgressBar = $DepthMeter
-@onready var t_arrows: TextureRect = $TopArrows
-@onready var b_arrows: TextureRect = $BottomArrows
 @onready var ui_anim: AnimationPlayer = $DisplayAnim
 @onready var hp_units = [$HBoxContainer/TextureRect as TextureRect, 
 							$HBoxContainer/TextureRect2 as TextureRect, 
@@ -32,21 +30,21 @@ func update_depth_fill(active:bool) ->void:
 	else:
 		depth_meter.texture_progress = normal_fill
 
-func enable_arrows(top_arrows:bool) ->void:
-	if top_arrows: 
-		t_arrows.show()
-		b_arrows.hide()
-	else:
-		t_arrows.hide()
-		b_arrows.show()
-	
-	ui_anim.play("ArrowBlink")
+#func enable_arrows(top_arrows:bool) ->void:
+	#if top_arrows: 
+		#t_arrows.show()
+		#b_arrows.hide()
+	#else:
+		#t_arrows.hide()
+		#b_arrows.show()
+	#
+	#ui_anim.play("ArrowBlink")
 
-func disable_arrows() ->void:
-	if ui_anim.is_playing(): ui_anim.stop()
-	
-	t_arrows.hide()
-	b_arrows.hide()
+#func disable_arrows() ->void:
+	#if ui_anim.is_playing(): ui_anim.stop()
+	#
+	#t_arrows.hide()
+	#b_arrows.hide()
 
 func reset() ->void:
 	depth_meter.value = 0.0

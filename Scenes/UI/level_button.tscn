@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://ceu8hrymme0il"]
+
+[ext_resource type="Script" path="res://Scenes/UI/LevelButton.gd" id="2_5cej4"]
+
+[node name="LevelButton" type="TextureButton"]
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("2_5cej4")
+
+[connection signal="pressed" from="." to="." method="on_level_button_pressed"]

@@ -13,7 +13,8 @@ func _ready() -> void:
 func on_area_entered(body:Node2D) ->void:
 	var collect_obj := body as Grab_Block
 	if collect_obj.block_data.get_obj_action() == BlockData.Object_Action.WIN:
-		emit_signal("win_signal")
+		#emit_signal("win_signal")
+		GameManager.instance.win()
 
 func display_arrow(active:bool) ->void: pass
 	#arrow.visible = active

@@ -1,0 +1,7 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://djcwu1llul6a4"]
+
+[ext_resource type="Texture2D" uid="uid://daj5absay0ltj" path="res://Sprites/UI/LevelIcons.png" id="1_68twa"]
+
+[resource]
+texture = ExtResource("1_68twa")
+region_rect = Rect2(0, 0, 15.5141, 15.8923)
