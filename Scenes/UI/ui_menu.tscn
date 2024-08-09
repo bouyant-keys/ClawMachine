@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bix7bxbdv1uqr"]
+[gd_scene load_steps=26 format=3 uid="uid://bix7bxbdv1uqr"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UIMenu.gd" id="1_0hlau"]
 [ext_resource type="Texture2D" uid="uid://pqxc0rtgsnce" path="res://Sprites/MenuTitle.png" id="2_ebojs"]
@@ -10,7 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://brrq0m2xrngja" path="res://Sprites/ClawOpen_Swap.png" id="6_w156f"]
 [ext_resource type="Texture2D" uid="uid://b7tgbrmm17ny3" path="res://Sprites/Chain_LinkLong.png" id="7_0c8p1"]
 [ext_resource type="Texture2D" uid="uid://daj5absay0ltj" path="res://Sprites/UI/LevelIcons.png" id="7_0iwv7"]
+[ext_resource type="Texture2D" uid="uid://7m33ey4h1lpe" path="res://Sprites/UI/LvlSelectButton.png" id="7_3jc3s"]
 [ext_resource type="PackedScene" uid="uid://ceu8hrymme0il" path="res://Scenes/UI/level_button.tscn" id="7_qo24h"]
+[ext_resource type="AudioStream" uid="uid://f7dku23xcf24" path="res://Audio/Effects/Grab.wav" id="12_dklwc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lyw0l"]
 atlas = ExtResource("7_0iwv7")
@@ -60,91 +62,6 @@ region = Rect2(32, 32, 16, 16)
 atlas = ExtResource("7_0iwv7")
 region = Rect2(48, 32, 16, 16)
 
-[sub_resource type="Animation" id="Animation_x4nsn"]
-resource_name = "StartAnim"
-length = 3.0
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ClawSprite:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(32, -0.25, 0, 0.25, 0, 29.7209, -0.25, 0, 0.25, 0, 33.7765, -0.25, 0, 0.25, 0, 32, -0.2, 0.681541, 0.25, 0),
-"times": PackedFloat32Array(0, 1.4, 2.2, 3)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ClawSprite:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(2, 0),
-"points": PackedFloat32Array(-48, 0, 0, 0, 63.4056, 62, -0.333333, 0, 0, 0),
-"times": PackedFloat32Array(0, 3)
-}
-
-[sub_resource type="Animation" id="Animation_2qfi2"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ClawSprite:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(32, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ClawSprite:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-48, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_tjmtt"]
-resource_name = "IdleLoop"
-length = 3.5
-loop_mode = 1
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ClawSprite:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(3, 2, 2, 2),
-"points": PackedFloat32Array(32, -0.5, -2.71674, 0.5, 2.71674, 33.2451, -0.433333, 0, 0.333333, 0, 25.2325, -0.333333, 0, 0.4, 0, 32, -0.4, -2.43417, 0, 0),
-"times": PackedFloat32Array(0, 1.3, 2.3, 3.5)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ClawSprite:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(3, 2, 2, 3),
-"points": PackedFloat32Array(62, -0.4, -1.74171, 0.4, 1.74171, 64.87, -0.457639, 1.72117, 0.3, -1.1283, 59.785, -0.33189, 0.583831, 0.4, -0.703644, 62, -0.2, -1.44695, 0.2, 1.44695),
-"times": PackedFloat32Array(0, 1.4, 2.4, 3.5)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_m04x3"]
-_data = {
-"IdleLoop": SubResource("Animation_tjmtt"),
-"RESET": SubResource("Animation_2qfi2"),
-"StartAnim": SubResource("Animation_x4nsn")
-}
-
 [node name="UIMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -160,11 +77,12 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.347
-offset_left = 45.0
-offset_top = 8.0
-offset_right = -45.0
-offset_bottom = 8.032
+offset_left = 43.0
+offset_top = 4.0
+offset_right = -79.9999
+offset_bottom = -17.968
 grow_horizontal = 2
+scale = Vector2(2, 2)
 texture = ExtResource("2_ebojs")
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
@@ -188,8 +106,7 @@ texture_normal = ExtResource("2_etfsf")
 texture_pressed = ExtResource("3_l85rl")
 stretch_mode = 0
 
-[node name="ButtonContainer" type="VBoxContainer" parent="."]
-visible = false
+[node name="StartButtonContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2
@@ -202,12 +119,12 @@ theme_override_constants/separation = -5
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="StartButton" type="Panel" parent="ButtonContainer"]
+[node name="StartButton" type="Panel" parent="StartButtonContainer"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("5_cc2ot")
 
-[node name="TextureRect" type="TextureRect" parent="ButtonContainer/StartButton"]
+[node name="StartTexture" type="TextureRect" parent="StartButtonContainer/StartButton"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -219,7 +136,7 @@ grow_vertical = 2
 texture = ExtResource("2_etfsf")
 stretch_mode = 5
 
-[node name="Button" type="Button" parent="ButtonContainer/StartButton"]
+[node name="Button" type="Button" parent="StartButtonContainer/StartButton"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -231,21 +148,25 @@ offset_top = -11.0
 offset_bottom = 11.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(0.501961, 0.501961, 0.501961, 1)
-theme_override_colors/font_hover_color = Color(0.25098, 0.25098, 0.25098, 1)
-theme_override_colors/font_focus_color = Color(0.25098, 0.25098, 0.25098, 1)
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_colors/font_pressed_color = Color(0.25098, 0.25098, 0.25098, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_r14mh")
 theme_override_styles/normal = ExtResource("5_cc2ot")
-text = "Start Game "
+theme_override_styles/hover = ExtResource("5_cc2ot")
+theme_override_styles/pressed = ExtResource("5_cc2ot")
+theme_override_styles/disabled = ExtResource("5_cc2ot")
+theme_override_styles/focus = ExtResource("5_cc2ot")
+text = "- Start Game "
 alignment = 0
 
-[node name="LevelSelectbutton" type="Panel" parent="ButtonContainer"]
+[node name="LevelSelectbutton" type="Panel" parent="StartButtonContainer"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("5_cc2ot")
 
-[node name="TextureRect" type="TextureRect" parent="ButtonContainer/LevelSelectbutton"]
+[node name="LvlSelectTexture" type="TextureRect" parent="StartButtonContainer/LevelSelectbutton"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -254,10 +175,10 @@ offset_top = -11.0
 offset_right = 16.0
 offset_bottom = 11.0
 grow_vertical = 2
-texture = ExtResource("2_etfsf")
+texture = ExtResource("7_3jc3s")
 stretch_mode = 5
 
-[node name="Button" type="Button" parent="ButtonContainer/LevelSelectbutton"]
+[node name="Button" type="Button" parent="StartButtonContainer/LevelSelectbutton"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -269,15 +190,21 @@ offset_top = -11.0
 offset_bottom = 11.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(0.501961, 0.501961, 0.501961, 1)
-theme_override_colors/font_hover_color = Color(0.25098, 0.25098, 0.25098, 1)
-theme_override_colors/font_focus_color = Color(0.25098, 0.25098, 0.25098, 1)
+theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+theme_override_colors/font_pressed_color = Color(0.25098, 0.25098, 0.25098, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_r14mh")
 theme_override_styles/normal = ExtResource("5_cc2ot")
-text = "Level Select"
+theme_override_styles/hover = ExtResource("5_cc2ot")
+theme_override_styles/pressed = ExtResource("5_cc2ot")
+theme_override_styles/disabled = ExtResource("5_cc2ot")
+theme_override_styles/focus = ExtResource("5_cc2ot")
+text = "- Level Select"
+alignment = 0
 
-[node name="HFlowContainer" type="HFlowContainer" parent="."]
+[node name="LevelButtonContainer" type="HFlowContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.25
@@ -291,98 +218,155 @@ grow_vertical = 0
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Level1" parent="HFlowContainer" instance=ExtResource("7_qo24h")]
+[node name="Level1" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_lyw0l")
 
-[node name="Level2" parent="HFlowContainer" instance=ExtResource("7_qo24h")]
+[node name="Level2" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_mkeck")
 level_index = 1
 
-[node name="Level3" parent="HFlowContainer" instance=ExtResource("7_qo24h")]
+[node name="Level3" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_80ect")
 level_index = 2
 
-[node name="Level4" parent="HFlowContainer" instance=ExtResource("7_qo24h")]
+[node name="Level4" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_e8asp")
 level_index = 3
 
-[node name="Level5" parent="HFlowContainer" instance=ExtResource("7_qo24h")]
+[node name="Level5" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_25fof")
 level_index = 4
 
-[node name="Level6" parent="HFlowContainer" instance=ExtResource("7_qo24h")]
+[node name="Level6" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_6yhr3")
 level_index = 5
 
-[node name="Level7" parent="HFlowContainer" instance=ExtResource("7_qo24h")]
+[node name="Level7" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_4orlr")
 level_index = 6
 
-[node name="Level8" parent="HFlowContainer" instance=ExtResource("7_qo24h")]
+[node name="Level8" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_gogkq")
 level_index = 7
 
-[node name="Level9" parent="HFlowContainer" instance=ExtResource("7_qo24h")]
+[node name="Level9" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_6to8n")
 level_index = 8
 
-[node name="Level10" parent="HFlowContainer" instance=ExtResource("7_qo24h")]
+[node name="Level10" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_eppl4")
 level_index = 9
 
-[node name="Level11" parent="HFlowContainer" instance=ExtResource("7_qo24h")]
+[node name="Level11" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_47eg7")
 level_index = 10
 
-[node name="Level12" parent="HFlowContainer" instance=ExtResource("7_qo24h")]
+[node name="Level12" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_08tfe")
 level_index = 11
 
-[node name="Claw" type="Node2D" parent="."]
+[node name="Claw" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 24.0
+offset_top = -16.0
+offset_right = 24.0
+offset_bottom = -16.0
 script = ExtResource("6_qmft7")
 
-[node name="ClawSprite" type="Sprite2D" parent="Claw"]
+[node name="ClawSprite" type="TextureRect" parent="Claw"]
 z_index = 10
-position = Vector2(32, -48)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("6_w156f")
+stretch_mode = 5
 
-[node name="Chain" type="Sprite2D" parent="Claw/ClawSprite"]
+[node name="Chain" type="TextureRect" parent="Claw/ClawSprite"]
 z_as_relative = false
 texture_filter = 1
 texture_repeat = 2
-position = Vector2(0, -88)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -136.0
+offset_right = 8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("7_0c8p1")
-region_enabled = true
-region_rect = Rect2(0, 0, 16, 160)
+stretch_mode = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Claw"]
-libraries = {
-"": SubResource("AnimationLibrary_m04x3")
-}
+[node name="GrabObj" type="TextureRect" parent="Claw/ClawSprite"]
+visible = false
+z_as_relative = false
+texture_filter = 1
+texture_repeat = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -3.0
+offset_right = 8.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_etfsf")
+stretch_mode = 5
+
+[node name="Grab_SFX" type="AudioStreamPlayer" parent="Claw"]
+stream = ExtResource("12_dklwc")
+bus = &"SFX"
+
+[node name="StopMouseInput" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("5_cc2ot")
 
 [connection signal="button_up" from="TextureButton" to="." method="on_start_pressed"]
-[connection signal="button_up" from="ButtonContainer/StartButton/Button" to="." method="on_start_pressed"]
-[connection signal="load_level" from="HFlowContainer/Level1" to="." method="on_level_pressed"]
-[connection signal="load_level" from="HFlowContainer/Level2" to="." method="on_level_pressed"]
-[connection signal="load_level" from="HFlowContainer/Level3" to="." method="on_level_pressed"]
-[connection signal="load_level" from="HFlowContainer/Level4" to="." method="on_level_pressed"]
-[connection signal="load_level" from="HFlowContainer/Level5" to="." method="on_level_pressed"]
-[connection signal="load_level" from="HFlowContainer/Level6" to="." method="on_level_pressed"]
-[connection signal="load_level" from="HFlowContainer/Level7" to="." method="on_level_pressed"]
-[connection signal="load_level" from="HFlowContainer/Level8" to="." method="on_level_pressed"]
-[connection signal="load_level" from="HFlowContainer/Level9" to="." method="on_level_pressed"]
-[connection signal="load_level" from="HFlowContainer/Level10" to="." method="on_level_pressed"]
-[connection signal="load_level" from="HFlowContainer/Level11" to="." method="on_level_pressed"]
-[connection signal="load_level" from="HFlowContainer/Level12" to="." method="on_level_pressed"]
+[connection signal="button_up" from="StartButtonContainer/StartButton/Button" to="." method="on_start_pressed"]
+[connection signal="button_up" from="StartButtonContainer/LevelSelectbutton/Button" to="." method="on_level_select_pressed"]
+[connection signal="load_level" from="LevelButtonContainer/Level1" to="." method="on_level_pressed"]
+[connection signal="load_level" from="LevelButtonContainer/Level2" to="." method="on_level_pressed"]
+[connection signal="load_level" from="LevelButtonContainer/Level3" to="." method="on_level_pressed"]
+[connection signal="load_level" from="LevelButtonContainer/Level4" to="." method="on_level_pressed"]
+[connection signal="load_level" from="LevelButtonContainer/Level5" to="." method="on_level_pressed"]
+[connection signal="load_level" from="LevelButtonContainer/Level6" to="." method="on_level_pressed"]
+[connection signal="load_level" from="LevelButtonContainer/Level7" to="." method="on_level_pressed"]
+[connection signal="load_level" from="LevelButtonContainer/Level8" to="." method="on_level_pressed"]
+[connection signal="load_level" from="LevelButtonContainer/Level9" to="." method="on_level_pressed"]
+[connection signal="load_level" from="LevelButtonContainer/Level10" to="." method="on_level_pressed"]
+[connection signal="load_level" from="LevelButtonContainer/Level11" to="." method="on_level_pressed"]
+[connection signal="load_level" from="LevelButtonContainer/Level12" to="." method="on_level_pressed"]

@@ -5,7 +5,7 @@ static var input_enabled := true
 static var grabbing := false
 
 const MAX_VEL_Y := 1000.0
-const PULL_VEL_X := 60.0
+const PULL_VEL_X := 120.0
 
 var health := 3
 var grab_obj : Grab_Block
@@ -20,6 +20,7 @@ var y_dir := 0.0
 
 #enum PlayerState {IDLE, MOVING}
 #@export var current_player_state : PlayerState
+@export var player_speed : float
 
 @onready var claw_sprite = $ClawSprite as AnimatedSprite2D
 @onready var grab_sprite = $GrabObj_Sprite as Sprite2D

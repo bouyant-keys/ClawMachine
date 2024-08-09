@@ -171,9 +171,11 @@ libraries = {
 [node name="UIMenu" parent="CanvasLayer" instance=ExtResource("13_77ex3")]
 
 [node name="TransitionShader" parent="CanvasLayer" instance=ExtResource("6_x3bfk")]
+z_index = 99
 
 [node name="PaletteShader" type="ColorRect" parent="CanvasLayer"]
 visible = false
+z_index = 100
 material = SubResource("ShaderMaterial_b3eom")
 anchors_preset = 15
 anchor_right = 1.0
@@ -200,6 +202,7 @@ current_pattern = 3
 [connection signal="menu_process" from="GameManager" to="LevelObjects/GameCamera" method="deactivate_camera"]
 [connection signal="menu_process" from="GameManager" to="CanvasLayer/GameDisplay" method="hide_self"]
 [connection signal="menu_process" from="GameManager" to="CanvasLayer/UIController" method="hide_self"]
+[connection signal="menu_process" from="GameManager" to="CanvasLayer/UIMenu" method="on_menu_load"]
 [connection signal="menu_process" from="GameManager" to="CanvasLayer/ParallaxBackground" method="set_menu_background"]
 [connection signal="pause" from="GameManager" to="CanvasLayer/PauseDisplay" method="on_pause"]
 [connection signal="reset_process" from="GameManager" to="MainLevel" method="load_level"]

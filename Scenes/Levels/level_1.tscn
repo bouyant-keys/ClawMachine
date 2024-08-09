@@ -1,47 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://d14csjxl4pxdr"]
+[gd_scene load_steps=5 format=3 uid="uid://d14csjxl4pxdr"]
 
 [ext_resource type="TileSet" uid="uid://bfrx7f5cwkkor" path="res://Sprites/TileSets/TileSet_Main.tres" id="1_3838a"]
 [ext_resource type="Script" path="res://Scripts/Level.gd" id="2_0ky0g"]
 [ext_resource type="PackedScene" uid="uid://d258hxwh1n74s" path="res://Scenes/Objects/Obj_Goal.tscn" id="4_m678w"]
-[ext_resource type="Texture2D" uid="uid://b0x8usm3wlun4" path="res://Sprites/GoalArrow.png" id="5_kiwh3"]
 [ext_resource type="PackedScene" uid="uid://dm0q2rxk4vbev" path="res://Scenes/collection_box.tscn" id="7_y8nam"]
-
-[sub_resource type="Animation" id="Animation_35ytj"]
-resource_name = "Blink"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_7wiex"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_nkyeg"]
-_data = {
-"Blink": SubResource("Animation_35ytj"),
-"RESET": SubResource("Animation_7wiex")
-}
 
 [node name="Level_1" type="TileMap"]
 tile_set = ExtResource("1_3838a")
@@ -52,15 +14,6 @@ goal_path = NodePath("Goal")
 
 [node name="Goal" parent="." instance=ExtResource("4_m678w")]
 position = Vector2(48, 88)
-
-[node name="GoalArrow" type="Sprite2D" parent="."]
-position = Vector2(48, 72)
-texture = ExtResource("5_kiwh3")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GoalArrow"]
-libraries = {
-"": SubResource("AnimationLibrary_nkyeg")
-}
 
 [node name="CollectionBox" parent="." instance=ExtResource("7_y8nam")]
 position = Vector2(120, 80)

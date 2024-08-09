@@ -1,11 +1,7 @@
 extends StaticBody2D
 
 @onready var area_sprite: AnimatedSprite2D = $CollectionArea/AreaSprite
-#@onready var stars: GPUParticles2D = $StarParticles
-#@onready var arrow: Sprite2D = $ArrowSprite
-
-signal win_signal
-
+@onready var arrow_sprite: Sprite2D = $ArrowSprite
 
 func _ready() -> void:
 	area_sprite.play("default")
@@ -13,9 +9,7 @@ func _ready() -> void:
 func on_area_entered(body:Node2D) ->void:
 	var collect_obj := body as Grab_Block
 	if collect_obj.block_data.get_obj_action() == BlockData.Object_Action.WIN:
-		#emit_signal("win_signal")
 		GameManager.instance.win()
 
-func display_arrow(active:bool) ->void: pass
-	#arrow.visible = active
-	#stars.emitting = active
+func display_arrow(active:bool) ->void:
+	arrow_sprite.visible = active

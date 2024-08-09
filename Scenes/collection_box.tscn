@@ -1,31 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://dm0q2rxk4vbev"]
+[gd_scene load_steps=10 format=3 uid="uid://dm0q2rxk4vbev"]
 
 [ext_resource type="Script" path="res://Scripts/collection_box.gd" id="1_18chk"]
 [ext_resource type="Texture2D" uid="uid://csm5axgy88i58" path="res://Sprites/TileSets/WinAreaSet.png" id="1_fu3q7"]
-[ext_resource type="Texture2D" uid="uid://dpc243doppvat" path="res://Sprites/TileSets/Stars.png" id="2_67yjx"]
 [ext_resource type="Texture2D" uid="uid://brv2x5rv8o60w" path="res://Sprites/TileSets/WinArea_Set.png" id="3_rs5ih"]
+[ext_resource type="Texture2D" uid="uid://c8qnrsc4c051h" path="res://Sprites/UI/VArrowWhiteAnim.tres" id="3_yh68h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n7l83"]
 size = Vector2(8, 8)
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_iekky"]
-particles_animation = true
-particles_anim_h_frames = 4
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ljlu6"]
-particle_flag_disable_z = true
-emission_shape = 2
-emission_sphere_radius = 16.0
-direction = Vector3(0, 0, 0)
-spread = 180.0
-orbit_velocity_min = 0.01
-orbit_velocity_max = 0.05
-radial_velocity_min = 6.0
-radial_velocity_max = 6.0
-gravity = Vector3(0, 0, 0)
-anim_offset_max = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70ioy"]
 atlas = ExtResource("3_rs5ih")
@@ -63,6 +44,11 @@ script = ExtResource("1_18chk")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_fu3q7")
 
+[node name="ArrowSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_yh68h")
+offset = Vector2(0, -12)
+flip_v = true
+
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 build_mode = 1
 polygon = PackedVector2Array(8, -8, 12, -8, 12, 7, -12, 7, -12, -8, -8, -8, -8, 3, 8, 3)
@@ -75,16 +61,6 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionArea"]
 shape = SubResource("RectangleShape2D_n7l83")
 debug_color = Color(0.486275, 0, 1, 0.419608)
-
-[node name="StarParticles" type="GPUParticles2D" parent="CollectionArea"]
-visible = false
-material = SubResource("CanvasItemMaterial_iekky")
-amount = 4
-process_material = SubResource("ParticleProcessMaterial_ljlu6")
-texture = ExtResource("2_67yjx")
-lifetime = 2.0
-interpolate = false
-fract_delta = false
 
 [node name="AreaSprite" type="AnimatedSprite2D" parent="CollectionArea"]
 position = Vector2(0, -5)
