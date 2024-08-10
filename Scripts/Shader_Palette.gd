@@ -7,7 +7,7 @@ func _ready():
 	change_palette(0)
 
 func _input(event: InputEvent) -> void:
-	if !GameManager.game_completed_once: return
+	#if !GameManager.game_completed_once: return
 	
 	if event is InputEventKey:
 		if event.is_action_pressed("Inc_Palette"): change_palette(1)

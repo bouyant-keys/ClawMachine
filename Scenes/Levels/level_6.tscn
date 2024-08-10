@@ -30,7 +30,7 @@ position = Vector2(64, 104)
 position = Vector2(128, 224)
 
 [node name="CollectionBox" parent="." instance=ExtResource("7_g6icc")]
-position = Vector2(48, 56)
+position = Vector2(32, 68)
 
 [connection signal="on_press" from="Button2" to="Door" method="open"]
 [connection signal="on_release" from="Button2" to="Door" method="close"]

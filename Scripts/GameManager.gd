@@ -11,6 +11,8 @@ var transitioning := false
 var paused := false
 
 #@onready var main_level: MainLevel = $"../MainLevel"
+@onready var win_sfx: AudioStreamPlayer = $WinSFX
+@onready var lose_sfx: AudioStreamPlayer = $LoseSFX
 @onready var transition: Transition_Shader = $"../CanvasLayer/TransitionShader"
 
 signal menu_process
@@ -44,7 +46,7 @@ func menu() ->void:
 	#emit_signal("freeze_process", false)
 
 func start(level:int = 0) ->void:
-	print("starting")
+	#print("starting")
 	MainLevel.current_level = level
 	emit_signal("freeze_process", true)
 	transitioning = true
@@ -57,11 +59,13 @@ func start(level:int = 0) ->void:
 	transitioning = false
 	emit_signal("freeze_process", false)
 
-func win() ->void:
-	print("win")
+func win() ->void: # Called by CollectionBox
+	#print("win")
 	MainLevel.current_level += 1
 	emit_signal("freeze_process", true)
 	transitioning = true
+	win_sfx.play()
+	await get_tree().create_timer(1.0) # Hold on the win for a little
 	
 	await transition.fade_out(Vector2.ZERO)
 	emit_signal("reset_process")
@@ -73,9 +77,11 @@ func win() ->void:
 	emit_signal("freeze_process", false)
 
 func lose() ->void:
-	print("lose")
+	#print("lose")
 	emit_signal("freeze_process", true)
 	transitioning = true
+	lose_sfx.play()
+	await get_tree().create_timer(1.0) # Hold on the lose for a little
 	
 	await transition.fade_out(Vector2.ZERO)
 	emit_signal("reset_process")

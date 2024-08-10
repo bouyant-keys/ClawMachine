@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://gxh1451tlop0"]
+[gd_scene load_steps=8 format=3 uid="uid://gxh1451tlop0"]
 
 [ext_resource type="Texture2D" uid="uid://b7xaoahas4r6w" path="res://Sprites/Blocks/Crate.png" id="1_d5a1a"]
 [ext_resource type="Script" path="res://Scripts/Grab_Block.gd" id="1_gw0l4"]
 [ext_resource type="Script" path="res://Scripts/Resources/BlockData.gd" id="2_axexp"]
+[ext_resource type="Texture2D" uid="uid://c8qnrsc4c051h" path="res://Sprites/UI/VArrowWhiteAnim.tres" id="4_pnu6r"]
 
 [sub_resource type="Resource" id="Resource_kr5r6"]
 script = ExtResource("2_axexp")
@@ -22,6 +23,11 @@ block_data = SubResource("Resource_kr5r6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_d5a1a")
+
+[node name="ArrowSprite" type="Sprite2D" parent="."]
+texture = ExtResource("4_pnu6r")
+offset = Vector2(0, -14)
+flip_v = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5nggr")

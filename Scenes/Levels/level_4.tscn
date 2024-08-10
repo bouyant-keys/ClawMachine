@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b316nwhiw8pkv"]
+[gd_scene load_steps=8 format=3 uid="uid://b316nwhiw8pkv"]
 
 [ext_resource type="TileSet" uid="uid://bfrx7f5cwkkor" path="res://Sprites/TileSets/TileSet_Main.tres" id="1_gkoog"]
 [ext_resource type="Script" path="res://Scripts/Level.gd" id="2_cq5h1"]
@@ -7,15 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://d3871c50y6jgn" path="res://Scenes/Mechanisms/door.tscn" id="5_b70ek"]
 [ext_resource type="PackedScene" uid="uid://dm0q2rxk4vbev" path="res://Scenes/collection_box.tscn" id="6_hnsr7"]
 [ext_resource type="PackedScene" uid="uid://ba2jovn5uijl4" path="res://Scenes/Mechanisms/button.tscn" id="6_wgxui"]
-[ext_resource type="PackedScene" uid="uid://ccdqwkrucicfk" path="res://Scenes/Triggers/cam_follow.tscn" id="7_gjdbe"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eecjs"]
-size = Vector2(128, 64)
 
 [node name="Level_4" type="TileMap"]
 tile_set = ExtResource("1_gkoog")
 format = 2
-layer_0/tile_data = PackedInt32Array(196608, 65536, 2, 262144, 262144, 2, 327680, 65536, 0, 393216, 65536, 2, 458752, 262144, 2, 524288, 65536, 0, 327681, 196609, 0, 393217, 1, 1, 458753, 1, 0, 524289, 131073, 2, 393218, 1, 2, 458754, 1, 0, 524290, 65537, 2, 458755, 196609, 0, 524292, 1, 1, 393221, 65537, 0, 458757, 196609, 1, 524293, 1, 0, 327686, 1, 2, 393222, 1, 0, 458758, 1, 0, 524294, 1, 0, 393223, 196609, 0, 524295, 196609, 0, 196617, 0, 2, 262153, 327680, 2, 327689, 0, 0, 393225, 0, 2, 458761, 327680, 2, 524297, 0, 0, 589824, 65536, 1, 655360, 65536, 2, 720896, 131072, 0, 589825, 1, 0, 655361, 1, 0, 720897, 262144, 0, 589826, 1, 2, 655362, 1, 0, 720898, 262144, 1, 589827, 196609, 1, 655363, 1, 0, 720899, 131072, 1, 589828, 1, 0, 655364, 1, 0, 720900, 262144, 0, 589829, 1, 0, 655365, 1, 0, 720901, 262144, 1, 589830, 1, 0, 655366, 1, 0, 720902, 131072, 1, 589831, 65537, 1, 655367, 131073, 2, 720903, 262144, 0, 589832, 196609, 1, 655368, 65537, 0, 720904, 262144, 1, 589833, 0, 1, 655369, 0, 2, 720905, 196608, 0, 0, 262144, 2, 9, 327680, 2, 8, 196608, 2, 1, 196608, 1, 2, 131072, 2, 3, 131072, 2, 4, 131072, 2, 5, 131072, 2, 6, 131072, 2, 7, 131072, 2, 65545, 0, 0, 131081, 0, 1, 65536, 65536, 0, 131072, 65536, 1)
+layer_0/tile_data = PackedInt32Array(196608, 65536, 2, 262144, 262144, 2, 327680, 65536, 0, 393216, 65536, 2, 458752, 262144, 2, 524288, 65536, 0, 458753, 1, 0, 458754, 1, 0, 524293, 1, 0, 393222, 1, 0, 458758, 1, 0, 524294, 1, 0, 196617, 0, 2, 262153, 327680, 2, 327689, 0, 0, 393225, 0, 2, 458761, 327680, 2, 524297, 0, 0, 589824, 65536, 1, 655360, 65536, 2, 720896, 131072, 0, 589825, 1, 0, 655361, 1, 0, 720897, 262144, 0, 655362, 1, 0, 720898, 262144, 1, 655363, 1, 0, 720899, 131072, 1, 589828, 1, 0, 655364, 1, 0, 720900, 262144, 0, 589829, 1, 0, 655365, 1, 0, 720901, 262144, 1, 589830, 1, 0, 655366, 1, 0, 720902, 131072, 1, 720903, 262144, 0, 720904, 262144, 1, 589833, 0, 1, 655369, 0, 2, 720905, 196608, 0, 0, 262144, 2, 9, 327680, 2, 8, 196608, 2, 1, 196608, 1, 2, 131072, 2, 3, 131072, 2, 4, 131072, 2, 5, 131072, 2, 6, 131072, 2, 7, 131072, 2, 65545, 0, 0, 131081, 0, 1, 65536, 65536, 0, 131072, 65536, 1)
 script = ExtResource("2_cq5h1")
 goal_path = NodePath("Goal")
 cam_limit_y = 208.0
@@ -35,12 +31,6 @@ position = Vector2(32, 104)
 
 [node name="CollectionBox" parent="." instance=ExtResource("6_hnsr7")]
 position = Vector2(80, 80)
-
-[node name="CamFollow" parent="." instance=ExtResource("7_gjdbe")]
-position = Vector2(80, 96)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CamFollow"]
-shape = SubResource("RectangleShape2D_eecjs")
 
 [connection signal="on_press" from="Button" to="Door" method="open"]
 [connection signal="on_release" from="Button" to="Door" method="close"]

@@ -1,14 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://birmp5yag4pm5"]
+[gd_scene load_steps=8 format=3 uid="uid://birmp5yag4pm5"]
 
 [ext_resource type="TileSet" uid="uid://bfrx7f5cwkkor" path="res://Sprites/TileSets/TileSet_Main.tres" id="1_tlnqu"]
 [ext_resource type="Script" path="res://Scripts/Level.gd" id="2_uvh8w"]
-[ext_resource type="PackedScene" uid="uid://ccdqwkrucicfk" path="res://Scenes/Triggers/cam_follow.tscn" id="4_lwp7w"]
 [ext_resource type="PackedScene" uid="uid://d258hxwh1n74s" path="res://Scenes/Objects/Obj_Goal.tscn" id="4_uurjf"]
 [ext_resource type="PackedScene" uid="uid://dm0q2rxk4vbev" path="res://Scenes/collection_box.tscn" id="5_ghj0e"]
 [ext_resource type="PackedScene" uid="uid://cl4ojyxc2f48a" path="res://Scenes/Mechanisms/moving_platform.tscn" id="5_vtjwv"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_olq34"]
-size = Vector2(128, 232)
 
 [sub_resource type="Curve2D" id="Curve2D_5x65d"]
 _data = {
@@ -30,12 +26,6 @@ script = ExtResource("2_uvh8w")
 goal_path = NodePath("Goal")
 cam_limit_y = 368.0
 
-[node name="CamFollow" parent="." instance=ExtResource("4_lwp7w")]
-position = Vector2(80, 176)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CamFollow"]
-shape = SubResource("RectangleShape2D_olq34")
-
 [node name="MovingPlatform" parent="." instance=ExtResource("5_vtjwv")]
 position = Vector2(88, 48)
 curve = SubResource("Curve2D_5x65d")
@@ -49,7 +39,7 @@ speed_scale = 0.3
 body_size = Vector2i(16, 16)
 
 [node name="Goal" parent="." instance=ExtResource("4_uurjf")]
-position = Vector2(104, 280)
+position = Vector2(32, 88)
 
 [node name="CollectionBox" parent="." instance=ExtResource("5_ghj0e")]
-position = Vector2(40, 84)
+position = Vector2(104, 308)

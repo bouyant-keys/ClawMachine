@@ -24,4 +24,4 @@ layer_0/tile_data = PackedInt32Array(327681, 0, 4, 393217, 0, 1, 458753, 0, 2, 4
 position = Vector2(104, 168)
 
 [node name="CollectionBox" parent="." instance=ExtResource("4_7hgaf")]
-position = Vector2(80, 68)
+position = Vector2(104, 68)

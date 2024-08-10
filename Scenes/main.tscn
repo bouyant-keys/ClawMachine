@@ -1,8 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://b3d7gawmwn128"]
+[gd_scene load_steps=30 format=3 uid="uid://b3d7gawmwn128"]
 
 [ext_resource type="PackedScene" uid="uid://006i5i72bun1" path="res://Scenes/main_level.tscn" id="1_bu0eb"]
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_ryie0"]
 [ext_resource type="Script" path="res://Scripts/MusicManager.gd" id="2_w01u1"]
+[ext_resource type="AudioStream" uid="uid://cx7e8k1xmoiiw" path="res://Audio/Effects/WinSFX.wav" id="2_x31a4"]
 [ext_resource type="AudioStream" uid="uid://cq5tj2wf5j7nl" path="res://Audio/Music/Blippy Trance.mp3" id="3_lp5p5"]
 [ext_resource type="PackedScene" uid="uid://ch4wglb7cfc7" path="res://Scenes/Player.tscn" id="3_nfab3"]
 [ext_resource type="PackedScene" uid="uid://ovd4lsqu07bh" path="res://Scenes/chain.tscn" id="4_pdtj6"]
@@ -12,12 +13,12 @@
 [ext_resource type="PackedScene" uid="uid://dpg5ed8ojadqn" path="res://Scenes/transition_shader.tscn" id="6_x3bfk"]
 [ext_resource type="Shader" path="res://Materials/SetColorPalette.gdshader" id="7_4qc8k"]
 [ext_resource type="Script" path="res://Scripts/BumpParticles.gd" id="7_eg0vb"]
-[ext_resource type="Texture2D" uid="uid://b8ckqp3m8in1g" path="res://Sprites/palettes_flip.png" id="8_6gf24"]
 [ext_resource type="Script" path="res://Scripts/Shader_Palette.gd" id="9_btm2a"]
 [ext_resource type="PackedScene" uid="uid://x43hhp23efsb" path="res://Scenes/UI/game_display.tscn" id="11_qti71"]
 [ext_resource type="PackedScene" uid="uid://gvsaqucmvlmu" path="res://Scenes/UI/pause_display.tscn" id="12_85uhn"]
 [ext_resource type="PackedScene" uid="uid://bix7bxbdv1uqr" path="res://Scenes/UI/ui_menu.tscn" id="13_77ex3"]
 [ext_resource type="PackedScene" uid="uid://caqp2s3n5m7og" path="res://Scenes/ui_controller.tscn" id="14_8al8u"]
+[ext_resource type="Texture2D" uid="uid://cpg0l7a4y2uut" path="res://Sprites/palettes_edit1.png" id="18_w12af"]
 [ext_resource type="PackedScene" uid="uid://dahacdx3umm8n" path="res://Scenes/Background.tscn" id="19_y2reb"]
 
 [sub_resource type="Curve" id="Curve_npoln"]
@@ -104,13 +105,20 @@ _data = {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b3eom"]
 shader = ExtResource("7_4qc8k")
 shader_parameter/palette_index = 0.0
-shader_parameter/palette = ExtResource("8_6gf24")
+shader_parameter/palette = ExtResource("18_w12af")
 
 [node name="Main" type="Node"]
 
 [node name="GameManager" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("1_ryie0")
+
+[node name="WinSFX" type="AudioStreamPlayer" parent="GameManager"]
+stream = ExtResource("2_x31a4")
+bus = &"SFX"
+
+[node name="LoseSFX" type="AudioStreamPlayer" parent="GameManager"]
+bus = &"SFX"
 
 [node name="MusicManager" type="Node" parent="."]
 script = ExtResource("2_w01u1")
@@ -184,7 +192,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_btm2a")
-current_pattern = 3
+current_pattern = 1
 
 [node name="ParallaxBackground" parent="CanvasLayer" instance=ExtResource("19_y2reb")]
 
