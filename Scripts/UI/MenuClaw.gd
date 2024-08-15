@@ -1,5 +1,5 @@
 extends Control
-class_name MenuClaw
+class_name MenuClaw 
 
 var claw_tween : Tween
 
@@ -17,9 +17,10 @@ var claw_tween : Tween
 
 func menu_start() ->void:
 	# Move claw to idle position
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(0.5).timeout
 	
 	var move_pos := Vector2(32.0, 64.0)
+	claw_sprite.texture = claw_open_tex
 	grab_sprite.hide()
 	claw_tween = get_tree().create_tween()
 	claw_tween.set_trans(Tween.TRANS_BACK)
@@ -97,6 +98,8 @@ func level_button_pressed(index : int) ->void:
 	claw_sprite.texture = claw_closed_tex
 	grab_sprite.texture = level_button.texture_normal
 	grab_sprite.show()
+	var lvl_button_container := get_node("../LevelButtonContainer") as Control # Ugly, but it works
+	lvl_button_container.self_modulate = Color8(128, 128, 128, 255)
 	level_button.texture_normal = empty_tex
 	grab_sfx.play()
 	await get_tree().create_timer(0.2).timeout

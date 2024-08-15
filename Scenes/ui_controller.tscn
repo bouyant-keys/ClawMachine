@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://caqp2s3n5m7og"]
 
-[ext_resource type="Script" path="res://Scripts/UIController.gd" id="1_xx844"]
+[ext_resource type="Script" path="res://Scripts/UI/UIController.gd" id="1_xx844"]
 [ext_resource type="Texture2D" uid="uid://7m8jcppj3qxf" path="res://Sprites/UI/UI_Bar.png" id="2_dg3mu"]
 [ext_resource type="Texture2D" uid="uid://4418kp8ve5dl" path="res://Sprites/UI/Controller_Bar.png" id="2_smda5"]
 [ext_resource type="Script" path="res://Scripts/ControllerKnob.gd" id="4_4ghb5"]
@@ -257,6 +257,7 @@ stream = ExtResource("5_wvpgk")
 volume_db = -6.0
 bus = &"SFX"
 
+[connection signal="reset_knob" from="." to="ControllerBG/ControllerBar/Knob" method="reset_knob"]
 [connection signal="h_dir_changed" from="ControllerBG/ControllerBar/Knob" to="." method="on_h_slider_changed"]
 [connection signal="v_dir_changed" from="ControllerBG/ControllerBar/Knob" to="." method="on_v_slider_changed"]
 [connection signal="mouse_entered" from="ControllerBG/ControllerBar/Knob/Area2D" to="ControllerBG/ControllerBar/Knob" method="mouse_entered"]

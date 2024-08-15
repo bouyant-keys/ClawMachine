@@ -14,6 +14,7 @@ var start_pos : Vector2
 var goal : Node2D
 var total_goal_dist : float
 var grabbed_goal := false
+var prev_coll_id : int
 
 var x_pos := 0.0
 var y_dir := 0.0
@@ -59,7 +60,12 @@ func _physics_process(delta):
 	check_dist_from_goal()
 	if move_and_slide():
 		var collision := get_last_slide_collision()
-		if velocity.length() != 0.0: on_bump(collision.get_position())
+		
+		# Bump only if moving fast enough, and just once with the same object # Actually the whole tilemap is one obj lol FIXME!!!
+		if velocity.length() > 40.0 && collision.get_collider_id() != prev_coll_id: 
+			prev_coll_id = collision.get_collider_id()
+			print(velocity.length())
+			on_bump(collision.get_position())
 
 func check_dist_from_goal() ->void:
 	if grabbed_goal: return
@@ -89,8 +95,8 @@ func set_goal(obj:Node2D) ->void:
 # Needs to be activated from somewhere
 func on_bump(pos:Vector2) ->void:
 	claw_anim.play("bump")
-	#bump_sfx.pitch_scale = randf_range(1.0, 2.5)
-	#bump_sfx.play()
+	bump_sfx.pitch_scale = randf_range(1.0, 2.5)
+	bump_sfx.play()
 	wall_bumped.emit(pos) #maybe pass collision point ?
 
 # Grab / Release Functions

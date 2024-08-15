@@ -7,6 +7,7 @@ signal v_speed_changed(dir:float)
 signal h_speed_changed(dir:float)
 signal grab_pressed
 signal pause_pressed
+signal reset_knob
 
 func _ready() -> void:
 	controller_bg.hide()
@@ -36,6 +37,7 @@ func on_pause_pressed() ->void:
 
 func reset() ->void:
 	controller_bg.hide()
+	emit_signal("reset_knob")
 
 func hide_self() ->void: hide()
 func show_self() ->void: show()
