@@ -25,6 +25,7 @@ signal update_camera(Vector2)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Singleton pattern:
 	if instance == null:
 		instance = self
 	else:
@@ -65,7 +66,7 @@ func win() ->void: # Called by CollectionBox
 	emit_signal("freeze_process", true)
 	transitioning = true
 	win_sfx.play()
-	await get_tree().create_timer(1.0) # Hold on the win for a little
+	await get_tree().create_timer(1.0).timeout # Hold on the win for a little
 	
 	await transition.fade_out(Vector2.ZERO)
 	emit_signal("reset_process")
@@ -81,7 +82,7 @@ func lose() ->void:
 	emit_signal("freeze_process", true)
 	transitioning = true
 	lose_sfx.play()
-	await get_tree().create_timer(1.0) # Hold on the lose for a little
+	await get_tree().create_timer(1.0).timeout # Hold on the lose for a little
 	
 	await transition.fade_out(Vector2.ZERO)
 	emit_signal("reset_process")

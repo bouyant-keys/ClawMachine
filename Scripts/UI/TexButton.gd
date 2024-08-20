@@ -19,7 +19,7 @@ func _ready() -> void:
 # call on button release
 func swap_button_texture() ->void:
 	if is_grab_button:
-		show_normal = Player.grabbing
+		show_normal = !Player.grabbing
 	else:
 		show_normal = !show_normal
 	

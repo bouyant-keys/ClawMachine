@@ -25,3 +25,7 @@ func get_data() ->BlockData:
 
 func get_sprite() ->Texture2D:
 	return sprite.texture
+
+func dissolve() ->void:
+	var sprite_tween := get_tree().create_tween()
+	sprite_tween.tween_property(self, "self_modulate", Color.BLACK, 0.8)

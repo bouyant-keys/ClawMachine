@@ -18,10 +18,6 @@ Mechanics?:
 			Fans (Push claw around) +*
 			Zappy Blocksa (Knocks held obj out of claw, deals damage?) +
 			Explosives? (when picked up starts a countdown?, breaks blocks?) *
-	
-	Shop?:
-		Coins/Tokens? +
-		Buy palettes, keychain toys?
 
 
 Levels:
@@ -44,8 +40,7 @@ Stuff to do:
 	
 	Add:
 		- Implement camera shake (On hit with dangerous obj, on collision with wall?)
-		- Add music (idle, playing, on lose, on win)
-		- Add SFX (starting game, lose, win fireworks, bonk on walls, zapping, objects colliding, etc.)
+		- Add music (menu?)
 		- 
 	
 	Fix:

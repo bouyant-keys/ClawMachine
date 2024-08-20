@@ -346,15 +346,6 @@ stretch_mode = 5
 stream = ExtResource("12_dklwc")
 bus = &"SFX"
 
-[node name="StopMouseInput" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = ExtResource("5_cc2ot")
-
 [connection signal="disable_levels" from="." to="LevelButtonContainer" method="set_else_disabled"]
 [connection signal="disable_select" from="." to="StartButtonContainer/LevelSelectbutton" method="set_disabled"]
 [connection signal="disable_start" from="." to="StartButtonContainer/StartButton" method="set_disabled"]

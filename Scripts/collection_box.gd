@@ -9,6 +9,7 @@ func _ready() -> void:
 func on_area_entered(body:Node2D) ->void:
 	var collect_obj := body as Grab_Block
 	if collect_obj.block_data.get_obj_action() == BlockData.Object_Action.WIN:
+		collect_obj.dissolve()
 		arrow_sprite.hide()
 		GameManager.instance.win()
 

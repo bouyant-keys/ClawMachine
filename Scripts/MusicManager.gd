@@ -9,10 +9,16 @@ func _ready() -> void:
 func start_music() ->void:
 	music_player.play()
 
+func pause_music() ->void:
+	music_player.stream_paused = true;
+
+func resume_music() ->void:
+	music_player.stream_paused = false;
+
 func stop_music() ->void:
 	music_player.stop()
 
-#func change_music(value:int) ->void: pass
+#func change_song(value:int) ->void: pass
 
 func change_volume(value:float) ->void:
 	music_player.volume_db = value

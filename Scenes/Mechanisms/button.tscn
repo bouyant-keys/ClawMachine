@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://ba2jovn5uijl4"]
 
 [ext_resource type="Script" path="res://Scripts/Button.gd" id="1_c73jt"]
-[ext_resource type="Texture2D" uid="uid://s04l8y8s5frh" path="res://Sprites/Mechanisms/ObjButton_top.png" id="2_0hvtn"]
-[ext_resource type="Texture2D" uid="uid://deevub0bblqmg" path="res://Sprites/Mechanisms/ObjButton_bottom.png" id="3_qs811"]
+[ext_resource type="Texture2D" uid="uid://cwatq5dib8v4b" path="res://Sprites/Mechanisms/ObjButton_top1.png" id="2_a2kq0"]
+[ext_resource type="Texture2D" uid="uid://n068rc3iyqf2" path="res://Sprites/Mechanisms/ObjButton_bottom1.png" id="3_mr3d7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_td0t2"]
 size = Vector2(12, 4)
@@ -73,7 +73,7 @@ collision_layer = 0
 [node name="SpriteTop" type="Sprite2D" parent="Button_Top"]
 z_index = -1
 z_as_relative = false
-texture = ExtResource("2_0hvtn")
+texture = ExtResource("2_a2kq0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Button_Top"]
 position = Vector2(0, 2)
@@ -93,7 +93,7 @@ debug_color = Color(1, 1, 0, 0.419608)
 collision_layer = 0
 
 [node name="SpriteBase" type="Sprite2D" parent="Button_Base"]
-texture = ExtResource("3_qs811")
+texture = ExtResource("3_mr3d7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Button_Base"]
 position = Vector2(0, 6)

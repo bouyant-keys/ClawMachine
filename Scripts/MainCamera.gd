@@ -16,7 +16,7 @@ func _process(_delta: float) -> void:
 func set_camera_follow(active:bool) ->void:
 	following = active
 
-func set_cam_limit(value:float) ->void:
+func set_cam_limit(value:int) ->void:
 	limit_bottom = value
 
 func update_camera_pos(new_pos:Vector2) ->void:

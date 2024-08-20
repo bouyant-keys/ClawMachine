@@ -11,21 +11,24 @@ var current_floor := 0
 
 @onready var game_manager: GameManager = get_node(gm_path)
 
-signal menu()
-signal level_win()
-signal screen_wipe(Vector2)
-signal set_cam_limit(float)
+#signal menu()
+#signal level_win()
+#signal screen_wipe(Vector2)
+signal set_cam_limit(int)
 signal goal_position(Node2D)
 
 func _ready() -> void:
 	current_level = start_level
 	#call_deferred("load_level")
 
-func on_goal_collected() ->void:
-	emit_signal("level_win")
+#func on_goal_collected() ->void:
+	#emit_signal("level_win")
 
 func load_level() ->void:
-	#print_stack()
+	#TODO Comment following block out int final build
+	if current_level == 0:
+		current_level = start_level
+	
 	for child : int in self.get_child_count():
 		self.get_child(child).queue_free()
 	
@@ -37,14 +40,14 @@ func load_level() ->void:
 		if current_level < 0: 
 			current_level = 0
 		elif current_level > level_list.levels.size() - 1: 
-			emit_signal("menu")
+			#emit_signal("menu")
 			current_level = 0
 		
 		new_level = level_list.levels[current_level].instantiate() as Level
 		self.add_child(new_level)
 	
 	emit_signal("goal_position", new_level.goal_obj)
-	emit_signal("set_cam_limit", new_level.cam_limit_y)
+	emit_signal("set_cam_limit", int(new_level.cam_limit_y))
 
 func load_menu() ->void:
 	print("loading menu")

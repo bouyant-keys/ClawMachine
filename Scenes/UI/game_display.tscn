@@ -1,24 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://x43hhp23efsb"]
+[gd_scene load_steps=9 format=3 uid="uid://x43hhp23efsb"]
 
 [ext_resource type="Script" path="res://Scripts/UI/game_display.gd" id="1_6nmy3"]
 [ext_resource type="Texture2D" uid="uid://niphjphwcyjk" path="res://Sprites/UI/DepthMeter_BG.png" id="1_hpgv5"]
 [ext_resource type="Texture2D" uid="uid://dj07thm1geu7a" path="res://Sprites/UI/DepthMeter_Frame.png" id="2_l58c0"]
 [ext_resource type="Texture2D" uid="uid://dqhdur20rp8f6" path="res://Sprites/UI/DepthMeter_Fill.png" id="3_ormxu"]
 [ext_resource type="Texture2D" uid="uid://drj2lq0wsin3i" path="res://Sprites/UI/hp_unit.png" id="7_f2ow4"]
-
-[sub_resource type="GDScript" id="GDScript_2kp75"]
-script/source = "extends TextureProgressBar
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
 
 [sub_resource type="Animation" id="Animation_d8kh8"]
 resource_name = "ArrowBlink"
@@ -60,7 +46,6 @@ fill_mode = 2
 texture_under = ExtResource("1_hpgv5")
 texture_over = ExtResource("2_l58c0")
 texture_progress = ExtResource("3_ormxu")
-script = SubResource("GDScript_2kp75")
 
 [node name="DisplayAnim" type="AnimationPlayer" parent="."]
 libraries = {

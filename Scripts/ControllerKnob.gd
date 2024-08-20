@@ -73,11 +73,12 @@ func move_knob() ->void:
 
 func hide_arrows() ->void:
 	has_dragged = true
-	await get_tree().create_timer(1.0).timeout
+	#await get_tree().create_timer(1.0).timeout
 	arrows.hide()
 
 func reset_knob() ->void:
 	global_position = center_pos
+	slider.global_position.x = center_pos.x
 
 func mouse_entered():
 	mouse_in = true

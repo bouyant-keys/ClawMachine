@@ -59,7 +59,7 @@ func play_level_change() ->void:
 	level_label.text = "Level: " + str(MainLevel.current_level)
 	level_label.show()
 	await get_tree().create_timer(1.0).timeout
-	emit_signal("change_palette", MainLevel.current_level)
+	emit_signal("change_palette", 1)#MainLevel.current_level)
 	level_label.text = "Level: " + str(MainLevel.current_level+1)
 	level_sfx.play()
 	await get_tree().create_timer(1.0).timeout

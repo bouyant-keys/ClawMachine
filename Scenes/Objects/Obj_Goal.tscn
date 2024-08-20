@@ -20,6 +20,7 @@ radius = 8.0
 
 [node name="Goal" type="RigidBody2D" groups=["Goal"]]
 collision_layer = 2
+can_sleep = false
 script = ExtResource("3_u2r7o")
 block_data = SubResource("Resource_yvpi3")
 

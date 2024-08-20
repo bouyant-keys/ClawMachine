@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
-static var input_enabled := true
+static var input_enabled := false
 static var grabbing := false
 
 const MAX_VEL_Y := 1000.0
@@ -9,7 +9,6 @@ const PULL_VEL_X := 120.0
 
 var health := 3
 var grab_obj : Grab_Block
-var moving := false
 var start_pos : Vector2
 var goal : Node2D
 var total_goal_dist : float
@@ -36,6 +35,7 @@ var y_dir := 0.0
 @onready var zap_sfx: AudioStreamPlayer = $Zap_SFX
 
 signal player_lose
+signal moving_v(bool)
 signal update_health(int)
 signal update_depth(float)
 signal obj_nearby(bool)
@@ -51,7 +51,7 @@ func _ready():
 	start_pos = position
 
 func _physics_process(delta):
-	if !input_enabled or !moving: return
+	if !input_enabled: return
 	
 	var x_vel : float = (x_pos - position.x) * PULL_VEL_X
 	var y_vel : float = y_dir * MAX_VEL_Y
@@ -77,14 +77,16 @@ func check_dist_from_goal() ->void:
 	update_depth.emit(n_dist)
 
 func update_v_movement(dir:float) ->void:
-	moving = true
+	var moving : bool = false
 	y_dir = (2.0 * dir) - 1.0 # Converting 0<->1 value to -1<->1
+	
+	if y_dir != 0: moving = true
+	emit_signal("moving_v", moving)
 	
 	if y_dir != 0.0: move_sfx.play()
 	elif move_sfx.playing: move_sfx.stop()
 
 func update_h_movement(new_pos:float) ->void:
-	moving = true
 	x_pos = new_pos
 
 func set_goal(obj:Node2D) ->void:
@@ -197,8 +199,7 @@ func reset() ->void:
 	health = 3
 	emit_signal("update_health", health)
 	y_dir = 0.0
-	x_pos = 0.0
-	moving = false
+	x_pos = start_pos.x
 	grab_sprite.texture = null
 	claw_sprite.play("Open")
 	velocity = Vector2.ZERO

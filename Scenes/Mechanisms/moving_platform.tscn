@@ -1,8 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://cl4ojyxc2f48a"]
+[gd_scene load_steps=9 format=3 uid="uid://cl4ojyxc2f48a"]
 
 [ext_resource type="Script" path="res://Scripts/MovingPlatform.gd" id="1_q7xet"]
 [ext_resource type="Texture2D" uid="uid://bpia64yg87phq" path="res://Sprites/MovePath.png" id="2_r0d0k"]
-[ext_resource type="Texture2D" uid="uid://cwsk8s8r704ql" path="res://Sprites/ObstacleBlock.png" id="3_ihhde"]
+[ext_resource type="Texture2D" uid="uid://cepf6tr8e7yn2" path="res://Sprites/ObstacleSet_3HL.png" id="3_jb657"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0qqb"]
+atlas = ExtResource("3_jb657")
+region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ak7j"]
 size = Vector2(16, 16)
@@ -63,7 +67,7 @@ remote_path = NodePath("../../AnimatableBody2D")
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
-texture = ExtResource("3_ihhde")
+texture = SubResource("AtlasTexture_j0qqb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
 shape = SubResource("RectangleShape2D_0ak7j")

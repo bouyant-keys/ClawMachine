@@ -2,12 +2,12 @@ extends Control
 
 const disabledColor: Color = Color8(64, 64, 64)
 
+@export_node_path() var stop_input_path
+
 @onready var claw: MenuClaw = $Claw
-#@onready var start_panel: Panel = $StartButtonContainer/StartButton
-#@onready var select_panel: Panel = $StartButtonContainer/LevelSelectbutton
 @onready var start_button_container: VBoxContainer = $StartButtonContainer
 @onready var level_button_container: HFlowContainer = $LevelButtonContainer
-@onready var stop_mouse_panel: Panel = $StopMouseInput
+@onready var stop_mouse_panel: Panel = get_node(stop_input_path) as Panel
 
 signal start_game(int)
 signal disable_start

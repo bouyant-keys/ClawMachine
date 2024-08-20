@@ -18,6 +18,7 @@ size = Vector2(16, 16)
 
 [node name="Obj_Crate" type="RigidBody2D" groups=["Crate"]]
 collision_layer = 2
+can_sleep = false
 script = ExtResource("1_gw0l4")
 block_data = SubResource("Resource_kr5r6")
 
