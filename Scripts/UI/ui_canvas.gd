@@ -38,7 +38,7 @@ func update_health(value:float) ->void:
 	bottom_bar.update_health(value)
 
 func update_depth(value:float) ->void:
-	var temp : int = roundi(value / 100.0)
+	var temp : int = roundi(value / 20.0)
 	top_bar.update_health(temp)
 	bottom_bar.update_health(temp)
 
@@ -62,15 +62,7 @@ func disable_arrows() ->void:
 	t_arrows.hide()
 	b_arrows.hide()
 
-func on_pause() ->void:
-	print("pausing")
-	pause_menu.show()
-	pause_anim.play("paused_anim")
 
-func on_unpause() ->void:
-	print("unpausing")
-	hud_menu.show()
-	pause_menu.hide()
 
 func reset() ->void:
 	swap_data_displays(true)

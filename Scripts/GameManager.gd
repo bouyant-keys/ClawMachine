@@ -5,16 +5,18 @@ static var game_completed_once := false
 static var deaths := 0
 static var times_zapped := 0
 static var total_time := 0 # value in miliseconds
+static var instance : GameManager
 
 var transitioning := false
 var paused := false
 
 #@onready var main_level: MainLevel = $"../MainLevel"
+@onready var win_sfx: AudioStreamPlayer = $WinSFX
+@onready var lose_sfx: AudioStreamPlayer = $LoseSFX
 @onready var transition: Transition_Shader = $"../CanvasLayer/TransitionShader"
 
-#signal start_process
-#signal win_process
-#signal lose_process
+signal menu_process
+signal game_process
 signal reset_process
 signal freeze_process(bool)
 signal pause
@@ -23,22 +25,48 @@ signal update_camera(Vector2)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	call_deferred("intro")
+	# Singleton pattern:
+	if instance == null:
+		instance = self
+	else:
+		self.queue_free()
+	
+	call_deferred("menu")
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		if event.is_action_pressed("Pause") && !transitioning: set_pause()
+#func _input(event: InputEvent) -> void:
+	#if event is InputEventKey:
+		#if event.is_action_pressed("Pause") && !transitioning: set_pause()
 
-func intro() ->void:
+func menu() ->void:
+	#emit_signal("freeze_process", true)
+	emit_signal("menu_process")
 	transitioning = true
+	
 	await transition.fade_in(Vector2.ZERO)
 	transitioning = false
-	emit_signal("start_process")
+	#emit_signal("freeze_process", false)
 
-func win() ->void:
+func start(level:int = 0) ->void:
+	#print("starting")
+	MainLevel.current_level = level
+	emit_signal("freeze_process", true)
+	transitioning = true
+	
+	await transition.fade_out(Vector2.ZERO)
+	emit_signal("game_process")
+	emit_signal("reset_process")
+	
+	await transition.fade_in(Vector2.ZERO)
+	transitioning = false
+	emit_signal("freeze_process", false)
+
+func win() ->void: # Called by CollectionBox
+	#print("win")
 	MainLevel.current_level += 1
 	emit_signal("freeze_process", true)
 	transitioning = true
+	win_sfx.play()
+	await get_tree().create_timer(1.0).timeout # Hold on the win for a little
 	
 	await transition.fade_out(Vector2.ZERO)
 	emit_signal("reset_process")
@@ -50,8 +78,11 @@ func win() ->void:
 	emit_signal("freeze_process", false)
 
 func lose() ->void:
+	#print("lose")
 	emit_signal("freeze_process", true)
 	transitioning = true
+	lose_sfx.play()
+	await get_tree().create_timer(1.0).timeout # Hold on the lose for a little
 	
 	await transition.fade_out(Vector2.ZERO)
 	emit_signal("reset_process")
@@ -60,16 +91,16 @@ func lose() ->void:
 	transitioning = false
 	emit_signal("freeze_process", false)
 
-func change_floor(new_floor:int, dir:Vector2) ->void:
-	emit_signal("freeze_process", true)
-	transitioning = true
-	
-	await transition.fade_out(dir)
-	emit_signal("update_camera", Vector2(80.0, 72.0 + (144.0 * new_floor)))
-	
-	await transition.fade_in(dir)
-	emit_signal("freeze_process", false)
-	transitioning = false
+#func change_floor(new_floor:int, dir:Vector2) ->void:
+	#emit_signal("freeze_process", true)
+	#transitioning = true
+	#
+	#await transition.fade_out(dir)
+	#emit_signal("update_camera", Vector2(80.0, 72.0 + (144.0 * new_floor)))
+	#
+	#await transition.fade_in(dir)
+	#emit_signal("freeze_process", false)
+	#transitioning = false
 
 func set_pause() ->void:
 	if paused:

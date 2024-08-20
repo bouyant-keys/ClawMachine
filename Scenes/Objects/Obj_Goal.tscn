@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://d258hxwh1n74s"]
+[gd_scene load_steps=8 format=3 uid="uid://d258hxwh1n74s"]
 
 [ext_resource type="Texture2D" uid="uid://22qcxjft1nwm" path="res://Sprites/Blocks/GoalCapsule.png" id="2_g6dcq"]
 [ext_resource type="Script" path="res://Scripts/Resources/BlockData.gd" id="3_sw6yh"]
 [ext_resource type="Script" path="res://Scripts/Grab_Block.gd" id="3_u2r7o"]
+[ext_resource type="Texture2D" uid="uid://c8qnrsc4c051h" path="res://Sprites/UI/VArrowWhiteAnim.tres" id="4_xq3rf"]
 
 [sub_resource type="Resource" id="Resource_yvpi3"]
 script = ExtResource("3_sw6yh")
@@ -17,13 +18,19 @@ height = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_8q57j"]
 radius = 8.0
 
-[node name="Goal" type="RigidBody2D"]
+[node name="Goal" type="RigidBody2D" groups=["Goal"]]
 collision_layer = 2
+can_sleep = false
 script = ExtResource("3_u2r7o")
 block_data = SubResource("Resource_yvpi3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_g6dcq")
+
+[node name="ArrowSprite" type="Sprite2D" parent="."]
+texture = ExtResource("4_xq3rf")
+offset = Vector2(0, -14)
+flip_v = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_r5hlg")

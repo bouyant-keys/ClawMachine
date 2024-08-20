@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://x43hhp23efsb"]
+
+[ext_resource type="Script" path="res://Scripts/UI/game_display.gd" id="1_6nmy3"]
+[ext_resource type="Texture2D" uid="uid://niphjphwcyjk" path="res://Sprites/UI/DepthMeter_BG.png" id="1_hpgv5"]
+[ext_resource type="Texture2D" uid="uid://dj07thm1geu7a" path="res://Sprites/UI/DepthMeter_Frame.png" id="2_l58c0"]
+[ext_resource type="Texture2D" uid="uid://dqhdur20rp8f6" path="res://Sprites/UI/DepthMeter_Fill.png" id="3_ormxu"]
+[ext_resource type="Texture2D" uid="uid://drj2lq0wsin3i" path="res://Sprites/UI/hp_unit.png" id="7_f2ow4"]
+
+[sub_resource type="Animation" id="Animation_d8kh8"]
+resource_name = "ArrowBlink"
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_j3n4n"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qnd3h"]
+_data = {
+"ArrowBlink": SubResource("Animation_d8kh8"),
+"RESET": SubResource("Animation_j3n4n")
+}
+
+[node name="GameDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6nmy3")
+
+[node name="DepthMeter" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -56.0
+offset_bottom = 56.0
+grow_horizontal = 0
+grow_vertical = 2
+max_value = 1.0
+step = 0.01
+fill_mode = 2
+texture_under = ExtResource("1_hpgv5")
+texture_over = ExtResource("2_l58c0")
+texture_progress = ExtResource("3_ormxu")
+
+[node name="DisplayAnim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qnd3h")
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 32.0
+offset_bottom = 16.0
+theme_override_constants/separation = -8
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_f2ow4")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_f2ow4")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_f2ow4")
+stretch_mode = 2

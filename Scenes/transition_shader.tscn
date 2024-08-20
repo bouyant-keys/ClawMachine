@@ -26,6 +26,7 @@ wipe_time = 1.0
 hold_time = 0.5
 
 [node name="LevelChangeText" type="Label" parent="."]
+visible = false
 self_modulate = Color(0.501961, 0.501961, 0.501961, 1)
 layout_mode = 1
 anchors_preset = 8

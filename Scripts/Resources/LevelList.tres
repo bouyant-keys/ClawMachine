@@ -17,4 +17,4 @@
 
 [resource]
 script = ExtResource("1_3ungu")
-levels = Array[Resource]([ExtResource("1_pmyi5"), ExtResource("2_uvxqs"), ExtResource("3_soxl0"), ExtResource("4_oulge"), ExtResource("5_k8t3e"), ExtResource("6_0pjuh"), ExtResource("7_f168i"), ExtResource("8_kjsph"), ExtResource("9_ldr30"), ExtResource("10_bkmly"), ExtResource("11_8vb7p"), ExtResource("12_pdvpb"), ExtResource("13_qbpwp")])
+levels = Array[Resource]([ExtResource("1_pmyi5"), ExtResource("2_uvxqs"), ExtResource("3_soxl0"), ExtResource("4_oulge"), ExtResource("7_f168i"), ExtResource("8_kjsph"), ExtResource("5_k8t3e"), ExtResource("6_0pjuh"), ExtResource("9_ldr30"), ExtResource("10_bkmly"), ExtResource("11_8vb7p"), ExtResource("12_pdvpb"), ExtResource("13_qbpwp")])

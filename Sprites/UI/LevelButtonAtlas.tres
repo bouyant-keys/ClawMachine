@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://dvncajaebrqwc"]
+
+[ext_resource type="Texture2D" uid="uid://daj5absay0ltj" path="res://Sprites/UI/LevelIcons.png" id="1_wnexv"]
+
+[resource]
+atlas = ExtResource("1_wnexv")
+region = Rect2(0, 0, 16, 16)

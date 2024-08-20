@@ -1,9 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://cjimp4jwk24co"]
+[gd_scene load_steps=18 format=3 uid="uid://cjimp4jwk24co"]
 
 [ext_resource type="Script" path="res://Scripts/UI/ui_canvas.gd" id="1_kqwid"]
+[ext_resource type="Texture2D" uid="uid://niphjphwcyjk" path="res://Sprites/UI/DepthMeter_BG.png" id="2_7is7t"]
 [ext_resource type="PackedScene" uid="uid://cp3y7un0gtwcj" path="res://Scenes/grab_display.tscn" id="2_i44rk"]
+[ext_resource type="Texture2D" uid="uid://dj07thm1geu7a" path="res://Sprites/UI/DepthMeter_Frame.png" id="3_0cq8c"]
 [ext_resource type="Texture2D" uid="uid://7m8jcppj3qxf" path="res://Sprites/UI/UI_Bar.png" id="3_meky2"]
 [ext_resource type="FontFile" uid="uid://dnoqi8fg1yacv" path="res://Fonts/HelvetiPixel_by_pentacom.ttf" id="4_6r2kv"]
+[ext_resource type="Texture2D" uid="uid://dqhdur20rp8f6" path="res://Sprites/UI/DepthMeter_Fill.png" id="4_m07h7"]
 [ext_resource type="Script" path="res://Scripts/UI/BarDisplay.gd" id="4_yx2gg"]
 [ext_resource type="Texture2D" uid="uid://drj2lq0wsin3i" path="res://Sprites/UI/hp_unit.png" id="5_cqqbw"]
 [ext_resource type="Texture2D" uid="uid://oslgl4aatmiu" path="res://Sprites/DirectionArrows_1.png" id="7_m2c1e"]
@@ -74,7 +77,7 @@ _data = {
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect/Label:theme_override_colors/font_color")
+tracks/0/path = NodePath("PausePanel/Label:theme_override_colors/font_color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -90,7 +93,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect/Label:theme_override_colors/font_color")
+tracks/0/path = NodePath("PausePanel/Label:theme_override_colors/font_color")
 tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -127,11 +130,29 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="DepthMeter" type="TextureProgressBar" parent="HUD"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -56.0
+offset_bottom = 56.0
+grow_horizontal = 0
+grow_vertical = 2
+fill_mode = 2
+texture_under = ExtResource("2_7is7t")
+texture_over = ExtResource("3_0cq8c")
+texture_progress = ExtResource("4_m07h7")
+
 [node name="GrabDisplay" parent="HUD" instance=ExtResource("2_i44rk")]
 visible = false
 layout_mode = 1
 
 [node name="TopBar" type="TextureRect" parent="HUD"]
+visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -196,6 +217,7 @@ texture = ExtResource("5_cqqbw")
 stretch_mode = 2
 
 [node name="BottomBar" type="TextureRect" parent="HUD"]
+visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -328,7 +350,5 @@ process_mode = 2
 libraries = {
 "": SubResource("AnimationLibrary_35uom")
 }
-
-[node name="LevelChange_SFX" type="AudioStreamPlayer" parent="."]
 
 [connection signal="timeout" from="HUD/StartTutTimer" to="." method="on_start_tut_timer_timeout"]

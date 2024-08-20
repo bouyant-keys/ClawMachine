@@ -79,7 +79,7 @@ texture = ExtResource("2_l2ecm")
 
 [node name="AreaSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_dd4i6")
-frame_progress = 0.431568
+frame_progress = 0.589758
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)

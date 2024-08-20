@@ -8,8 +8,8 @@ var dir : Vector2
 
 @onready var level_label: Label = $LevelChangeText
 @onready var level_sfx: AudioStreamPlayer = $LevelChange_SFX
-@onready var fade_in_sfx: AudioStreamPlayer = $FadeIn_SFX
-@onready var fade_out_sfx: AudioStreamPlayer = $FadeOut_SFX
+#@onready var fade_in_sfx: AudioStreamPlayer = $FadeIn_SFX
+#@onready var fade_out_sfx: AudioStreamPlayer = $FadeOut_SFX
 #@onready var level_pfx: GPUParticles2D = $LevelChangeParticles
 
 #signal start_transition
@@ -59,7 +59,7 @@ func play_level_change() ->void:
 	level_label.text = "Level: " + str(MainLevel.current_level)
 	level_label.show()
 	await get_tree().create_timer(1.0).timeout
-	emit_signal("change_palette", MainLevel.current_level)
+	emit_signal("change_palette", 1)#MainLevel.current_level)
 	level_label.text = "Level: " + str(MainLevel.current_level+1)
 	level_sfx.play()
 	await get_tree().create_timer(1.0).timeout

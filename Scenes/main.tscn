@@ -1,25 +1,49 @@
-[gd_scene load_steps=20 format=3 uid="uid://b3d7gawmwn128"]
+[gd_scene load_steps=31 format=3 uid="uid://b3d7gawmwn128"]
 
 [ext_resource type="PackedScene" uid="uid://006i5i72bun1" path="res://Scenes/main_level.tscn" id="1_bu0eb"]
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_ryie0"]
 [ext_resource type="Script" path="res://Scripts/MusicManager.gd" id="2_w01u1"]
+[ext_resource type="AudioStream" uid="uid://cx7e8k1xmoiiw" path="res://Audio/Effects/WinSFX.wav" id="2_x31a4"]
 [ext_resource type="PackedScene" uid="uid://ch4wglb7cfc7" path="res://Scenes/Player.tscn" id="3_nfab3"]
-[ext_resource type="PackedScene" uid="uid://cjimp4jwk24co" path="res://Scenes/ui_canvas.tscn" id="4_0rokx"]
-[ext_resource type="PackedScene" uid="uid://c1q3hty38mbi2" path="res://Scenes/Triggers/win_area.tscn" id="4_giia6"]
+[ext_resource type="AudioStream" uid="uid://cn23xoh06728u" path="res://Audio/Music/Blippy Trance Edit.wav" id="4_7724e"]
 [ext_resource type="PackedScene" uid="uid://ovd4lsqu07bh" path="res://Scenes/chain.tscn" id="4_pdtj6"]
+[ext_resource type="Script" path="res://Scripts/LevelObjects.gd" id="5_2eaa3"]
 [ext_resource type="PackedScene" uid="uid://uj8cf506ml5v" path="res://Scenes/chain_base.tscn" id="5_33amq"]
 [ext_resource type="Script" path="res://Scripts/MainCamera.gd" id="5_kpbsb"]
 [ext_resource type="PackedScene" uid="uid://dpg5ed8ojadqn" path="res://Scenes/transition_shader.tscn" id="6_x3bfk"]
 [ext_resource type="Shader" path="res://Materials/SetColorPalette.gdshader" id="7_4qc8k"]
-[ext_resource type="Texture2D" uid="uid://b8ckqp3m8in1g" path="res://Sprites/palettes_flip.png" id="8_6gf24"]
+[ext_resource type="Script" path="res://Scripts/BumpParticles.gd" id="7_eg0vb"]
 [ext_resource type="Script" path="res://Scripts/Shader_Palette.gd" id="9_btm2a"]
+[ext_resource type="PackedScene" uid="uid://x43hhp23efsb" path="res://Scenes/UI/game_display.tscn" id="11_qti71"]
+[ext_resource type="PackedScene" uid="uid://gvsaqucmvlmu" path="res://Scenes/UI/pause_display.tscn" id="12_85uhn"]
+[ext_resource type="PackedScene" uid="uid://bix7bxbdv1uqr" path="res://Scenes/UI/ui_menu.tscn" id="13_77ex3"]
+[ext_resource type="PackedScene" uid="uid://caqp2s3n5m7og" path="res://Scenes/ui_controller.tscn" id="14_8al8u"]
+[ext_resource type="StyleBox" uid="uid://wny360jhf3cn" path="res://Materials/MenuPanelStyle.tres" id="16_eucvi"]
+[ext_resource type="Texture2D" uid="uid://cpg0l7a4y2uut" path="res://Sprites/palettes_edit1.png" id="18_w12af"]
+[ext_resource type="PackedScene" uid="uid://dahacdx3umm8n" path="res://Scenes/Background.tscn" id="19_y2reb"]
+
+[sub_resource type="Curve" id="Curve_npoln"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.82692, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_jur8o"]
+curve = SubResource("Curve_npoln")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c4cu5"]
+particle_flag_disable_z = true
+radial_velocity_min = 15.0
+radial_velocity_max = 30.0
+gravity = Vector3(0, 50, 0)
+scale_min = 2.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_jur8o")
 
 [sub_resource type="Animation" id="Animation_kquip"]
 length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D:offset:x")
+tracks/0/path = NodePath("LevelObjects/GameCamera:offset:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -33,7 +57,7 @@ resource_name = "big_shake_l"
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D:offset:x")
+tracks/0/path = NodePath("LevelObjects/GameCamera:offset:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -47,7 +71,7 @@ resource_name = "big_shake_r"
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D:offset:x")
+tracks/0/path = NodePath("LevelObjects/GameCamera:offset:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -62,7 +86,7 @@ length = 0.8
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D:offset:x")
+tracks/0/path = NodePath("LevelObjects/GameCamera:offset:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -82,7 +106,7 @@ _data = {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b3eom"]
 shader = ExtResource("7_4qc8k")
 shader_parameter/palette_index = 0.0
-shader_parameter/palette = ExtResource("8_6gf24")
+shader_parameter/palette = ExtResource("18_w12af")
 
 [node name="Main" type="Node"]
 
@@ -90,48 +114,88 @@ shader_parameter/palette = ExtResource("8_6gf24")
 process_mode = 3
 script = ExtResource("1_ryie0")
 
+[node name="WinSFX" type="AudioStreamPlayer" parent="GameManager"]
+stream = ExtResource("2_x31a4")
+bus = &"SFX"
+
+[node name="LoseSFX" type="AudioStreamPlayer" parent="GameManager"]
+bus = &"SFX"
+
 [node name="MusicManager" type="Node" parent="."]
 script = ExtResource("2_w01u1")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="MusicManager"]
+stream = ExtResource("4_7724e")
+volume_db = -12.0
 bus = &"Music"
 
 [node name="MainLevel" parent="." instance=ExtResource("1_bu0eb")]
 gm_path = NodePath("../GameManager")
+start_level = 2
 
-[node name="WinArea" parent="." instance=ExtResource("4_giia6")]
-position = Vector2(80, 83)
+[node name="LevelObjects" type="Node2D" parent="."]
+script = ExtResource("5_2eaa3")
 
-[node name="Chain" parent="." instance=ExtResource("4_pdtj6")]
+[node name="Chain" parent="LevelObjects" instance=ExtResource("4_pdtj6")]
 base_path = NodePath("../ChainBase")
 player_path = NodePath("../Player")
 
-[node name="ChainBase" parent="." instance=ExtResource("5_33amq")]
-position = Vector2(80, 20)
-player_path = NodePath("../Player")
+[node name="ChainBase" parent="LevelObjects" instance=ExtResource("5_33amq")]
+position = Vector2(80, 4)
+claw_path = NodePath("../Player")
 
-[node name="Player" parent="." instance=ExtResource("3_nfab3")]
-position = Vector2(80, 28)
+[node name="BumpParticles" type="GPUParticles2D" parent="LevelObjects"]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_c4cu5")
+one_shot = true
+explosiveness = 1.0
+script = ExtResource("7_eg0vb")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Player" parent="LevelObjects" instance=ExtResource("3_nfab3")]
+position = Vector2(80, 11)
+safe_margin = 0.2
+
+[node name="GameCamera" type="Camera2D" parent="LevelObjects"]
 position = Vector2(80, 72)
+limit_left = 0
+limit_top = 0
+limit_right = 160
+limit_bottom = 288
 script = ExtResource("5_kpbsb")
 player_path = NodePath("../Player")
 
-[node name="CamAnim" type="AnimationPlayer" parent="Camera2D"]
-root_node = NodePath("../..")
+[node name="CamAnim" type="AnimationPlayer" parent="LevelObjects/GameCamera"]
+root_node = NodePath("../../..")
 libraries = {
 "": SubResource("AnimationLibrary_mocy2")
 }
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="UICanvas" parent="CanvasLayer" instance=ExtResource("4_0rokx")]
+[node name="GameDisplay" parent="CanvasLayer" instance=ExtResource("11_qti71")]
+
+[node name="PauseDisplay" parent="CanvasLayer" instance=ExtResource("12_85uhn")]
+
+[node name="UIController" parent="CanvasLayer" instance=ExtResource("14_8al8u")]
+stop_input_path = NodePath("../StopMouseInput")
+
+[node name="UIMenu" parent="CanvasLayer" instance=ExtResource("13_77ex3")]
+stop_input_path = NodePath("../StopMouseInput")
+
+[node name="StopMouseInput" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("16_eucvi")
 
 [node name="TransitionShader" parent="CanvasLayer" instance=ExtResource("6_x3bfk")]
+z_index = 99
 
 [node name="PaletteShader" type="ColorRect" parent="CanvasLayer"]
 visible = false
+z_index = 100
 material = SubResource("ShaderMaterial_b3eom")
 anchors_preset = 15
 anchor_right = 1.0
@@ -140,26 +204,51 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_btm2a")
+current_pattern = 1
 
-[connection signal="freeze_process" from="GameManager" to="Player" method="freeze"]
-[connection signal="pause" from="GameManager" to="CanvasLayer/UICanvas" method="on_pause"]
+[node name="ParallaxBackground" parent="CanvasLayer" instance=ExtResource("19_y2reb")]
+
+[connection signal="freeze_process" from="GameManager" to="LevelObjects/Player" method="freeze"]
+[connection signal="freeze_process" from="GameManager" to="CanvasLayer/UIController" method="freeze_controls"]
+[connection signal="game_process" from="GameManager" to="MainLevel" method="load_level"]
+[connection signal="game_process" from="GameManager" to="LevelObjects" method="show_self"]
+[connection signal="game_process" from="GameManager" to="LevelObjects/GameCamera" method="activate_camera"]
+[connection signal="game_process" from="GameManager" to="CanvasLayer/GameDisplay" method="show_self"]
+[connection signal="game_process" from="GameManager" to="CanvasLayer/UIController" method="show_self"]
+[connection signal="game_process" from="GameManager" to="CanvasLayer/UIMenu" method="hide_self"]
+[connection signal="game_process" from="GameManager" to="CanvasLayer/ParallaxBackground" method="set_game_background"]
+[connection signal="menu_process" from="GameManager" to="MainLevel" method="load_menu"]
+[connection signal="menu_process" from="GameManager" to="LevelObjects" method="hide_self"]
+[connection signal="menu_process" from="GameManager" to="LevelObjects/GameCamera" method="deactivate_camera"]
+[connection signal="menu_process" from="GameManager" to="CanvasLayer/GameDisplay" method="hide_self"]
+[connection signal="menu_process" from="GameManager" to="CanvasLayer/UIController" method="hide_self"]
+[connection signal="menu_process" from="GameManager" to="CanvasLayer/UIMenu" method="on_menu_load"]
+[connection signal="menu_process" from="GameManager" to="CanvasLayer/ParallaxBackground" method="set_menu_background"]
+[connection signal="pause" from="GameManager" to="CanvasLayer/PauseDisplay" method="on_pause"]
 [connection signal="reset_process" from="GameManager" to="MainLevel" method="load_level"]
-[connection signal="reset_process" from="GameManager" to="Chain" method="reset_chain"]
-[connection signal="reset_process" from="GameManager" to="Player" method="reset"]
-[connection signal="reset_process" from="GameManager" to="Camera2D" method="reset_camera"]
-[connection signal="reset_process" from="GameManager" to="CanvasLayer/UICanvas" method="reset"]
-[connection signal="unpause" from="GameManager" to="CanvasLayer/UICanvas" method="on_unpause"]
-[connection signal="update_camera" from="GameManager" to="Camera2D" method="update_camera_pos"]
-[connection signal="screen_wipe" from="MainLevel" to="CanvasLayer/TransitionShader" method="transition"]
-[connection signal="update_camera" from="MainLevel" to="Camera2D" method="update_camera_pos"]
-[connection signal="win_signal" from="WinArea" to="GameManager" method="win"]
-[connection signal="cam_shake" from="Player" to="Camera2D" method="camera_shake"]
-[connection signal="goal_grabbed" from="Player" to="WinArea" method="display_arrow"]
-[connection signal="player_lose" from="Player" to="GameManager" method="lose"]
-[connection signal="set_cam_follow" from="Player" to="Camera2D" method="set_camera_follow"]
-[connection signal="set_display" from="Player" to="CanvasLayer/UICanvas" method="set_displaying"]
-[connection signal="swap_display" from="Player" to="CanvasLayer/UICanvas" method="swap_data_displays"]
-[connection signal="update_depth" from="Player" to="CanvasLayer/UICanvas" method="update_depth"]
-[connection signal="update_health" from="Player" to="CanvasLayer/UICanvas" method="update_health"]
-[connection signal="update_tutorial" from="Player" to="CanvasLayer/UICanvas" method="update_tutorial"]
+[connection signal="reset_process" from="GameManager" to="LevelObjects/Chain" method="reset_chain"]
+[connection signal="reset_process" from="GameManager" to="LevelObjects/ChainBase" method="reset"]
+[connection signal="reset_process" from="GameManager" to="LevelObjects/Player" method="reset"]
+[connection signal="reset_process" from="GameManager" to="LevelObjects/GameCamera" method="reset_camera"]
+[connection signal="reset_process" from="GameManager" to="CanvasLayer/GameDisplay" method="reset"]
+[connection signal="reset_process" from="GameManager" to="CanvasLayer/UIController" method="reset"]
+[connection signal="unpause" from="GameManager" to="CanvasLayer/PauseDisplay" method="on_unpause"]
+[connection signal="update_camera" from="GameManager" to="LevelObjects/GameCamera" method="update_camera_pos"]
+[connection signal="goal_position" from="MainLevel" to="LevelObjects/Player" method="set_goal"]
+[connection signal="set_cam_limit" from="MainLevel" to="LevelObjects/GameCamera" method="set_cam_limit"]
+[connection signal="cam_shake" from="LevelObjects/Player" to="LevelObjects/GameCamera" method="camera_shake"]
+[connection signal="goal_grabbed" from="LevelObjects/Player" to="CanvasLayer/GameDisplay" method="update_depth_fill"]
+[connection signal="moving_v" from="LevelObjects/Player" to="LevelObjects/ChainBase" method="set_particles_active"]
+[connection signal="obj_nearby" from="LevelObjects/Player" to="CanvasLayer/UIController" method="highlight_grab"]
+[connection signal="player_lose" from="LevelObjects/Player" to="GameManager" method="lose"]
+[connection signal="set_cam_follow" from="LevelObjects/Player" to="LevelObjects/GameCamera" method="set_camera_follow"]
+[connection signal="update_depth" from="LevelObjects/Player" to="CanvasLayer/GameDisplay" method="update_depth"]
+[connection signal="update_health" from="LevelObjects/Player" to="CanvasLayer/GameDisplay" method="update_health"]
+[connection signal="wall_bumped" from="LevelObjects/Player" to="LevelObjects/BumpParticles" method="on_bump"]
+[connection signal="grab_pressed" from="CanvasLayer/UIController" to="LevelObjects/Player" method="on_grab_pressed"]
+[connection signal="h_speed_changed" from="CanvasLayer/UIController" to="LevelObjects/Player" method="update_h_movement"]
+[connection signal="pause_pressed" from="CanvasLayer/UIController" to="GameManager" method="set_pause"]
+[connection signal="reset_knob" from="CanvasLayer/UIController" to="CanvasLayer/UIController/ControllerBG/ControllerBar/Knob" method="reset_knob"]
+[connection signal="v_speed_changed" from="CanvasLayer/UIController" to="LevelObjects/Player" method="update_v_movement"]
+[connection signal="start_game" from="CanvasLayer/UIMenu" to="GameManager" method="start"]
 [connection signal="change_palette" from="CanvasLayer/TransitionShader" to="CanvasLayer/PaletteShader" method="change_palette"]

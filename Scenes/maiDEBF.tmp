@@ -1,0 +1,168 @@
+[gd_scene load_steps=21 format=3 uid="uid://b3d7gawmwn128"]
+
+[ext_resource type="PackedScene" uid="uid://006i5i72bun1" path="res://Scenes/main_level.tscn" id="1_bu0eb"]
+[ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_ryie0"]
+[ext_resource type="Script" path="res://Scripts/MusicManager.gd" id="2_w01u1"]
+[ext_resource type="PackedScene" uid="uid://ch4wglb7cfc7" path="res://Scenes/Player.tscn" id="3_nfab3"]
+[ext_resource type="PackedScene" uid="uid://cjimp4jwk24co" path="res://Scenes/ui_canvas.tscn" id="4_0rokx"]
+[ext_resource type="PackedScene" uid="uid://c1q3hty38mbi2" path="res://Scenes/Triggers/win_area.tscn" id="4_giia6"]
+[ext_resource type="PackedScene" uid="uid://ovd4lsqu07bh" path="res://Scenes/chain.tscn" id="4_pdtj6"]
+[ext_resource type="PackedScene" uid="uid://uj8cf506ml5v" path="res://Scenes/chain_base.tscn" id="5_33amq"]
+[ext_resource type="Script" path="res://Scripts/MainCamera.gd" id="5_kpbsb"]
+[ext_resource type="PackedScene" uid="uid://dpg5ed8ojadqn" path="res://Scenes/transition_shader.tscn" id="6_x3bfk"]
+[ext_resource type="Shader" path="res://Materials/SetColorPalette.gdshader" id="7_4qc8k"]
+[ext_resource type="Texture2D" uid="uid://b8ckqp3m8in1g" path="res://Sprites/palettes_flip.png" id="8_6gf24"]
+[ext_resource type="Script" path="res://Scripts/Shader_Palette.gd" id="9_btm2a"]
+[ext_resource type="PackedScene" uid="uid://caqp2s3n5m7og" path="res://Scenes/ui_controller.tscn" id="14_8al8u"]
+
+[sub_resource type="Animation" id="Animation_kquip"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:offset:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_iyfj4"]
+resource_name = "big_shake_l"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:offset:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -4, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3, 1)
+}
+
+[sub_resource type="Animation" id="Animation_8hybr"]
+resource_name = "big_shake_r"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:offset:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.2, -0.0119137, 0.25, 0, 4, -0.25, 0, 0.25, 0, 0, -0.2, -0.0119137, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3, 1)
+}
+
+[sub_resource type="Animation" id="Animation_m3svg"]
+resource_name = "small_shake"
+length = 0.8
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:offset:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, 0, 0, 0, 0, -1, -0.1, 0, 0.1, 0, 1, 0, 0, 0, 0, -0.000140718, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3, 0.4, 0.5, 0.8)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mocy2"]
+_data = {
+"RESET": SubResource("Animation_kquip"),
+"big_shake_l": SubResource("Animation_iyfj4"),
+"big_shake_r": SubResource("Animation_8hybr"),
+"small_shake": SubResource("Animation_m3svg")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b3eom"]
+shader = ExtResource("7_4qc8k")
+shader_parameter/palette_index = 0.0
+shader_parameter/palette = ExtResource("8_6gf24")
+
+[node name="Main" type="Node"]
+
+[node name="GameManager" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("1_ryie0")
+
+[node name="MusicManager" type="Node" parent="."]
+script = ExtResource("2_w01u1")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="MusicManager"]
+bus = &"Music"
+
+[node name="MainLevel" parent="." instance=ExtResource("1_bu0eb")]
+gm_path = NodePath("../GameManager")
+
+[node name="WinArea" parent="." instance=ExtResource("4_giia6")]
+position = Vector2(80, 83)
+
+[node name="Chain" parent="." instance=ExtResource("4_pdtj6")]
+base_path = NodePath("../ChainBase")
+player_path = NodePath("../Player")
+
+[node name="ChainBase" parent="." instance=ExtResource("5_33amq")]
+position = Vector2(80, 20)
+player_path = NodePath("../Player")
+
+[node name="Player" parent="." instance=ExtResource("3_nfab3")]
+position = Vector2(80, 28)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(80, 72)
+script = ExtResource("5_kpbsb")
+player_path = NodePath("../Player")
+
+[node name="CamAnim" type="AnimationPlayer" parent="Camera2D"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_mocy2")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UICanvas" parent="CanvasLayer" instance=ExtResource("4_0rokx")]
+
+[node name="TransitionShader" parent="CanvasLayer" instance=ExtResource("6_x3bfk")]
+
+[node name="PaletteShader" type="ColorRect" parent="CanvasLayer"]
+visible = false
+material = SubResource("ShaderMaterial_b3eom")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("9_btm2a")
+
+[node name="UIController" parent="CanvasLayer" instance=ExtResource("14_8al8u")]
+
+[connection signal="freeze_process" from="GameManager" to="Player" method="freeze"]
+[connection signal="pause" from="GameManager" to="CanvasLayer/UICanvas" method="on_pause"]
+[connection signal="reset_process" from="GameManager" to="MainLevel" method="load_level"]
+[connection signal="reset_process" from="GameManager" to="Chain" method="reset_chain"]
+[connection signal="reset_process" from="GameManager" to="Player" method="reset"]
+[connection signal="reset_process" from="GameManager" to="Camera2D" method="reset_camera"]
+[connection signal="reset_process" from="GameManager" to="CanvasLayer/UICanvas" method="reset"]
+[connection signal="unpause" from="GameManager" to="CanvasLayer/UICanvas" method="on_unpause"]
+[connection signal="update_camera" from="GameManager" to="Camera2D" method="update_camera_pos"]
+[connection signal="screen_wipe" from="MainLevel" to="CanvasLayer/TransitionShader" method="transition"]
+[connection signal="update_camera" from="MainLevel" to="Camera2D" method="update_camera_pos"]
+[connection signal="win_signal" from="WinArea" to="GameManager" method="win"]
+[connection signal="cam_shake" from="Player" to="Camera2D" method="camera_shake"]
+[connection signal="goal_grabbed" from="Player" to="WinArea" method="display_arrow"]
+[connection signal="player_lose" from="Player" to="GameManager" method="lose"]
+[connection signal="set_cam_follow" from="Player" to="Camera2D" method="set_camera_follow"]
+[connection signal="set_display" from="Player" to="CanvasLayer/UICanvas" method="set_displaying"]
+[connection signal="swap_display" from="Player" to="CanvasLayer/UICanvas" method="swap_data_displays"]
+[connection signal="update_depth" from="Player" to="CanvasLayer/UICanvas" method="update_depth"]
+[connection signal="update_health" from="Player" to="CanvasLayer/UICanvas" method="update_health"]
+[connection signal="update_tutorial" from="Player" to="CanvasLayer/UICanvas" method="update_tutorial"]
+[connection signal="change_palette" from="CanvasLayer/TransitionShader" to="CanvasLayer/PaletteShader" method="change_palette"]

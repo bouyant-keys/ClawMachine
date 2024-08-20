@@ -7,40 +7,53 @@ var current_floor := 0
 @export_node_path() var gm_path
 @export var level_list : LevelList
 @export var start_level : int
+@export var test_lvl := false
 
-@onready var level_container = $CurrentLevel as Node2D
 @onready var game_manager: GameManager = get_node(gm_path)
-@onready var down_arrows: AnimatedSprite2D = $DownArrows
-@onready var up_arrows: AnimatedSprite2D = $UpArrows
 
-signal screen_wipe(Vector2)
-signal update_camera(Vector2)
-#signal new_level(int)
+#signal menu()
+#signal level_win()
+#signal screen_wipe(Vector2)
+signal set_cam_limit(int)
+signal goal_position(Node2D)
 
 func _ready() -> void:
 	current_level = start_level
-	load_level()
-	down_arrows.play("default")
-	up_arrows.play("default")
+	#call_deferred("load_level")
 
-func update_camera_pos(to_floor:int, enter_dir:Vector2) ->void:
-	if to_floor == current_floor: return
-	
-	current_floor = to_floor
-	game_manager.change_floor(to_floor, enter_dir)
+#func on_goal_collected() ->void:
+	#emit_signal("level_win")
 
-# This script will load/swap certain tilesets, a 'main' set will stay with the 
-# options menu and shop, but the 'depths' below level 0 will be loaded in. 
 func load_level() ->void:
-	for child : int in level_container.get_child_count():
-		level_container.get_child(child).queue_free()
+	#TODO Comment following block out int final build
+	if current_level == 0:
+		current_level = start_level
 	
-	if current_level < 0 or current_level > level_list.levels.size() - 1:
-		current_level = 0
+	for child : int in self.get_child_count():
+		self.get_child(child).queue_free()
 	
-	var new_level = level_list.levels[current_level].instantiate() as Node
-	level_container.add_child(new_level)
-	#emit_signal("new_level", current_level)
+	var new_level : Level
+	if test_lvl:
+		new_level = preload("res://Scenes/Levels/test_level.tscn").instantiate() as Level
+		self.add_child(new_level)
+	else:
+		if current_level < 0: 
+			current_level = 0
+		elif current_level > level_list.levels.size() - 1: 
+			#emit_signal("menu")
+			current_level = 0
+		
+		new_level = level_list.levels[current_level].instantiate() as Level
+		self.add_child(new_level)
+	
+	emit_signal("goal_position", new_level.goal_obj)
+	emit_signal("set_cam_limit", int(new_level.cam_limit_y))
 
-#func on_win() ->void:
-	#current_level += 1
+func load_menu() ->void:
+	print("loading menu")
+	for child : int in self.get_child_count():
+		self.get_child(child).queue_free()
+	
+	var new_level := preload("res://Scenes/Levels/menu_level.tscn").instantiate() as LevelMenu
+	new_level.play_menu()
+	self.add_child(new_level)

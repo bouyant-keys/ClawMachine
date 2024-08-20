@@ -27,7 +27,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if paused: return
-	follower.progress += speed * speed_scale
+	follower.progress += (speed * speed_scale) * delta
 
 func pause() ->void:
 	paused = true
