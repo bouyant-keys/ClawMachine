@@ -4,8 +4,8 @@ class_name Player
 static var input_enabled := false
 static var grabbing := false
 
-const MAX_VEL_Y := 1000.0
-const PULL_VEL_X := 120.0
+const MAX_VEL_Y := 1500.0
+const PULL_VEL_X := 240.0
 
 var health := 3
 var grab_obj : Grab_Block
@@ -13,14 +13,10 @@ var start_pos : Vector2
 var goal : Node2D
 var total_goal_dist : float
 var grabbed_goal := false
-var prev_coll_id : int
+var can_bump := true
 
 var x_pos := 0.0
 var y_dir := 0.0
-
-#enum PlayerState {IDLE, MOVING}
-#@export var current_player_state : PlayerState
-@export var player_speed : float
 
 @onready var claw_sprite = $ClawSprite as AnimatedSprite2D
 @onready var grab_sprite = $GrabObj_Sprite as Sprite2D
@@ -62,13 +58,15 @@ func _physics_process(delta):
 		var collision := get_last_slide_collision()
 		
 		# Bump only if moving fast enough, and just once with the same object # Actually the whole tilemap is one obj lol FIXME!!!
-		if velocity.length() > 40.0 && collision.get_collider_id() != prev_coll_id: 
-			prev_coll_id = collision.get_collider_id()
+		if velocity.length() > 60.0 && can_bump: 
 			print(velocity.length())
 			on_bump(collision.get_position())
 
 func check_dist_from_goal() ->void:
 	if grabbed_goal: return
+	elif goal == null: 
+		#print("Goal is null")
+		return
 	
 	var dist := goal.global_position.y - global_position.y
 	var n_dist := dist / total_goal_dist #normalized dist
@@ -92,14 +90,18 @@ func update_h_movement(new_pos:float) ->void:
 func set_goal(obj:Node2D) ->void:
 	goal = obj
 	total_goal_dist = absf(goal.global_position.y - start_pos.y)
-	print("Dist to goal from start_pos: " + str(total_goal_dist))
+	#print("Dist to goal from start_pos: " + str(total_goal_dist))
 
 # Needs to be activated from somewhere
 func on_bump(pos:Vector2) ->void:
+	can_bump = false
 	claw_anim.play("bump")
 	bump_sfx.pitch_scale = randf_range(1.0, 2.5)
 	bump_sfx.play()
 	wall_bumped.emit(pos) #maybe pass collision point ?
+	
+	await get_tree().create_timer(0.5).timeout
+	can_bump = true
 
 # Grab / Release Functions
 
@@ -148,6 +150,7 @@ func on_hit() ->void:
 	
 	if health != 0:
 		invincible_anim.play("invincible")
+		claw_anim.play("bump")
 	else:
 		GameManager.deaths += 1
 		emit_signal("player_lose")
@@ -155,7 +158,7 @@ func on_hit() ->void:
 	await invincible_anim.animation_finished
 	
 	if hurt_area.get_overlapping_areas().size() != 0:
-		print("still in hurt area")
+		#print("still in hurt area")
 		on_hit()
 
 # Area Functions
@@ -177,7 +180,7 @@ func on_grab_area_exited(area:Area2D) ->void:
 		obj_nearby.emit(false)
 
 func on_hurt_area_entered(_body:Node2D) ->void:
-	print("Hurt area entered")
+	#print("Hurt area entered")
 	if invincible_anim.is_playing(): return
 	
 	on_hit()
@@ -187,14 +190,16 @@ func on_hurt_area_entered(_body:Node2D) ->void:
 func freeze(frozen:bool) ->void:
 	if frozen:
 		input_enabled = false
+		set_physics_process(false)
 		move_sfx.stop()
 	else:
 		input_enabled = true
+		set_physics_process(true)
 		if y_dir != 0.0:
 			move_sfx.play()
 
 func reset() ->void:
-	if grabbing: release()
+	if grabbing && grab_obj != null: release()
 	
 	health = 3
 	emit_signal("update_health", health)

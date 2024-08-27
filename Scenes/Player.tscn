@@ -47,7 +47,7 @@ radius = 3.0
 b = Vector2(0, 24)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jehkn"]
-radius = 8.0
+radius = 6.0
 
 [sub_resource type="Animation" id="Animation_c8gx3"]
 length = 0.001

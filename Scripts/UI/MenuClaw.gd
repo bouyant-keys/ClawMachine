@@ -17,6 +17,8 @@ var claw_tween : Tween
 
 func menu_start() ->void:
 	# Move claw to idle position
+	start_block.texture = start_tex
+	select_block.texture = select_tex
 	await get_tree().create_timer(0.5).timeout
 	
 	var move_pos := Vector2(32.0, 64.0)

@@ -74,6 +74,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="SliderSprite" type="TextureRect" parent="ControllerBG/ControllerBar/Slider"]
 layout_mode = 1
@@ -110,6 +111,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="Up" type="TextureRect" parent="ControllerBG/ControllerBar/Knob/Arrows"]
 layout_mode = 1
@@ -212,6 +214,7 @@ offset_right = -2.0
 offset_bottom = 8.0
 grow_horizontal = 0
 grow_vertical = 2
+mouse_filter = 1
 texture_normal = ExtResource("8_ddaej")
 stretch_mode = 3
 script = ExtResource("8_5avfk")
@@ -244,6 +247,7 @@ offset_right = 18.0
 offset_bottom = 8.0
 grow_vertical = 2
 scale = Vector2(1, 1.00428)
+mouse_filter = 1
 texture_normal = ExtResource("13_risul")
 script = ExtResource("8_5avfk")
 normal_tex = ExtResource("13_risul")
@@ -257,7 +261,9 @@ stream = ExtResource("5_wvpgk")
 volume_db = -6.0
 bus = &"SFX"
 
-[connection signal="reset_knob" from="." to="ControllerBG/ControllerBar/Knob" method="reset_knob"]
+[connection signal="reset_elements" from="." to="ControllerBG/ControllerBar/Knob" method="reset_knob"]
+[connection signal="reset_elements" from="." to="ControllerBG/ControllerBar/GrabButton" method="reset_state"]
+[connection signal="reset_elements" from="." to="ControllerBG/ControllerBar/PauseButton" method="reset_state"]
 [connection signal="h_dir_changed" from="ControllerBG/ControllerBar/Knob" to="." method="on_h_slider_changed"]
 [connection signal="v_dir_changed" from="ControllerBG/ControllerBar/Knob" to="." method="on_v_slider_changed"]
 [connection signal="mouse_entered" from="ControllerBG/ControllerBar/Knob/Area2D" to="ControllerBG/ControllerBar/Knob" method="mouse_entered"]

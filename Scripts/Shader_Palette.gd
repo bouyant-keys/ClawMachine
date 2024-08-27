@@ -3,7 +3,7 @@ extends ColorRect
 @export var current_pattern = 0
 
 func _ready():
-	#show()
+	show()
 	change_palette(0)
 
 func _input(event: InputEvent) -> void:

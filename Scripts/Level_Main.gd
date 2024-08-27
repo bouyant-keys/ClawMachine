@@ -50,7 +50,7 @@ func load_level() ->void:
 	emit_signal("set_cam_limit", int(new_level.cam_limit_y))
 
 func load_menu() ->void:
-	print("loading menu")
+	#print("loading menu")
 	for child : int in self.get_child_count():
 		self.get_child(child).queue_free()
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bix7bxbdv1uqr"]
+[gd_scene load_steps=29 format=3 uid="uid://bix7bxbdv1uqr"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UIMenu.gd" id="1_0hlau"]
 [ext_resource type="Texture2D" uid="uid://pqxc0rtgsnce" path="res://Sprites/MenuTitle.png" id="2_ebojs"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" path="res://Scripts/UI/LevelButtonContainer.gd" id="8_tu3aw"]
 [ext_resource type="Script" path="res://Scripts/UI/MenuClaw.gd" id="10_jnyxv"]
 [ext_resource type="AudioStream" uid="uid://f7dku23xcf24" path="res://Audio/Effects/Grab.wav" id="12_dklwc"]
+[ext_resource type="AudioStream" uid="uid://dg7civ3l4w3j7" path="res://Audio/Effects/EmptyGrab.wav" id="15_1kju8"]
+[ext_resource type="AudioStream" uid="uid://bl2i0x1alqnr7" path="res://Audio/Effects/Bump.wav" id="16_fyjdb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lyw0l"]
 atlas = ExtResource("7_0iwv7")
@@ -89,7 +91,6 @@ stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="StartButtonContainer" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2
@@ -105,6 +106,7 @@ metadata/_edit_use_anchors_ = true
 [node name="StartButton" type="Panel" parent="StartButtonContainer"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = ExtResource("5_cc2ot")
 script = ExtResource("4_pl6n8")
 tex_path = NodePath("StartTexture")
@@ -134,6 +136,7 @@ offset_top = -11.0
 offset_bottom = 11.0
 grow_horizontal = 0
 grow_vertical = 2
+mouse_filter = 1
 theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
 theme_override_colors/font_pressed_color = Color(0.25098, 0.25098, 0.25098, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
@@ -150,6 +153,7 @@ alignment = 0
 [node name="LevelSelectbutton" type="Panel" parent="StartButtonContainer"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = ExtResource("5_cc2ot")
 script = ExtResource("4_pl6n8")
 tex_path = NodePath("LvlSelectTexture")
@@ -179,6 +183,7 @@ offset_top = -11.0
 offset_bottom = 11.0
 grow_horizontal = 0
 grow_vertical = 2
+mouse_filter = 1
 theme_override_colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
 theme_override_colors/font_pressed_color = Color(0.25098, 0.25098, 0.25098, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
@@ -193,6 +198,7 @@ text = "- Level Select"
 alignment = 0
 
 [node name="LevelButtonContainer" type="HFlowContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.25
@@ -209,70 +215,82 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Level1" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_lyw0l")
 
 [node name="Level2" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_mkeck")
 atlas_coords = Vector2(16, 0)
 level_index = 1
 
 [node name="Level3" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_80ect")
 atlas_coords = Vector2(32, 0)
 level_index = 2
 
 [node name="Level4" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_e8asp")
 atlas_coords = Vector2(48, 0)
 level_index = 3
 
 [node name="Level5" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_25fof")
 atlas_coords = Vector2(0, 16)
 level_index = 4
 
 [node name="Level6" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_6yhr3")
 atlas_coords = Vector2(16, 16)
 level_index = 5
 
 [node name="Level7" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_4orlr")
 atlas_coords = Vector2(32, 16)
 level_index = 6
 
 [node name="Level8" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_gogkq")
 atlas_coords = Vector2(48, 16)
 level_index = 7
 
 [node name="Level9" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_6to8n")
 atlas_coords = Vector2(0, 32)
 level_index = 8
 
 [node name="Level10" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_eppl4")
 atlas_coords = Vector2(16, 32)
 level_index = 9
 
 [node name="Level11" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_47eg7")
 atlas_coords = Vector2(32, 32)
 level_index = 10
 
 [node name="Level12" parent="LevelButtonContainer" instance=ExtResource("7_qo24h")]
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_08tfe")
 atlas_coords = Vector2(48, 32)
 level_index = 11
@@ -284,6 +302,7 @@ offset_left = 24.0
 offset_top = -16.0
 offset_right = 24.0
 offset_bottom = -16.0
+mouse_filter = 1
 script = ExtResource("10_jnyxv")
 
 [node name="ClawSprite" type="TextureRect" parent="Claw"]
@@ -345,6 +364,12 @@ stretch_mode = 5
 [node name="Grab_SFX" type="AudioStreamPlayer" parent="Claw"]
 stream = ExtResource("12_dklwc")
 bus = &"SFX"
+
+[node name="ButtonClickSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_1kju8")
+
+[node name="LockedSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_fyjdb")
 
 [connection signal="disable_levels" from="." to="LevelButtonContainer" method="set_else_disabled"]
 [connection signal="disable_select" from="." to="StartButtonContainer/LevelSelectbutton" method="set_disabled"]

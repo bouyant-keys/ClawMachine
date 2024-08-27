@@ -1,6 +1,7 @@
 extends Node
 class_name GameManager
 
+static var level_progress : Array[bool]
 static var game_completed_once := false
 static var deaths := 0
 static var times_zapped := 0
@@ -25,26 +26,37 @@ signal update_camera(Vector2)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	level_progress.resize(13)
+	level_progress.fill(false)
+	level_progress[0] = true # Allow first level to be accessible in level select
+	
 	# Singleton pattern:
 	if instance == null:
 		instance = self
 	else:
 		self.queue_free()
 	
-	call_deferred("menu")
+	call_deferred("menu", true)
 
 #func _input(event: InputEvent) -> void:
 	#if event is InputEventKey:
 		#if event.is_action_pressed("Pause") && !transitioning: set_pause()
 
-func menu() ->void:
-	#emit_signal("freeze_process", true)
+func menu(firstTime:bool = false) ->void:
+	if paused:
+		set_pause()
+	
+	if !firstTime:
+		emit_signal("freeze_process", true)
+		transitioning = true
+		await transition.fade_out(Vector2.ZERO)
+	else:
+		transitioning = true
+	
 	emit_signal("menu_process")
-	transitioning = true
 	
 	await transition.fade_in(Vector2.ZERO)
 	transitioning = false
-	#emit_signal("freeze_process", false)
 
 func start(level:int = 0) ->void:
 	#print("starting")
@@ -62,6 +74,7 @@ func start(level:int = 0) ->void:
 
 func win() ->void: # Called by CollectionBox
 	#print("win")
+	level_progress[MainLevel.current_level] = true
 	MainLevel.current_level += 1
 	emit_signal("freeze_process", true)
 	transitioning = true
