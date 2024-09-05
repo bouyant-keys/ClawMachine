@@ -41,6 +41,7 @@ _data = {
 script = ExtResource("1_nuht2")
 
 [node name="PathTex" type="Line2D" parent="."]
+visible = false
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 position = Vector2(80, 48)

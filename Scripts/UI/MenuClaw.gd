@@ -1,8 +1,6 @@
 extends Control
 class_name MenuClaw 
 
-var claw_tween : Tween
-
 @onready var claw_sprite: TextureRect = $ClawSprite
 @onready var grab_sprite: TextureRect = $ClawSprite/GrabObj
 @onready var start_block: TextureRect = $"../StartButtonContainer/StartButton/StartTexture"
@@ -24,21 +22,17 @@ func menu_start() ->void:
 	var move_pos := Vector2(32.0, 64.0)
 	claw_sprite.texture = claw_open_tex
 	grab_sprite.hide()
-	claw_tween = get_tree().create_tween()
-	claw_tween.set_trans(Tween.TRANS_BACK)
-	claw_tween.set_ease(Tween.EASE_OUT)
-	claw_tween.tween_property(self, "position", move_pos, 1.6)
-	await claw_tween.finished
+	
+	var start_tween = get_tree().create_tween()
+	start_tween.set_trans(Tween.TRANS_BACK)
+	start_tween.set_ease(Tween.EASE_OUT)
+	start_tween.tween_property(self, "position", move_pos, 1.6)
+	await start_tween.finished
 
 func start_button_pressed() ->void:
 	# Tween claw to button position
-	var move_pos := start_block.get_global_transform_with_canvas().get_origin() + Vector2(8.0, 8.0)
-	grab_sprite.hide()
-	claw_tween = get_tree().create_tween()
-	claw_tween.set_trans(Tween.TRANS_SINE)
-	claw_tween.set_ease(Tween.EASE_IN_OUT)
-	claw_tween.tween_property(self, "position", move_pos, 0.6)
-	await claw_tween.finished
+	var move_pos = start_block.get_global_transform_with_canvas().get_origin() + Vector2(8.0, 8.0)
+	await move_claw_in(move_pos)
 	
 	# Claw grabs button, button disappears
 	await get_tree().create_timer(0.2).timeout
@@ -50,22 +44,12 @@ func start_button_pressed() ->void:
 	await get_tree().create_timer(0.2).timeout
 	
 	# Claw tweens away with button
-	var exit_pos := Vector2(position.x, position.y - 160.0)
-	claw_tween = get_tree().create_tween()
-	claw_tween.set_trans(Tween.TRANS_BACK)
-	claw_tween.set_ease(Tween.EASE_IN)
-	claw_tween.tween_property(self, "position", exit_pos, 1.6)
-	await claw_tween.finished
+	await move_claw_out(Vector2(position.x, position.y - 160.0))
 
 func lvl_select_button_pressed() ->void:
 	# Tween claw to button position
-	var move_pos := select_block.get_global_transform_with_canvas().get_origin() + Vector2(8.0, 8.0)
-	grab_sprite.hide()
-	claw_tween = get_tree().create_tween()
-	claw_tween.set_trans(Tween.TRANS_SINE)
-	claw_tween.set_ease(Tween.EASE_IN_OUT)
-	claw_tween.tween_property(self, "position", move_pos, 1.6)
-	await claw_tween.finished
+	var move_pos = select_block.get_global_transform_with_canvas().get_origin() + Vector2(8.0, 8.0)
+	await move_claw_in(move_pos)
 	
 	# Claw grabs button, button disappears
 	await get_tree().create_timer(0.2).timeout
@@ -77,23 +61,13 @@ func lvl_select_button_pressed() ->void:
 	await get_tree().create_timer(0.2).timeout
 	
 	# Claw tweens away with button
-	var exit_pos := Vector2(position.x, position.y - 160.0)
-	claw_tween = get_tree().create_tween()
-	claw_tween.set_trans(Tween.TRANS_BACK)
-	claw_tween.set_ease(Tween.EASE_IN)
-	claw_tween.tween_property(self, "position", exit_pos, 1.6)
-	await claw_tween.finished
+	await move_claw_out(Vector2(position.x, position.y - 160.0))
 
 func level_button_pressed(index : int) ->void:
 	# Tween claw to button position
 	var level_button : TextureButton = level_button_parent.get_child(index) as TextureButton
-	var move_pos := level_button.get_global_transform_with_canvas().get_origin() + Vector2(8.0, 8.0)
-	grab_sprite.hide()
-	claw_tween = get_tree().create_tween()
-	claw_tween.set_trans(Tween.TRANS_SINE)
-	claw_tween.set_ease(Tween.EASE_IN_OUT)
-	claw_tween.tween_property(self, "position", move_pos, 1.0)
-	await claw_tween.finished
+	var move_pos := level_button.get_global_transform_with_canvas().get_origin() + Vector2(8.0, 6.0)
+	await move_claw_in(move_pos)
 	
 	# Claw grabs button, button disappears
 	await get_tree().create_timer(0.2).timeout
@@ -107,9 +81,19 @@ func level_button_pressed(index : int) ->void:
 	await get_tree().create_timer(0.2).timeout
 	
 	# Claw tweens away with button
-	var exit_pos := Vector2(position.x, position.y - 160.0)
-	claw_tween = get_tree().create_tween()
-	claw_tween.set_trans(Tween.TRANS_BACK)
-	claw_tween.set_ease(Tween.EASE_IN)
-	claw_tween.tween_property(self, "position", exit_pos, 1.6)
-	await claw_tween.finished
+	await move_claw_out(Vector2(position.x, position.y - 160.0))
+
+func move_claw_in(pos:Vector2) ->void:
+	grab_sprite.hide()
+	var to_tween = get_tree().create_tween()
+	to_tween.set_trans(Tween.TRANS_SINE)
+	to_tween.set_ease(Tween.EASE_IN_OUT)
+	to_tween.tween_property(self, "position", pos, 1.0)
+	await to_tween.finished
+
+func move_claw_out(pos:Vector2) ->void:
+	var out_tween = get_tree().create_tween()
+	out_tween.set_trans(Tween.TRANS_BACK)
+	out_tween.set_ease(Tween.EASE_IN)
+	out_tween.tween_property(self, "position", pos, 1.6)
+	await out_tween.finished

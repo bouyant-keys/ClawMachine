@@ -1,5 +1,9 @@
 extends Node
 
+const DEFAULT_VOL := -12.0 # in dB
+
+@onready var menu_song : AudioStream = preload("res://Audio/Music/Blippy Trance Edit.wav") as AudioStream
+@onready var game_song : AudioStream = preload("res://Audio/Music/513555_Insomnia-Dreams.mp3") as AudioStream
 @onready var music_player = $MusicPlayer as AudioStreamPlayer
 
 # Called when the node enters the scene tree for the first time.
@@ -7,6 +11,8 @@ func _ready() -> void:
 	start_music()
 
 func start_music() ->void:
+	music_player.stream = menu_song
+	#music_player.volume_db = -80.0
 	music_player.play()
 
 func pause_music() ->void:
@@ -18,7 +24,32 @@ func resume_music() ->void:
 func stop_music() ->void:
 	music_player.stop()
 
-#func change_song(value:int) ->void: pass
+# Signaled functions
+
+func lower_vol() ->void:
+	tween_vol(DEFAULT_VOL, -18.0, 0.8)
+
+func raise_vol() ->void:
+	tween_vol(-18.0, DEFAULT_VOL, 0.8)
+
+func change_song(menu:bool) ->void: #maybe alter to fade out, then start next song
+	await tween_vol(DEFAULT_VOL, -64.0, 1.0)
+	
+	if menu: 
+		music_player.stream = menu_song
+		music_player.play()
+	else: 
+		music_player.stream = game_song
+		music_player.play(183.0)
+	
+	tween_vol(-64.0, DEFAULT_VOL, 1.0)
+
+func tween_vol(start:float, end:float, duration:float) ->void:
+	var vol_tween = get_tree().create_tween()
+	vol_tween.set_trans(Tween.TRANS_CUBIC)
+	vol_tween.set_ease(Tween.EASE_IN)
+	vol_tween.tween_method(change_volume, start, end, duration)
+	await vol_tween.finished
 
 func change_volume(value:float) ->void:
 	music_player.volume_db = value

@@ -21,8 +21,8 @@
 [ext_resource type="PackedScene" uid="uid://caqp2s3n5m7og" path="res://Scenes/ui_controller.tscn" id="14_8al8u"]
 [ext_resource type="StyleBox" uid="uid://wny360jhf3cn" path="res://Materials/MenuPanelStyle.tres" id="16_eucvi"]
 [ext_resource type="Script" path="res://Scripts/UI/StopMouseInput.gd" id="17_knx2u"]
-[ext_resource type="Texture2D" uid="uid://cpg0l7a4y2uut" path="res://Sprites/palettes_edit1.png" id="18_w12af"]
 [ext_resource type="PackedScene" uid="uid://dahacdx3umm8n" path="res://Scenes/Background.tscn" id="19_y2reb"]
+[ext_resource type="Texture2D" uid="uid://clqpw7s10hw7f" path="res://Sprites/palettes_edit2.png" id="21_mbjk8"]
 
 [sub_resource type="Curve" id="Curve_npoln"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.82692, 0.0, 0, 0]
@@ -108,13 +108,15 @@ _data = {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b3eom"]
 shader = ExtResource("7_4qc8k")
 shader_parameter/palette_index = 0.0
-shader_parameter/palette = ExtResource("18_w12af")
+shader_parameter/palette = ExtResource("21_mbjk8")
 
 [node name="Main" type="Node"]
 
 [node name="GameManager" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("1_ryie0")
+skip_main_menu = true
+transition_path = NodePath("../CanvasLayer/TransitionShader")
 
 [node name="WinSFX" type="AudioStreamPlayer" parent="GameManager"]
 stream = ExtResource("2_l35ue")
@@ -125,6 +127,7 @@ stream = ExtResource("3_mtsoq")
 bus = &"SFX"
 
 [node name="MusicManager" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("2_w01u1")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="MusicManager"]
@@ -134,7 +137,7 @@ bus = &"Music"
 
 [node name="MainLevel" parent="." instance=ExtResource("1_bu0eb")]
 gm_path = NodePath("../GameManager")
-start_level = 2
+start_level = 8
 
 [node name="LevelObjects" type="Node2D" parent="."]
 script = ExtResource("5_2eaa3")
@@ -177,6 +180,8 @@ libraries = {
 
 [node name="GameDisplay" parent="CanvasLayer" instance=ExtResource("11_qti71")]
 
+[node name="PauseDisplay" parent="CanvasLayer" instance=ExtResource("12_85uhn")]
+
 [node name="UIController" parent="CanvasLayer" instance=ExtResource("14_8al8u")]
 
 [node name="UIMenu" parent="CanvasLayer" instance=ExtResource("13_77ex3")]
@@ -191,9 +196,8 @@ grow_vertical = 2
 theme_override_styles/panel = ExtResource("16_eucvi")
 script = ExtResource("17_knx2u")
 
-[node name="PauseDisplay" parent="CanvasLayer" instance=ExtResource("12_85uhn")]
-
 [node name="TransitionShader" parent="CanvasLayer" instance=ExtResource("6_x3bfk")]
+process_mode = 3
 z_index = 99
 mouse_filter = 2
 
@@ -208,7 +212,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("9_btm2a")
-current_pattern = 1
 
 [node name="ParallaxBackground" parent="CanvasLayer" instance=ExtResource("19_y2reb")]
 
@@ -229,6 +232,9 @@ current_pattern = 1
 [connection signal="menu_process" from="GameManager" to="CanvasLayer/UIMenu" method="show_self"]
 [connection signal="menu_process" from="GameManager" to="CanvasLayer/UIMenu" method="on_menu_load"]
 [connection signal="menu_process" from="GameManager" to="CanvasLayer/ParallaxBackground" method="set_menu_background"]
+[connection signal="music_change" from="GameManager" to="MusicManager" method="change_song"]
+[connection signal="music_lower_vol" from="GameManager" to="MusicManager" method="lower_vol"]
+[connection signal="music_raise_vol" from="GameManager" to="MusicManager" method="raise_vol"]
 [connection signal="pause" from="GameManager" to="CanvasLayer/PauseDisplay" method="on_pause"]
 [connection signal="reset_process" from="GameManager" to="MainLevel" method="load_level"]
 [connection signal="reset_process" from="GameManager" to="LevelObjects/Chain" method="reset_chain"]
@@ -250,12 +256,13 @@ current_pattern = 1
 [connection signal="update_depth" from="LevelObjects/Player" to="CanvasLayer/GameDisplay" method="update_depth"]
 [connection signal="update_health" from="LevelObjects/Player" to="CanvasLayer/GameDisplay" method="update_health"]
 [connection signal="wall_bumped" from="LevelObjects/Player" to="LevelObjects/BumpParticles" method="on_bump"]
+[connection signal="back_to_menu" from="CanvasLayer/UIController" to="GameManager" method="menu"]
 [connection signal="grab_pressed" from="CanvasLayer/UIController" to="LevelObjects/Player" method="on_grab_pressed"]
 [connection signal="h_speed_changed" from="CanvasLayer/UIController" to="LevelObjects/Player" method="update_h_movement"]
 [connection signal="pause_pressed" from="CanvasLayer/UIController" to="GameManager" method="set_pause"]
+[connection signal="restart" from="CanvasLayer/UIController" to="GameManager" method="restart_level"]
 [connection signal="stop_mouse_input" from="CanvasLayer/UIController" to="CanvasLayer/StopMouseInput" method="set_visibility"]
 [connection signal="v_speed_changed" from="CanvasLayer/UIController" to="LevelObjects/Player" method="update_v_movement"]
 [connection signal="start_game" from="CanvasLayer/UIMenu" to="GameManager" method="start"]
 [connection signal="stop_mouse_input" from="CanvasLayer/UIMenu" to="CanvasLayer/StopMouseInput" method="set_visibility"]
-[connection signal="back_to_menu" from="CanvasLayer/PauseDisplay" to="GameManager" method="menu"]
 [connection signal="change_palette" from="CanvasLayer/TransitionShader" to="CanvasLayer/PaletteShader" method="change_palette"]

@@ -1,7 +1,9 @@
 extends Path2D
 
 var paused := false
+var obj : Node2D
 
+@export var display_pos := false
 @export_node_path() var move_obj_path
 
 @export var closed_loop : bool
@@ -11,23 +13,24 @@ var paused := false
 @onready var follower: PathFollow2D = $PathFollow2D
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var path_tex: Line2D = $PathTex
-@onready var remote: RemoteTransform2D = $PathFollow2D/RemoteTransform2D
+#@onready var remote: RemoteTransform2D = $PathFollow2D/RemoteTransform2D
 
 
 func _ready() -> void:
-	remote.remote_path = move_obj_path
-	
-	for point : int in curve.point_count:
-		path_tex.points.append(curve.get_point_position(point))
+	#remote.remote_path = move_obj_path
+	obj = get_node(move_obj_path) as Node2D
 	
 	if !closed_loop: 
 		anim.play("move")
 		anim.speed_scale = speed_scale
-		set_process(false)
+		#set_process(display_pos)
+		#paused = display_pos
 
 func _process(delta: float) -> void:
-	if paused: return
-	follower.progress += (speed * speed_scale) * delta
+	if closed_loop: 
+		follower.progress += (speed * speed_scale) * delta
+	
+	obj.global_position = follower.global_position
 
 func pause() ->void:
 	paused = true

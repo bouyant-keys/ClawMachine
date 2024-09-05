@@ -1,36 +1,37 @@
-[gd_scene load_steps=10 format=3 uid="uid://dm0q2rxk4vbev"]
+[gd_scene load_steps=11 format=3 uid="uid://dm0q2rxk4vbev"]
 
 [ext_resource type="Script" path="res://Scripts/collection_box.gd" id="1_18chk"]
 [ext_resource type="Texture2D" uid="uid://csm5axgy88i58" path="res://Sprites/TileSets/WinAreaSet.png" id="1_fu3q7"]
-[ext_resource type="Texture2D" uid="uid://brv2x5rv8o60w" path="res://Sprites/TileSets/WinArea_Set.png" id="3_rs5ih"]
 [ext_resource type="Texture2D" uid="uid://c8qnrsc4c051h" path="res://Sprites/UI/VArrowWhiteAnim.tres" id="3_yh68h"]
+[ext_resource type="Texture2D" uid="uid://bjp3t2l5mpswy" path="res://Sprites/TileSets/CollectAreaBG.png" id="4_di0k4"]
+[ext_resource type="Texture2D" uid="uid://b4yvkx0gvxmfm" path="res://Sprites/TileSets/CollectArea_Set.png" id="5_21hd6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n7l83"]
 size = Vector2(8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_70ioy"]
-atlas = ExtResource("3_rs5ih")
+[sub_resource type="AtlasTexture" id="AtlasTexture_anwol"]
+atlas = ExtResource("5_21hd6")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c5hup"]
-atlas = ExtResource("3_rs5ih")
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrb8l"]
+atlas = ExtResource("5_21hd6")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6ya55"]
-atlas = ExtResource("3_rs5ih")
+[sub_resource type="AtlasTexture" id="AtlasTexture_qiuav"]
+atlas = ExtResource("5_21hd6")
 region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mk72j"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_70ioy")
+"texture": SubResource("AtlasTexture_anwol")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_c5hup")
+"texture": SubResource("AtlasTexture_jrb8l")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6ya55")
+"texture": SubResource("AtlasTexture_qiuav")
 }],
 "loop": true,
 "name": &"default",
@@ -61,6 +62,11 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectionArea"]
 shape = SubResource("RectangleShape2D_n7l83")
 debug_color = Color(0.486275, 0, 1, 0.419608)
+
+[node name="CollectBG" type="Sprite2D" parent="CollectionArea"]
+z_index = -1
+position = Vector2(0, -5)
+texture = ExtResource("4_di0k4")
 
 [node name="AreaSprite" type="AnimatedSprite2D" parent="CollectionArea"]
 position = Vector2(0, -5)

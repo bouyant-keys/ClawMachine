@@ -24,6 +24,7 @@ cam_limit_y = 288.0
 [node name="MovingObj" parent="." instance=ExtResource("4_fs3og")]
 curve = SubResource("Curve2D_806a4")
 move_obj_path = NodePath("../ZapBar")
+speed_scale = 0.4
 
 [node name="ZapBar" type="TileMap" parent="."]
 position = Vector2(80, 48)

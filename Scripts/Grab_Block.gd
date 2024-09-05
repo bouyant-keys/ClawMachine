@@ -27,5 +27,6 @@ func get_sprite() ->Texture2D:
 	return sprite.texture
 
 func dissolve() ->void:
+	print("Dissolving")
 	var sprite_tween := get_tree().create_tween()
-	sprite_tween.tween_property(self, "self_modulate", Color.BLACK, 0.8)
+	sprite_tween.tween_property(sprite, "self_modulate", Color.BLACK, 0.8)

@@ -15,7 +15,7 @@ var current_floor := 0
 #signal level_win()
 #signal screen_wipe(Vector2)
 signal set_cam_limit(int)
-signal goal_position(Node2D)
+signal goal_position(capsule:Node2D, box:Node2D)
 
 func _ready() -> void:
 	current_level = start_level
@@ -25,7 +25,7 @@ func _ready() -> void:
 	#emit_signal("level_win")
 
 func load_level() ->void:
-	#TODO Comment following block out int final build
+	#TODO Comment following block out in final build
 	if current_level == 0:
 		current_level = start_level
 	
@@ -46,7 +46,7 @@ func load_level() ->void:
 		new_level = level_list.levels[current_level].instantiate() as Level
 		self.add_child(new_level)
 	
-	emit_signal("goal_position", new_level.goal_obj)
+	emit_signal("goal_position", new_level.goal_obj, new_level.collection_obj)
 	emit_signal("set_cam_limit", int(new_level.cam_limit_y))
 
 func load_menu() ->void:

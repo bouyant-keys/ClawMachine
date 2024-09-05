@@ -11,10 +11,12 @@ static var instance : GameManager
 var transitioning := false
 var paused := false
 
-#@onready var main_level: MainLevel = $"../MainLevel"
+@export var skip_main_menu := false
+@export_node_path() var transition_path
+
 @onready var win_sfx: AudioStreamPlayer = $WinSFX
 @onready var lose_sfx: AudioStreamPlayer = $LoseSFX
-@onready var transition: Transition_Shader = $"../CanvasLayer/TransitionShader"
+@onready var transition: Transition_Shader = get_node(transition_path) as Transition_Shader
 
 signal menu_process
 signal game_process
@@ -22,6 +24,9 @@ signal reset_process
 signal freeze_process(bool)
 signal pause
 signal unpause
+signal music_change(menu:bool)
+signal music_lower_vol
+signal music_raise_vol
 signal update_camera(Vector2)
 
 # Called when the node enters the scene tree for the first time.
@@ -36,17 +41,15 @@ func _ready() -> void:
 	else:
 		self.queue_free()
 	
-	call_deferred("menu", true)
-
-#func _input(event: InputEvent) -> void:
-	#if event is InputEventKey:
-		#if event.is_action_pressed("Pause") && !transitioning: set_pause()
+	if !skip_main_menu: call_deferred("menu", true)
+	else: call_deferred("start")
 
 func menu(firstTime:bool = false) ->void:
 	if paused:
 		set_pause()
 	
 	if !firstTime:
+		emit_signal("music_change", true)
 		emit_signal("freeze_process", true)
 		transitioning = true
 		await transition.fade_out(Vector2.ZERO)
@@ -61,6 +64,7 @@ func menu(firstTime:bool = false) ->void:
 func start(level:int = 0) ->void:
 	#print("starting")
 	MainLevel.current_level = level
+	emit_signal("music_change", false)
 	emit_signal("freeze_process", true)
 	transitioning = true
 	
@@ -83,8 +87,10 @@ func win() ->void: # Called by CollectionBox
 	
 	await transition.fade_out(Vector2.ZERO)
 	emit_signal("reset_process")
+	emit_signal("music_lower_vol")
 	
 	await transition.play_level_change()
+	emit_signal("music_raise_vol")
 	
 	await transition.fade_in(Vector2.ZERO)
 	transitioning = false
@@ -104,16 +110,8 @@ func lose() ->void:
 	transitioning = false
 	emit_signal("freeze_process", false)
 
-#func change_floor(new_floor:int, dir:Vector2) ->void:
-	#emit_signal("freeze_process", true)
-	#transitioning = true
-	#
-	#await transition.fade_out(dir)
-	#emit_signal("update_camera", Vector2(80.0, 72.0 + (144.0 * new_floor)))
-	#
-	#await transition.fade_in(dir)
-	#emit_signal("freeze_process", false)
-	#transitioning = false
+func restart_level() ->void:
+	start(MainLevel.current_level)
 
 func set_pause() ->void:
 	if paused:

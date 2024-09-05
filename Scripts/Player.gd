@@ -4,13 +4,14 @@ class_name Player
 static var input_enabled := false
 static var grabbing := false
 
-const MAX_VEL_Y := 1500.0
-const PULL_VEL_X := 240.0
+const MAX_VEL_Y := 1200.0
+const PULL_VEL_X := 200.0
 
 var health := 3
 var grab_obj : Grab_Block
 var start_pos : Vector2
-var goal : Node2D
+var capsule : Node2D
+var collect_box : Node2D
 var total_goal_dist : float
 var grabbed_goal := false
 var can_bump := true
@@ -20,6 +21,7 @@ var y_dir := 0.0
 
 @onready var claw_sprite = $ClawSprite as AnimatedSprite2D
 @onready var grab_sprite = $GrabObj_Sprite as Sprite2D
+@onready var dir_arrow: Sprite2D = $DirectionArrow
 @onready var hurt_area: Area2D = $HurtArea
 @onready var remote_trans = $RemoteTransform2D as RemoteTransform2D
 @onready var claw_anim: AnimationPlayer = $ClawAnim
@@ -63,13 +65,16 @@ func _physics_process(delta):
 			on_bump(collision.get_position())
 
 func check_dist_from_goal() ->void:
-	if grabbed_goal: return
-	elif goal == null: 
-		#print("Goal is null")
-		return
+	if capsule == null && collect_box == null: return
 	
-	var dist := goal.global_position.y - global_position.y
-	var n_dist := dist / total_goal_dist #normalized dist
+	var target : Node2D
+	if grabbed_goal: target = collect_box
+	else: target = capsule
+	
+	var dist = target.global_position - global_position
+	dir_arrow.rotation = dist.angle() + (PI / 2.0)
+	
+	var n_dist := dist.length() / total_goal_dist #normalized dist
 	n_dist = (n_dist - 1.0) * -1.0
 	
 	update_depth.emit(n_dist)
@@ -87,9 +92,10 @@ func update_v_movement(dir:float) ->void:
 func update_h_movement(new_pos:float) ->void:
 	x_pos = new_pos
 
-func set_goal(obj:Node2D) ->void:
-	goal = obj
-	total_goal_dist = absf(goal.global_position.y - start_pos.y)
+func set_goal(capsule:Node2D, collector:Node2D) ->void:
+	self.capsule = capsule
+	collect_box = collector
+	total_goal_dist = absf(capsule.global_position.y - start_pos.y)
 	#print("Dist to goal from start_pos: " + str(total_goal_dist))
 
 # Needs to be activated from somewhere

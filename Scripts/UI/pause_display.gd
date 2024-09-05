@@ -3,13 +3,8 @@ extends Control
 @onready var pause_panel: ColorRect = $PausePanel
 @onready var pause_anim: AnimationPlayer = $PauseAnim
 
-signal back_to_menu
-
 func _ready() -> void:
 	hide()
-
-func on_mainmenu_pressed() ->void:
-	emit_signal("back_to_menu")
 
 func on_pause() ->void:
 	show()

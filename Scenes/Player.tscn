@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://ch4wglb7cfc7"]
+[gd_scene load_steps=21 format=3 uid="uid://ch4wglb7cfc7"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_kn0tk"]
 [ext_resource type="Texture2D" uid="uid://22qcxjft1nwm" path="res://Sprites/Blocks/GoalCapsule.png" id="2_56148"]
 [ext_resource type="Texture2D" uid="uid://cqq4eronihr5t" path="res://Sprites/ClawClosed_Swap.png" id="3_655xl"]
 [ext_resource type="Texture2D" uid="uid://brrq0m2xrngja" path="res://Sprites/ClawOpen_Swap.png" id="3_ld5u5"]
 [ext_resource type="AudioStream" uid="uid://f7dku23xcf24" path="res://Audio/Effects/Grab.wav" id="5_8y0ge"]
+[ext_resource type="Texture2D" uid="uid://dolgw8nhy50lf" path="res://Sprites/DirectionArrow.png" id="5_xq1ee"]
 [ext_resource type="AudioStream" uid="uid://dg7civ3l4w3j7" path="res://Audio/Effects/EmptyGrab.wav" id="6_17la2"]
 [ext_resource type="AudioStream" uid="uid://bl2i0x1alqnr7" path="res://Audio/Effects/Bump.wav" id="7_8ioh1"]
 [ext_resource type="AudioStream" uid="uid://clkbu4g6yctyc" path="res://Audio/Effects/ChainMove_Loop.wav" id="7_b66oh"]
@@ -136,6 +137,11 @@ animation = &"EmptyGrab"
 frame = 1
 frame_progress = 1.0
 offset = Vector2(0, 8)
+
+[node name="DirectionArrow" type="Sprite2D" parent="."]
+position = Vector2(0, 10)
+texture = ExtResource("5_xq1ee")
+offset = Vector2(0, -14)
 
 [node name="CenterCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)

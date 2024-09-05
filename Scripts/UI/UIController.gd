@@ -2,6 +2,7 @@ extends Control
 
 @onready var controller_bg: TextureRect = $ControllerBG
 @onready var highlight: TextureRect = $ControllerBG/ControllerBar/GrabButton/Highlight
+@onready var menu_button: Panel = $MainMenuButton
 
 signal v_speed_changed(dir:float)
 signal h_speed_changed(dir:float)
@@ -9,11 +10,8 @@ signal grab_pressed
 signal pause_pressed
 signal reset_elements
 signal stop_mouse_input(active:bool)
-
-#func _ready() -> void:
-	#controller_bg.hide()
-
-# In-game functions:
+signal restart
+signal back_to_menu
 
 func freeze_controls(freeze:bool) ->void:
 	emit_signal("stop_mouse_input", freeze)
@@ -36,9 +34,21 @@ func on_grab_pressed() ->void:
 
 func on_pause_pressed() ->void:
 	pause_pressed.emit()
+	
+	if GameManager.instance.paused:
+		menu_button.show()
+	else:
+		menu_button.hide()
+
+func on_mainmenu_pressed() ->void:
+	emit_signal("back_to_menu")
+
+func on_restart_pressed() ->void:
+	emit_signal("restart")
 
 func reset() ->void:
 	emit_signal("reset_elements")
+	menu_button.hide()
 
 func hide_self() ->void: hide()
 func show_self() ->void: show()
