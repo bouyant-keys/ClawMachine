@@ -6,12 +6,15 @@ func _ready():
 	show()
 	change_palette(0)
 
-func _input(event: InputEvent) -> void:
-	#if !GameManager.game_completed_once: return
-	
-	if event is InputEventKey:
-		if event.is_action_pressed("Inc_Palette"): change_palette(1)
-		elif event.is_action_pressed("Dec_Palette"): change_palette(-1)
+#func _input(event: InputEvent) -> void:
+	##if !GameManager.game_completed_once: return
+	#
+	#if event is InputEventKey:
+		#if event.is_action_pressed("Inc_Palette"): change_palette(1)
+		#elif event.is_action_pressed("Dec_Palette"): change_palette(-1)
+
+func increment_palette() ->void:
+	change_palette(1)
 
 func change_palette(value:int):
 	var new_index = current_pattern + value

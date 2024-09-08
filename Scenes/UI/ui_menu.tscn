@@ -1,8 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://bix7bxbdv1uqr"]
+[gd_scene load_steps=32 format=3 uid="uid://bix7bxbdv1uqr"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UIMenu.gd" id="1_0hlau"]
 [ext_resource type="Texture2D" uid="uid://pqxc0rtgsnce" path="res://Sprites/MenuTitle.png" id="2_ebojs"]
 [ext_resource type="Texture2D" uid="uid://dyebnlvtlkauh" path="res://Sprites/UI/ResumeButton.png" id="2_etfsf"]
+[ext_resource type="Texture2D" uid="uid://iuxjyva1rj8i" path="res://Sprites/UI/SpecialButton.png" id="2_s2nby"]
+[ext_resource type="Texture2D" uid="uid://jruii4sd3hi8" path="res://Sprites/UI/SpecialButton_Press.png" id="3_e2sbg"]
 [ext_resource type="Script" path="res://Scripts/UI/MenuButtonPanel.gd" id="4_pl6n8"]
 [ext_resource type="StyleBox" uid="uid://wny360jhf3cn" path="res://Materials/MenuPanelStyle.tres" id="5_cc2ot"]
 [ext_resource type="FontFile" uid="uid://dnoqi8fg1yacv" path="res://Fonts/HelvetiPixel_by_pentacom.ttf" id="5_r14mh"]
@@ -16,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://f7dku23xcf24" path="res://Audio/Effects/Grab.wav" id="12_dklwc"]
 [ext_resource type="AudioStream" uid="uid://dg7civ3l4w3j7" path="res://Audio/Effects/EmptyGrab.wav" id="15_1kju8"]
 [ext_resource type="AudioStream" uid="uid://bl2i0x1alqnr7" path="res://Audio/Effects/Bump.wav" id="16_fyjdb"]
+[ext_resource type="AudioStream" uid="uid://cs2535saxrxko" path="res://Audio/Effects/vClick.wav" id="18_po8ey"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lyw0l"]
 atlas = ExtResource("7_0iwv7")
@@ -74,6 +77,19 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_0hlau")
+
+[node name="SpecialButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -16.0
+offset_bottom = 16.0
+grow_horizontal = 0
+mouse_filter = 1
+texture_normal = ExtResource("2_s2nby")
+texture_pressed = ExtResource("3_e2sbg")
+stretch_mode = 3
 
 [node name="TitleImage" type="TextureRect" parent="."]
 layout_mode = 1
@@ -361,6 +377,9 @@ bus = &"SFX"
 [node name="ButtonClickSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_1kju8")
 
+[node name="SpecialClickSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_po8ey")
+
 [node name="LockedSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_fyjdb")
 
@@ -370,6 +389,7 @@ stream = ExtResource("16_fyjdb")
 [connection signal="enable_all" from="." to="StartButtonContainer/StartButton" method="set_enabled"]
 [connection signal="enable_all" from="." to="StartButtonContainer/LevelSelectbutton" method="set_enabled"]
 [connection signal="enable_all" from="." to="LevelButtonContainer" method="set_enabled"]
+[connection signal="pressed" from="SpecialButton" to="." method="on_special_press"]
 [connection signal="button_up" from="StartButtonContainer/StartButton/Button" to="." method="on_start_pressed"]
 [connection signal="button_up" from="StartButtonContainer/LevelSelectbutton/Button" to="." method="on_level_select_pressed"]
 [connection signal="load_level" from="LevelButtonContainer/Level1" to="." method="on_level_pressed"]

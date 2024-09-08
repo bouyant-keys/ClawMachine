@@ -4,20 +4,20 @@ class_name Grab_Block
 @export var block_data : BlockData
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var area: Area2D = $Area2D
 @onready var arrow_sprite: Sprite2D = $ArrowSprite
+@onready var area_coll: CollisionShape2D = $Area2D/CollisionShape2D
 
 func on_grab() ->void:
 	print("grabbing object: " + name)
 	freeze = true
-	area.hide()
+	area_coll.disabled = true
 	arrow_sprite.hide()
 	hide()
 
 func on_release() ->void:
 	print("releasing object: " + name)
 	freeze = false
-	area.show()
+	area_coll.disabled = false
 	show()
 
 func get_data() ->BlockData:

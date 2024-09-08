@@ -62,7 +62,6 @@ func menu(firstTime:bool = false) ->void:
 	transitioning = false
 
 func start(level:int = 0) ->void:
-	#print("starting")
 	MainLevel.current_level = level
 	emit_signal("music_change", false)
 	emit_signal("freeze_process", true)
@@ -77,9 +76,10 @@ func start(level:int = 0) ->void:
 	emit_signal("freeze_process", false)
 
 func win() ->void: # Called by CollectionBox
-	#print("win")
 	level_progress[MainLevel.current_level] = true
-	MainLevel.current_level += 1
+	
+	MainLevel.current_level += 1 # Mainlevel checks if value is out of bounds later
+	
 	emit_signal("freeze_process", true)
 	transitioning = true
 	win_sfx.play()
@@ -95,6 +95,16 @@ func win() ->void: # Called by CollectionBox
 	await transition.fade_in(Vector2.ZERO)
 	transitioning = false
 	emit_signal("freeze_process", false)
+
+func complete() ->void:
+	game_completed_once = true
+	level_progress[MainLevel.current_level] = true
+	
+	emit_signal("freeze_process", true)
+	transitioning = true
+	win_sfx.play()
+	await get_tree().create_timer(1.0).timeout # Hold on the win for a little
+	menu()
 
 func lose() ->void:
 	#print("lose")

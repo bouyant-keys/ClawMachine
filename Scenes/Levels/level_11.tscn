@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dh8cf476vwqkf"]
+[gd_scene load_steps=18 format=3 uid="uid://dh8cf476vwqkf"]
 
 [ext_resource type="TileSet" uid="uid://bfrx7f5cwkkor" path="res://Sprites/TileSets/TileSet_Main.tres" id="1_lfsof"]
 [ext_resource type="Script" path="res://Scripts/Level.gd" id="2_2cg7c"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://d3871c50y6jgn" path="res://Scenes/Mechanisms/door.tscn" id="5_ia3ix"]
 [ext_resource type="PackedScene" uid="uid://ba2jovn5uijl4" path="res://Scenes/Mechanisms/button.tscn" id="6_per6c"]
 [ext_resource type="PackedScene" uid="uid://gxh1451tlop0" path="res://Scenes/Objects/Obj_Crate.tscn" id="7_iqf5t"]
+[ext_resource type="Script" path="res://Scripts/AnimZapper.gd" id="8_b8ph7"]
 [ext_resource type="PackedScene" uid="uid://qbvx8lj036hk" path="res://Scenes/Mechanisms/moving_object.tscn" id="8_jd117"]
+[ext_resource type="Texture2D" uid="uid://cwdymf72qck8b" path="res://Sprites/TileSets/ZapperSet_2.png" id="8_ux8y1"]
 [ext_resource type="PackedScene" uid="uid://d258hxwh1n74s" path="res://Scenes/Objects/Obj_Goal.tscn" id="8_wpv1j"]
 [ext_resource type="PackedScene" uid="uid://dm0q2rxk4vbev" path="res://Scenes/collection_box.tscn" id="9_q73vm"]
 
@@ -15,6 +17,31 @@ _data = {
 "points": PackedVector2Array(-0.353553, 8.57367, 0, -8, 104, 72, -8, 0, 8, 0, 120, 56, 0, -8, 0, 8, 136, 72, 8, 0, -8, 0, 120, 88, 0, 8, -1.14905, -14.1421, 104, 72)
 }
 point_count = 5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph7y5"]
+atlas = ExtResource("8_ux8y1")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pq4o"]
+atlas = ExtResource("8_ux8y1")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bj4bf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ph7y5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pq4o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hyhc0"]
+size = Vector2(12, 12)
 
 [sub_resource type="Curve2D" id="Curve2D_ess1y"]
 _data = {
@@ -34,7 +61,7 @@ cam_limit_y = 320.0
 tile_set = ExtResource("3_a7yr3")
 format = 2
 layer_0/z_index = 1
-layer_0/tile_data = PackedInt32Array(851970, 131072, 0, 720897, 131072, 0, 851969, 0, 2, 786433, 131072, 1, 720896, 65536, 3, 917506, 0, 3, 393217, 0, 4, 458753, 131072, 2, 458752, 65536, 2, 524287, 65536, 3, 458759, 0, 3, 393223, 0, 0, 393224, 131072, 2, 327688, 0, 0, 327689, 65536, 0, 327690, 65536, 4)
+layer_0/tile_data = PackedInt32Array(851969, 131072, 0, 655359, 65536, 3, 589824, 65536, 2, 851968, 65536, 3, 524289, 0, 4, 589825, 131072, 2, 917505, 131072, 1, 983041, 0, 2, 983042, 131072, 0, 1048578, 0, 3, 524295, 0, 0, 589831, 0, 3, 458760, 0, 0, 524296, 131072, 2, 458761, 65536, 0, 458762, 65536, 4)
 
 [node name="Door" parent="." instance=ExtResource("5_ia3ix")]
 position = Vector2(32, 88)
@@ -49,34 +76,38 @@ position = Vector2(96, 264)
 [node name="MovingObj" parent="." instance=ExtResource("8_jd117")]
 position = Vector2(0, 32)
 curve = SubResource("Curve2D_24avc")
-move_obj_path = NodePath("../Zapper1")
+move_obj_path = NodePath("../AnimZapper")
 closed_loop = true
+speed = 20.0
 
-[node name="Zapper1" type="Node2D" parent="."]
-position = Vector2(0, 32)
+[node name="AnimZapper" type="AnimatableBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("8_b8ph7")
 
-[node name="MovingZapper" type="TileMap" parent="Zapper1"]
-position = Vector2(-8, -8)
-tile_set = ExtResource("3_a7yr3")
-format = 2
-layer_0/z_index = 1
-layer_0/tile_data = PackedInt32Array(0, 65536, 1)
+[node name="AnimSprite" type="AnimatedSprite2D" parent="AnimZapper"]
+sprite_frames = SubResource("SpriteFrames_bj4bf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimZapper"]
+shape = SubResource("RectangleShape2D_hyhc0")
 
 [node name="MovingObj2" parent="." instance=ExtResource("8_jd117")]
 position = Vector2(0, 32)
 curve = SubResource("Curve2D_ess1y")
-move_obj_path = NodePath("../Zapper2")
+move_obj_path = NodePath("../AnimZapper2")
 closed_loop = true
+speed = 20.0
 
-[node name="Zapper2" type="Node2D" parent="."]
-position = Vector2(0, 32)
+[node name="AnimZapper2" type="AnimatableBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("8_b8ph7")
 
-[node name="MovingZapper2" type="TileMap" parent="Zapper2"]
-position = Vector2(-8, -8)
-tile_set = ExtResource("3_a7yr3")
-format = 2
-layer_0/z_index = 1
-layer_0/tile_data = PackedInt32Array(0, 65536, 1)
+[node name="AnimSprite" type="AnimatedSprite2D" parent="AnimZapper2"]
+sprite_frames = SubResource("SpriteFrames_bj4bf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimZapper2"]
+shape = SubResource("RectangleShape2D_hyhc0")
 
 [node name="Goal" parent="." instance=ExtResource("8_wpv1j")]
 position = Vector2(32, 104)

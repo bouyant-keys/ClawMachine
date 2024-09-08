@@ -9,81 +9,28 @@
 [node name="Level_Win" type="TileMap"]
 tile_set = ExtResource("1_63r82")
 format = 2
-layer_0/tile_data = PackedInt32Array(0, 262144, 2, 65536, 65536, 0, 9, 327680, 2, 65545, 0, 0, 131072, 65536, 1, 196608, 65536, 1, 262144, 65536, 2, 327680, 262144, 2, 393216, 65536, 0, 458752, 65536, 1, 524288, 65536, 1, 131081, 0, 1, 196617, 0, 1, 262153, 0, 2, 327689, 327680, 2, 393225, 0, 0, 458761, 0, 1, 524297, 0, 1, 589824, 65536, 2, 655360, 262144, 2, 720896, 65536, 0, 786432, 65536, 1, 851968, 65536, 1, 917504, 65536, 2, 983040, 262144, 2, 1048576, 65536, 0, 1114112, 65536, 1, 1179648, 65536, 1, 1245184, 65536, 2, 1310720, 262144, 2, 589833, 0, 2, 655369, 327680, 2, 720905, 0, 0, 786441, 0, 1, 851977, 0, 1, 917513, 0, 2, 983049, 327680, 2, 1048585, 0, 0, 1114121, 0, 1, 1179657, 0, 1, 1245193, 0, 2, 1310729, 327680, 2, 8, 196608, 2, 1, 196608, 1, 2, 131072, 2, 3, 131072, 2, 4, 131072, 2, 5, 131072, 2, 6, 131072, 2, 7, 131072, 2, 1441792, 65536, 1, 1507328, 65536, 1, 1572864, 65536, 2, 1441801, 0, 1, 1507337, 0, 1, 1572873, 0, 2, 1638400, 131072, 0, 1638401, 262144, 0, 1638402, 262144, 1, 1638403, 262144, 0, 1638404, 327680, 0, 1638405, 327680, 0, 1638406, 262144, 1, 1638407, 262144, 0, 1638408, 262144, 1, 1638409, 196608, 0, 1376265, 0, 0, 1376256, 65536, 0)
+layer_0/tile_data = PackedInt32Array(0, 262144, 2, 65536, 65536, 0, 9, 327680, 2, 65545, 0, 0, 131072, 65536, 2, 196608, 262144, 2, 327680, 65536, 1, 393216, 65536, 2, 458752, 131072, 0, 131081, 0, 1, 196617, 0, 1, 327689, 0, 0, 393225, 0, 2, 458761, 196608, 0, 8, 196608, 2, 1, 196608, 1, 2, 131072, 2, 3, 131072, 2, 4, 131072, 2, 5, 131072, 2, 6, 131072, 2, 7, 131072, 2, 458753, 262144, 0, 458754, 262144, 1, 458755, 262144, 0, 458756, 327680, 0, 458757, 327680, 0, 458758, 262144, 1, 458759, 262144, 0, 458760, 262144, 1, 262144, 65536, 0, 262153, 327680, 2)
 script = ExtResource("2_jwf3a")
 goal_path = NodePath("Goal")
-cam_limit_y = 432.0
 
 [node name="Goal" parent="." instance=ExtResource("3_eid6i")]
-position = Vector2(48, 392)
+position = Vector2(48, 104)
 
 [node name="CollectionBox" parent="." instance=ExtResource("4_0ifj0")]
-position = Vector2(112, 384)
+position = Vector2(112, 104)
+final_box = true
 
 [node name="Credits_Text" type="Node" parent="."]
 
 [node name="Label" type="Label" parent="Credits_Text"]
-offset_left = 40.0
-offset_top = 44.0
-offset_right = 120.0
-offset_bottom = 67.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 48.0
+grow_horizontal = 2
 theme_override_fonts/font = ExtResource("4_yfodd")
-text = "you won :]"
-horizontal_alignment = 1
-vertical_alignment = 1
+text = "
+you win!
 
-[node name="Label2" type="Label" parent="Credits_Text"]
-offset_left = 32.0
-offset_top = 84.0
-offset_right = 131.0
-offset_bottom = 115.0
-theme_override_fonts/font = ExtResource("4_yfodd")
-text = "thanks for
- playing! "
+thanks for
+playing!"
 horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label3" type="Label" parent="Credits_Text"]
-offset_left = 40.0
-offset_top = 148.0
-offset_right = 120.0
-offset_bottom = 171.0
-theme_override_fonts/font = ExtResource("4_yfodd")
-text = "made by
-Ethan Keys"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label4" type="Label" parent="Credits_Text"]
-offset_left = 40.0
-offset_top = 200.0
-offset_right = 120.0
-offset_bottom = 231.0
-theme_override_fonts/font = ExtResource("4_yfodd")
-text = "hope you had 
-fun!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label5" type="Label" parent="Credits_Text"]
-offset_left = 40.0
-offset_top = 248.0
-offset_right = 120.0
-offset_bottom = 279.0
-theme_override_fonts/font = ExtResource("4_yfodd")
-text = "the levels will 
-loop after this"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label6" type="Label" parent="Credits_Text"]
-visible = false
-offset_left = -28.0
-offset_top = 324.0
-offset_right = 191.0
-offset_bottom = 355.0
-theme_override_fonts/font = ExtResource("4_yfodd")
-text = "try pressing 1 or 2 
-in the next screen..."
-horizontal_alignment = 1
-vertical_alignment = 1

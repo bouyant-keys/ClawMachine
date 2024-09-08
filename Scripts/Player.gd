@@ -185,8 +185,9 @@ func on_grab_area_exited(area:Area2D) ->void:
 		grab_obj = null
 		obj_nearby.emit(false)
 
-func on_hurt_area_entered(_body:Node2D) ->void:
+func on_hurt_area_entered(body:Node2D) ->void:
 	#print("Hurt area entered")
+	print("Hurt by: " + body.name)
 	if invincible_anim.is_playing(): return
 	
 	on_hit()

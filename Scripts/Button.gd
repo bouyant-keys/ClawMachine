@@ -5,6 +5,7 @@ var is_pressed := false
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var press_sfx: AudioStreamPlayer = $Press_SFX
 @onready var release_sfx: AudioStreamPlayer = $Release_SFX
+@onready var press_area: Area2D = $Button_Top/PressArea
 
 signal on_press
 signal on_release
@@ -22,7 +23,7 @@ func press_button(active:bool) ->void:
 		release_sfx.play()
 		on_release.emit()
 
-func on_area_entered(_area:Area2D) ->void:
+func on_area_entered(area:Area2D) ->void:
 	press_button(true)
 
 func on_area_exited(_area:Area2D) ->void:

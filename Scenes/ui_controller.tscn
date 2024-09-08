@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://caqp2s3n5m7og"]
+[gd_scene load_steps=31 format=3 uid="uid://caqp2s3n5m7og"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UIController.gd" id="1_xx844"]
 [ext_resource type="Texture2D" uid="uid://7m8jcppj3qxf" path="res://Sprites/UI/UI_Bar.png" id="2_dg3mu"]
@@ -25,6 +25,9 @@
 [ext_resource type="Texture2D" uid="uid://cjnr1tav6ua03" path="res://Sprites/UI/RestartButton.png" id="23_orjxc"]
 [ext_resource type="Texture2D" uid="uid://7m33ey4h1lpe" path="res://Sprites/UI/LvlSelectButton.png" id="24_6bvcd"]
 [ext_resource type="FontFile" uid="uid://dnoqi8fg1yacv" path="res://Fonts/HelvetiPixel_by_pentacom.ttf" id="25_71nlq"]
+[ext_resource type="Texture2D" uid="uid://iuxjyva1rj8i" path="res://Sprites/UI/SpecialButton.png" id="26_ovhgx"]
+[ext_resource type="Texture2D" uid="uid://jruii4sd3hi8" path="res://Sprites/UI/SpecialButton_Press.png" id="27_x0kss"]
+[ext_resource type="AudioStream" uid="uid://dg7civ3l4w3j7" path="res://Audio/Effects/EmptyGrab.wav" id="28_ocxjc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h1lgf"]
 
@@ -44,6 +47,112 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_xx844")
+
+[node name="MenuButtons" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuButtons"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_right = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = -6
+alignment = 2
+
+[node name="MainMenuButton" type="Panel" parent="MenuButtons/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("22_4vf6d")
+metadata/_edit_use_anchors_ = true
+
+[node name="MMTexture" type="TextureRect" parent="MenuButtons/VBoxContainer/MainMenuButton"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.0
+offset_right = 16.0
+offset_bottom = 11.0
+grow_vertical = 2
+texture = ExtResource("24_6bvcd")
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="MenuButtons/VBoxContainer/MainMenuButton"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.25098, 0.25098, 0.25098, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("25_71nlq")
+theme_override_styles/normal = ExtResource("22_4vf6d")
+theme_override_styles/hover = ExtResource("22_4vf6d")
+theme_override_styles/pressed = ExtResource("22_4vf6d")
+theme_override_styles/disabled = ExtResource("22_4vf6d")
+theme_override_styles/focus = ExtResource("22_4vf6d")
+text = "Main Menu"
+alignment = 2
+
+[node name="RestartButton" type="Panel" parent="MenuButtons/VBoxContainer"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("22_4vf6d")
+metadata/_edit_use_anchors_ = true
+
+[node name="RestartTexture" type="TextureRect" parent="MenuButtons/VBoxContainer/RestartButton"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.0
+offset_right = 16.0
+offset_bottom = 11.0
+grow_vertical = 2
+texture = ExtResource("23_orjxc")
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="MenuButtons/VBoxContainer/RestartButton"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.25098, 0.25098, 0.25098, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("25_71nlq")
+theme_override_styles/normal = ExtResource("22_4vf6d")
+theme_override_styles/hover = ExtResource("22_4vf6d")
+theme_override_styles/pressed = ExtResource("22_4vf6d")
+theme_override_styles/disabled = ExtResource("22_4vf6d")
+theme_override_styles/focus = ExtResource("22_4vf6d")
+text = "Restart    "
+alignment = 2
 
 [node name="ControllerBG" type="TextureRect" parent="."]
 layout_mode = 1
@@ -265,107 +374,33 @@ stream = ExtResource("5_wvpgk")
 volume_db = -6.0
 bus = &"SFX"
 
-[node name="RestartButton" type="Panel" parent="."]
-custom_minimum_size = Vector2(0, 24)
+[node name="SpecialButton" type="TextureButton" parent="."]
+process_mode = 3
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.2625
-anchor_top = 0.555556
-anchor_right = 0.7375
-anchor_bottom = 0.722222
-offset_top = -4.57764e-05
-offset_bottom = 5.34058e-05
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = ExtResource("22_4vf6d")
-metadata/_edit_use_anchors_ = true
-
-[node name="RestartTexture" type="TextureRect" parent="RestartButton"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -11.0
-offset_right = 16.0
-offset_bottom = 11.0
-grow_vertical = 2
-texture = ExtResource("23_orjxc")
-stretch_mode = 5
-
-[node name="Button" type="Button" parent="RestartButton"]
-layout_mode = 1
-anchors_preset = 15
+anchors_preset = 1
+anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -16.0
+offset_bottom = 16.0
+grow_horizontal = 0
 mouse_filter = 1
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0.25098, 0.25098, 0.25098, 1)
-theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("25_71nlq")
-theme_override_styles/normal = ExtResource("22_4vf6d")
-theme_override_styles/hover = ExtResource("22_4vf6d")
-theme_override_styles/pressed = ExtResource("22_4vf6d")
-theme_override_styles/disabled = ExtResource("22_4vf6d")
-theme_override_styles/focus = ExtResource("22_4vf6d")
-text = "Restart    "
-alignment = 2
+texture_normal = ExtResource("26_ovhgx")
+texture_pressed = ExtResource("27_x0kss")
+stretch_mode = 3
 
-[node name="MainMenuButton" type="Panel" parent="."]
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.2625
-anchor_top = 0.666667
-anchor_right = 0.7375
-anchor_bottom = 0.833333
-offset_top = -4.57764e-05
-offset_bottom = 5.34058e-05
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = ExtResource("22_4vf6d")
-metadata/_edit_use_anchors_ = true
+[node name="ButtonClickSFX" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("28_ocxjc")
 
-[node name="MMTexture" type="TextureRect" parent="MainMenuButton"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -11.0
-offset_right = 16.0
-offset_bottom = 11.0
-grow_vertical = 2
-texture = ExtResource("24_6bvcd")
-stretch_mode = 5
-
-[node name="Button" type="Button" parent="MainMenuButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0.25098, 0.25098, 0.25098, 1)
-theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("25_71nlq")
-theme_override_styles/normal = ExtResource("22_4vf6d")
-theme_override_styles/hover = ExtResource("22_4vf6d")
-theme_override_styles/pressed = ExtResource("22_4vf6d")
-theme_override_styles/disabled = ExtResource("22_4vf6d")
-theme_override_styles/focus = ExtResource("22_4vf6d")
-text = "Main Menu"
-alignment = 2
+[node name="SpecialClickSFX" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("5_wvpgk")
 
 [connection signal="reset_elements" from="." to="ControllerBG/ControllerBar/Knob" method="reset_knob"]
 [connection signal="reset_elements" from="." to="ControllerBG/ControllerBar/GrabButton" method="reset_state"]
 [connection signal="reset_elements" from="." to="ControllerBG/ControllerBar/PauseButton" method="reset_state"]
+[connection signal="button_up" from="MenuButtons/VBoxContainer/MainMenuButton/Button" to="." method="on_mainmenu_pressed"]
+[connection signal="button_up" from="MenuButtons/VBoxContainer/RestartButton/Button" to="." method="on_restart_pressed"]
 [connection signal="h_dir_changed" from="ControllerBG/ControllerBar/Knob" to="." method="on_h_slider_changed"]
 [connection signal="v_dir_changed" from="ControllerBG/ControllerBar/Knob" to="." method="on_v_slider_changed"]
 [connection signal="mouse_entered" from="ControllerBG/ControllerBar/Knob/Area2D" to="ControllerBG/ControllerBar/Knob" method="mouse_entered"]
@@ -374,5 +409,4 @@ alignment = 2
 [connection signal="button_up" from="ControllerBG/ControllerBar/GrabButton" to="ControllerBG/ControllerBar/GrabButton" method="swap_button_texture"]
 [connection signal="button_up" from="ControllerBG/ControllerBar/PauseButton" to="." method="on_pause_pressed"]
 [connection signal="button_up" from="ControllerBG/ControllerBar/PauseButton" to="ControllerBG/ControllerBar/PauseButton" method="swap_button_texture"]
-[connection signal="button_up" from="RestartButton/Button" to="." method="on_restart_pressed"]
-[connection signal="button_up" from="MainMenuButton/Button" to="." method="on_mainmenu_pressed"]
+[connection signal="pressed" from="SpecialButton" to="." method="on_special_pressed"]

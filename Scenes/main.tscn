@@ -22,7 +22,7 @@
 [ext_resource type="StyleBox" uid="uid://wny360jhf3cn" path="res://Materials/MenuPanelStyle.tres" id="16_eucvi"]
 [ext_resource type="Script" path="res://Scripts/UI/StopMouseInput.gd" id="17_knx2u"]
 [ext_resource type="PackedScene" uid="uid://dahacdx3umm8n" path="res://Scenes/Background.tscn" id="19_y2reb"]
-[ext_resource type="Texture2D" uid="uid://clqpw7s10hw7f" path="res://Sprites/palettes_edit2.png" id="21_mbjk8"]
+[ext_resource type="Texture2D" uid="uid://dn3bsguixiw4g" path="res://Sprites/palettes_edit3.png" id="21_1n0of"]
 
 [sub_resource type="Curve" id="Curve_npoln"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.82692, 0.0, 0, 0]
@@ -108,14 +108,13 @@ _data = {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b3eom"]
 shader = ExtResource("7_4qc8k")
 shader_parameter/palette_index = 0.0
-shader_parameter/palette = ExtResource("21_mbjk8")
+shader_parameter/palette = ExtResource("21_1n0of")
 
 [node name="Main" type="Node"]
 
 [node name="GameManager" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("1_ryie0")
-skip_main_menu = true
 transition_path = NodePath("../CanvasLayer/TransitionShader")
 
 [node name="WinSFX" type="AudioStreamPlayer" parent="GameManager"]
@@ -136,8 +135,7 @@ volume_db = -12.0
 bus = &"Music"
 
 [node name="MainLevel" parent="." instance=ExtResource("1_bu0eb")]
-gm_path = NodePath("../GameManager")
-start_level = 8
+start_level = 11
 
 [node name="LevelObjects" type="Node2D" parent="."]
 script = ExtResource("5_2eaa3")
@@ -180,9 +178,10 @@ libraries = {
 
 [node name="GameDisplay" parent="CanvasLayer" instance=ExtResource("11_qti71")]
 
-[node name="PauseDisplay" parent="CanvasLayer" instance=ExtResource("12_85uhn")]
-
 [node name="UIController" parent="CanvasLayer" instance=ExtResource("14_8al8u")]
+
+[node name="PauseDisplay" parent="CanvasLayer" instance=ExtResource("12_85uhn")]
+mouse_filter = 2
 
 [node name="UIMenu" parent="CanvasLayer" instance=ExtResource("13_77ex3")]
 stop_input_path = NodePath("../StopMouseInput")
@@ -245,6 +244,7 @@ script = ExtResource("9_btm2a")
 [connection signal="reset_process" from="GameManager" to="CanvasLayer/UIController" method="reset"]
 [connection signal="unpause" from="GameManager" to="CanvasLayer/PauseDisplay" method="on_unpause"]
 [connection signal="update_camera" from="GameManager" to="LevelObjects/GameCamera" method="update_camera_pos"]
+[connection signal="game_complete" from="MainLevel" to="GameManager" method="complete"]
 [connection signal="goal_position" from="MainLevel" to="LevelObjects/Player" method="set_goal"]
 [connection signal="set_cam_limit" from="MainLevel" to="LevelObjects/GameCamera" method="set_cam_limit"]
 [connection signal="cam_shake" from="LevelObjects/Player" to="LevelObjects/GameCamera" method="camera_shake"]
@@ -259,10 +259,12 @@ script = ExtResource("9_btm2a")
 [connection signal="back_to_menu" from="CanvasLayer/UIController" to="GameManager" method="menu"]
 [connection signal="grab_pressed" from="CanvasLayer/UIController" to="LevelObjects/Player" method="on_grab_pressed"]
 [connection signal="h_speed_changed" from="CanvasLayer/UIController" to="LevelObjects/Player" method="update_h_movement"]
+[connection signal="inc_palette" from="CanvasLayer/UIController" to="CanvasLayer/PaletteShader" method="increment_palette"]
 [connection signal="pause_pressed" from="CanvasLayer/UIController" to="GameManager" method="set_pause"]
 [connection signal="restart" from="CanvasLayer/UIController" to="GameManager" method="restart_level"]
 [connection signal="stop_mouse_input" from="CanvasLayer/UIController" to="CanvasLayer/StopMouseInput" method="set_visibility"]
 [connection signal="v_speed_changed" from="CanvasLayer/UIController" to="LevelObjects/Player" method="update_v_movement"]
+[connection signal="inc_palette" from="CanvasLayer/UIMenu" to="CanvasLayer/PaletteShader" method="increment_palette"]
 [connection signal="start_game" from="CanvasLayer/UIMenu" to="GameManager" method="start"]
 [connection signal="stop_mouse_input" from="CanvasLayer/UIMenu" to="CanvasLayer/StopMouseInput" method="set_visibility"]
 [connection signal="change_palette" from="CanvasLayer/TransitionShader" to="CanvasLayer/PaletteShader" method="change_palette"]

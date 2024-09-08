@@ -22,7 +22,7 @@ func close() ->void:
 	set_door_state(false)
 
 func set_door_state(set_open:bool) ->void:
-	if set_open == is_open: return
+	sprite.stop()
 	
 	if set_open: 
 		sprite.play("Opening")
