@@ -52,12 +52,15 @@ func fade_in(new_dir:Vector2) ->void:
 func update_shader_progress(value:float) ->void:
 	material.set_shader_parameter("progress", value)
 
-func play_level_change() ->void:
-	level_label.text = "Level: " + str(MainLevel.current_level)
+func play_level_change(from_menu:bool, from_level_index:int, to_level_index:int) ->void:
+	if from_menu:
+		level_label.text = " "
+	else:
+		level_label.text = "Level: " + str(from_level_index+1)
 	level_label.show()
 	await get_tree().create_timer(1.0).timeout
-	emit_signal("change_palette", 1)#MainLevel.current_level)
-	level_label.text = "Level: " + str(MainLevel.current_level+1)
+	emit_signal("change_palette", to_level_index)#MainLevel.current_level)
+	level_label.text = "Level: " + str(to_level_index+1)
 	level_sfx.play()
 	await get_tree().create_timer(1.0).timeout
 	level_label.hide()

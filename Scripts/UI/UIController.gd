@@ -24,19 +24,22 @@ signal back_to_menu
 signal inc_palette
 
 func on_level_start() ->void:
+	pass
+
+func display_controls() ->void:
 	show_self()
+	fake_controller.show()
 	controller_bg.hide()
 	
 	fake_controller.position = off_screen_pos
 	var controls_tween = get_tree().create_tween()
-	controls_tween.set_ease(Tween.EASE_IN)
-	controls_tween.set_trans(Tween.TRANS_SINE)
-	controls_tween.tween_property(fake_controller, "position", on_screen_pos, 1.5)
+	controls_tween.set_ease(Tween.EASE_OUT)
+	controls_tween.set_trans(Tween.TRANS_SPRING)
+	controls_tween.tween_property(fake_controller, "position", on_screen_pos, 1.0)
 	
 	await controls_tween.finished
 	fake_controller.hide()
 	controller_bg.show()
-
 
 func freeze_controls(freeze:bool) ->void:
 	emit_signal("stop_mouse_input", freeze)
@@ -83,6 +86,7 @@ func reset() ->void:
 	emit_signal("reset_elements")
 	menu_buttons.hide()
 	special_button.visible = GameManager.instance.game_completed_once
+	hide_self()
 
 func hide_self() ->void: hide()
 func show_self() ->void: show()

@@ -14,7 +14,10 @@ var accessible : bool
 
 signal load_level(index:int)
 
-func _ready() ->void: #TODO Change this into a function called by LevelButtonContainer?
+func _ready() ->void:
+	check_locked()
+
+func check_locked() ->void:
 	atlas_region = Rect2(atlas_coords, Vector2(16, 16))
 	normal_tex_atlas.region = atlas_region
 	highlight_tex_atlas.region = atlas_region
@@ -28,6 +31,7 @@ func _ready() ->void: #TODO Change this into a function called by LevelButtonCon
 	else:
 		texture_normal = lock_tex
 		texture_hover = lock_hover_tex
+	
 
 func on_level_button_pressed() ->void:
 	if accessible:

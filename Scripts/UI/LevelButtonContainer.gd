@@ -2,6 +2,10 @@ extends HFlowContainer
 
 const disabledColor : Color = Color8(128, 128, 128)
 
+func check_levels_locked() ->void:
+	for level in self.get_children():
+		level.check_locked()
+
 func set_enabled() ->void:
 	for i : int in self.get_children().size():
 		var button : TextureButton = self.get_child(i) as TextureButton

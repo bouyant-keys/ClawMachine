@@ -149,13 +149,13 @@ script = ExtResource("9_btm2a")
 
 [node name="ParallaxBackground" parent="CanvasLayer" instance=ExtResource("19_y2reb")]
 
+[connection signal="display_controls" from="GameManager" to="CanvasLayer/UIController" method="display_controls"]
 [connection signal="freeze_process" from="GameManager" to="LevelObjects/Player" method="freeze"]
 [connection signal="freeze_process" from="GameManager" to="CanvasLayer/UIController" method="freeze_controls"]
 [connection signal="game_process" from="GameManager" to="MainLevel" method="load_level"]
 [connection signal="game_process" from="GameManager" to="LevelObjects" method="show_self"]
 [connection signal="game_process" from="GameManager" to="LevelObjects/GameCamera" method="activate_camera"]
 [connection signal="game_process" from="GameManager" to="CanvasLayer/GameDisplay" method="show_self"]
-[connection signal="game_process" from="GameManager" to="CanvasLayer/UIController" method="on_level_start"]
 [connection signal="game_process" from="GameManager" to="CanvasLayer/UIMenu" method="hide_self"]
 [connection signal="game_process" from="GameManager" to="CanvasLayer/ParallaxBackground" method="set_game_background"]
 [connection signal="menu_process" from="GameManager" to="MainLevel" method="load_menu"]
@@ -202,4 +202,4 @@ script = ExtResource("9_btm2a")
 [connection signal="inc_palette" from="CanvasLayer/UIMenu" to="CanvasLayer/PaletteShader" method="increment_palette"]
 [connection signal="start_game" from="CanvasLayer/UIMenu" to="GameManager" method="start"]
 [connection signal="stop_mouse_input" from="CanvasLayer/UIMenu" to="CanvasLayer/StopMouseInput" method="set_visibility"]
-[connection signal="change_palette" from="CanvasLayer/TransitionShader" to="CanvasLayer/PaletteShader" method="change_palette"]
+[connection signal="change_palette" from="CanvasLayer/TransitionShader" to="CanvasLayer/PaletteShader" method="set_palette"]

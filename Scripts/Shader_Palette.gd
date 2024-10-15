@@ -13,6 +13,14 @@ func _ready():
 		#if event.is_action_pressed("Inc_Palette"): change_palette(1)
 		#elif event.is_action_pressed("Dec_Palette"): change_palette(-1)
 
+func set_palette(index:int) ->void:
+	if (index > 15): index = 0
+	elif (index < 0): index = 15
+	
+	current_pattern = index
+	print("Pattern Index: " + str(current_pattern))
+	material.set_shader_parameter("palette_index", current_pattern)
+
 func increment_palette() ->void:
 	change_palette(1)
 

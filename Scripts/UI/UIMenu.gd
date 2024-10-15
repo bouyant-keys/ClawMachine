@@ -17,6 +17,7 @@ signal disable_start
 signal disable_select
 signal disable_levels(except:int)
 signal enable_all
+signal check_locked_lvls
 signal level_select
 signal stop_mouse_input(active:bool)
 signal inc_palette
@@ -28,7 +29,12 @@ func _ready() -> void:
 	level_button_container.hide()
 
 func on_menu_load() ->void:
+	level_button_container.self_modulate = Color.WHITE
+	start_button_container.show()
+	level_button_container.hide()
+	
 	special_button.visible = GameManager.instance.game_completed_once
+	emit_signal("check_locked_lvls")
 	emit_signal("enable_all")
 	emit_signal("stop_mouse_input", true)
 	await claw.menu_start()

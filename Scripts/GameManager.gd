@@ -28,6 +28,7 @@ signal music_change(menu:bool)
 signal music_lower_vol
 signal music_raise_vol
 signal update_camera(Vector2)
+signal display_controls
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -71,12 +72,19 @@ func start(level:int = 0) ->void:
 	emit_signal("game_process")
 	emit_signal("reset_process")
 	
+	await transition.play_level_change(true, 0, MainLevel.current_level)
+	
 	await transition.fade_in(Vector2.ZERO)
 	transitioning = false
+	
+	emit_signal("display_controls")
+	
+	await get_tree().create_timer(1.0).timeout
 	emit_signal("freeze_process", false)
 
 func win() ->void: # Called by CollectionBox
-	level_progress[MainLevel.current_level] = true
+	if MainLevel.current_level < level_progress.size() - 1:
+		level_progress[MainLevel.current_level+1] = true
 	
 	MainLevel.current_level += 1 # Mainlevel checks if value is out of bounds later
 	
@@ -89,11 +97,15 @@ func win() ->void: # Called by CollectionBox
 	emit_signal("reset_process")
 	emit_signal("music_lower_vol")
 	
-	await transition.play_level_change()
+	await transition.play_level_change(false, MainLevel.current_level - 1, MainLevel.current_level) # CurrentLevel is now the next level, because it was incremented
 	emit_signal("music_raise_vol")
 	
 	await transition.fade_in(Vector2.ZERO)
 	transitioning = false
+	
+	emit_signal("display_controls")
+	
+	await get_tree().create_timer(1.0).timeout
 	emit_signal("freeze_process", false)
 
 func complete() ->void:

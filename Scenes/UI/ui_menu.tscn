@@ -383,6 +383,7 @@ stream = ExtResource("18_po8ey")
 [node name="LockedSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_fyjdb")
 
+[connection signal="check_locked_lvls" from="." to="LevelButtonContainer" method="check_levels_locked"]
 [connection signal="disable_levels" from="." to="LevelButtonContainer" method="set_else_disabled"]
 [connection signal="disable_select" from="." to="StartButtonContainer/LevelSelectbutton" method="set_disabled"]
 [connection signal="disable_start" from="." to="StartButtonContainer/StartButton" method="set_disabled"]
