@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b3d7gawmwn128"]
+[gd_scene load_steps=29 format=3 uid="uid://b3d7gawmwn128"]
 
 [ext_resource type="PackedScene" uid="uid://006i5i72bun1" path="res://Scenes/main_level.tscn" id="1_bu0eb"]
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_ryie0"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://Scripts/LevelObjects.gd" id="5_2eaa3"]
 [ext_resource type="PackedScene" uid="uid://uj8cf506ml5v" path="res://Scenes/chain_base.tscn" id="5_33amq"]
 [ext_resource type="Script" path="res://Scripts/MainCamera.gd" id="5_kpbsb"]
+[ext_resource type="AudioStream" uid="uid://dghsmkuc53p0c" path="res://Audio/Music/513555_Insomnia-Dreams.mp3" id="6_7nb2g"]
 [ext_resource type="PackedScene" uid="uid://dpg5ed8ojadqn" path="res://Scenes/transition_shader.tscn" id="6_x3bfk"]
 [ext_resource type="Shader" path="res://Materials/SetColorPalette.gdshader" id="7_4qc8k"]
 [ext_resource type="Script" path="res://Scripts/BumpParticles.gd" id="7_eg0vb"]
@@ -18,7 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://x43hhp23efsb" path="res://Scenes/UI/game_display.tscn" id="11_qti71"]
 [ext_resource type="PackedScene" uid="uid://gvsaqucmvlmu" path="res://Scenes/UI/pause_display.tscn" id="12_85uhn"]
 [ext_resource type="PackedScene" uid="uid://bix7bxbdv1uqr" path="res://Scenes/UI/ui_menu.tscn" id="13_77ex3"]
-[ext_resource type="PackedScene" uid="uid://caqp2s3n5m7og" path="res://Scenes/ui_controller.tscn" id="14_8al8u"]
+[ext_resource type="PackedScene" uid="uid://caqp2s3n5m7og" path="res://Scenes/UI/ui_controller.tscn" id="14_8al8u"]
 [ext_resource type="StyleBox" uid="uid://wny360jhf3cn" path="res://Materials/MenuPanelStyle.tres" id="16_eucvi"]
 [ext_resource type="Script" path="res://Scripts/UI/StopMouseInput.gd" id="17_knx2u"]
 [ext_resource type="PackedScene" uid="uid://dahacdx3umm8n" path="res://Scenes/Background.tscn" id="19_y2reb"]
@@ -39,71 +40,6 @@ gravity = Vector3(0, 50, 0)
 scale_min = 2.0
 scale_max = 2.0
 scale_curve = SubResource("CurveTexture_jur8o")
-
-[sub_resource type="Animation" id="Animation_kquip"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LevelObjects/GameCamera:offset:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_iyfj4"]
-resource_name = "big_shake_l"
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LevelObjects/GameCamera:offset:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -4, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.3, 1)
-}
-
-[sub_resource type="Animation" id="Animation_8hybr"]
-resource_name = "big_shake_r"
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LevelObjects/GameCamera:offset:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(0, -0.2, -0.0119137, 0.25, 0, 4, -0.25, 0, 0.25, 0, 0, -0.2, -0.0119137, 0.25, 0),
-"times": PackedFloat32Array(0, 0.3, 1)
-}
-
-[sub_resource type="Animation" id="Animation_m3svg"]
-resource_name = "small_shake"
-length = 0.8
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LevelObjects/GameCamera:offset:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, 0, 0, 0, 0, -1, -0.1, 0, 0.1, 0, 1, 0, 0, 0, 0, -0.000140718, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.3, 0.4, 0.5, 0.8)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_mocy2"]
-_data = {
-"RESET": SubResource("Animation_kquip"),
-"big_shake_l": SubResource("Animation_iyfj4"),
-"big_shake_r": SubResource("Animation_8hybr"),
-"small_shake": SubResource("Animation_m3svg")
-}
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b3eom"]
 shader = ExtResource("7_4qc8k")
@@ -129,8 +65,13 @@ bus = &"SFX"
 process_mode = 3
 script = ExtResource("2_w01u1")
 
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="MusicManager"]
+[node name="MenuPlayer" type="AudioStreamPlayer" parent="MusicManager"]
 stream = ExtResource("4_7724e")
+volume_db = -12.0
+bus = &"Music"
+
+[node name="GamePlayer" type="AudioStreamPlayer" parent="MusicManager"]
+stream = ExtResource("6_7nb2g")
 volume_db = -12.0
 bus = &"Music"
 
@@ -167,12 +108,6 @@ limit_right = 160
 limit_bottom = 288
 script = ExtResource("5_kpbsb")
 player_path = NodePath("../Player")
-
-[node name="CamAnim" type="AnimationPlayer" parent="LevelObjects/GameCamera"]
-root_node = NodePath("../../..")
-libraries = {
-"": SubResource("AnimationLibrary_mocy2")
-}
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -220,7 +155,7 @@ script = ExtResource("9_btm2a")
 [connection signal="game_process" from="GameManager" to="LevelObjects" method="show_self"]
 [connection signal="game_process" from="GameManager" to="LevelObjects/GameCamera" method="activate_camera"]
 [connection signal="game_process" from="GameManager" to="CanvasLayer/GameDisplay" method="show_self"]
-[connection signal="game_process" from="GameManager" to="CanvasLayer/UIController" method="show_self"]
+[connection signal="game_process" from="GameManager" to="CanvasLayer/UIController" method="on_level_start"]
 [connection signal="game_process" from="GameManager" to="CanvasLayer/UIMenu" method="hide_self"]
 [connection signal="game_process" from="GameManager" to="CanvasLayer/ParallaxBackground" method="set_game_background"]
 [connection signal="menu_process" from="GameManager" to="MainLevel" method="load_menu"]

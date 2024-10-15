@@ -121,6 +121,7 @@ func lose() ->void:
 	emit_signal("freeze_process", false)
 
 func restart_level() ->void:
+	set_pause()
 	start(MainLevel.current_level)
 
 func set_pause() ->void:

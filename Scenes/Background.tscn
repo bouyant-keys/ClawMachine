@@ -9,7 +9,6 @@
 script = ExtResource("1_e67ss")
 
 [node name="Game_Far" type="ParallaxLayer" parent="."]
-visible = false
 position = Vector2(0, -8)
 motion_scale = Vector2(0.3, 0.3)
 motion_mirroring = Vector2(0, 144)

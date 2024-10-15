@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/MovingPlatform.gd" id="1_q7xet"]
 [ext_resource type="Texture2D" uid="uid://bpia64yg87phq" path="res://Sprites/MovePath.png" id="2_r0d0k"]
-[ext_resource type="Texture2D" uid="uid://cepf6tr8e7yn2" path="res://Sprites/ObstacleSet_3HL.png" id="3_jb657"]
+[ext_resource type="Texture2D" uid="uid://cepf6tr8e7yn2" path="res://Sprites/TileSets/ObstacleSet_3HL.png" id="3_jb657"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j0qqb"]
 atlas = ExtResource("3_jb657")
